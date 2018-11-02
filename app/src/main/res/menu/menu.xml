@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+          android:title="@string/menu_discover"
+          android:icon="@drawable/ic_action_nav" />
+    <item
+        android:title="@string/menu_search"
+        android:icon="@drawable/ic_action_search" />
+    <item
+        android:title="@string/menu_me"
+        android:icon="@drawable/ic_action_face" />
+
+</menu>
