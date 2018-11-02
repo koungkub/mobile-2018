@@ -1,6 +1,81 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.constraint.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <SearchView
+            android:id="@+id/discover_btn_search"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:layout_marginRight="20dp"
+            android:layout_marginLeft="20dp"
+            tools:ignore="MissingConstraints"
+            tools:layout_editor_absoluteX="15dp"
+            tools:layout_editor_absoluteY="15dp">
+        </SearchView>
+
+            <TextView
+                android:id="@+id/discover_text_featured"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Featured"
+                android:layout_marginTop="6dp"
+                android:layout_marginLeft="50dp"
+                android:textSize="25dp"
+                android:textStyle="bold"
+                android:textColor="#000"
+                />
+
+            <ImageView
+                android:id="@+id/discover_image"
+                android:layout_width="wrap_content"
+                android:layout_height="250dp"
+                android:layout_gravity="center"
+                android:src="@drawable/hello"
+                />
+
+            <TextView
+                android:id="@+id/discover_text_discover"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Discover"
+                android:layout_marginTop="10dp"
+                android:layout_marginLeft="40dp"
+                android:textSize="25dp"
+                android:textStyle="bold"
+                android:textColor="#000"
+                />
+
+            <ListView
+                android:id="@+id/discover_list"
+                android:layout_width="match_parent"
+                android:layout_height="455dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginRight="20dp"
+                android:layout_marginLeft="20dp">
+            </ListView>
+
+
+
+    </LinearLayout>
+
+    </ScrollView>
+
+
+
+
 </android.support.constraint.ConstraintLayout>
+
