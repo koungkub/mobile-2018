@@ -1,0 +1,267 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:id="@+id/restaurant_btn_back"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginLeft="20dp"
+                    android:src="@drawable/ic_arrow_back"/>
+
+                <ImageView
+                    android:id="@+id/restaurant_btn_bookmark"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginLeft="300dp"
+                    android:src="@drawable/ic_bookmark"/>
+
+            </LinearLayout>
+
+            <ImageView
+                android:id="@+id/restaurant_image_restaurant"
+                android:layout_width="wrap_content"
+                android:layout_height="250dp"
+                android:layout_marginTop="20dp"
+                android:layout_gravity="center"
+                android:src="@drawable/hello"/>
+
+            <TextView
+                android:id="@+id/restaurant_text_restaurant"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="On the table"
+                android:layout_marginTop="6dp"
+                android:layout_marginLeft="40dp"
+                android:textSize="25dp"
+                android:textStyle="bold"
+                android:textColor="#000"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:id="@+id/restaurant_image_star"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginLeft="40dp"
+                    android:src="@drawable/ic_star"/>
+
+                <TextView
+                    android:id="@+id/restaurant_text_review"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="4.5"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginLeft="10dp"
+                    android:textSize="18dp"
+                    android:textColor="#33bbff"/>
+
+                <TextView
+                    android:id="@+id/restaurant_text_reviewer"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="from 15 reviewer"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginLeft="10dp"
+                    android:textSize="18dp"
+                    android:textColor="#000"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/restaurant_text_type"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Japanese fushion"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginLeft="40dp"
+                    android:textSize="18dp"
+                    android:textColor="#000"/>
+
+                <TextView
+                    android:id="@+id/restaurant_text_price"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="$$(121-300)"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginLeft="10dp"
+                    android:textSize="18dp"
+                    android:textColor="#000"/>
+
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="100dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginRight="30dp"
+                android:layout_marginLeft="30dp"
+                android:background="@drawable/box"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    android:orientation="horizontal">
+
+
+                    <ImageView
+                        android:id="@+id/restaurant_image_time"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="40dp"
+                        android:src="@drawable/ic_access_time"/>
+
+                    <TextView
+                        android:id="@+id/restaurant_text_time"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="10.00 - 22.00"
+                        android:layout_marginLeft="10dp"
+                        android:textSize="18dp"
+                        android:textColor="#000"/>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:id="@+id/restaurant_image_delivery"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="40dp"
+                        android:src="@drawable/ic_directions_bike"/>
+
+                    <TextView
+                        android:id="@+id/restaurant_text_delivery"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Delivery availble"
+                        android:layout_marginLeft="10dp"
+                        android:textSize="18dp"
+                        android:textColor="#000"/>
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:orientation="horizontal">
+
+                <GridView
+                    android:id="@+id/restaurant_gridView_image_list"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginRight="20dp"
+                    android:columnWidth="100dp"
+                    android:numColumns="auto_fit"
+                    android:verticalSpacing="4dp"
+                    android:horizontalSpacing="4dp"
+                    android:stretchMode="columnWidth"
+                    android:gravity="center" />
+
+                // ไม่รู้ว่าใช่ป่าวนะ
+
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/restaurant_text_reviews"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Reviews"
+                android:layout_marginTop="20dp"
+                android:layout_marginLeft="40dp"
+                android:textSize="25dp"
+                android:textStyle="bold"
+                android:textColor="#000"/>
+
+            <ListView
+                android:id="@+id/restaurant_list"
+                android:layout_width="match_parent"
+                android:layout_height="455dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginRight="20dp"
+                android:layout_marginLeft="20dp">
+            </ListView>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/restaurant_btn_write"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="WRITE A REVIEW"
+                    android:layout_marginLeft="50dp"
+                    android:textSize="18dp"
+                    android:textColor="#33bbff"/>
+
+                <TextView
+                    android:id="@+id/restaurant_btn_view"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="VIEW ALL"
+                    android:layout_marginLeft="50dp"
+                    android:textSize="18dp"
+                    android:textColor="#33bbff"/>
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/map"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="map gu tum mai pen"
+                android:layout_marginLeft="50dp"
+                android:layout_marginTop="50dp"
+                android:textSize="18dp"
+                android:textColor="#000"/>
+
+
+
+
+        </LinearLayout>
+
+    </ScrollView>
+
+
+
+</android.support.constraint.ConstraintLayout>
