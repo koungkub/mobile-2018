@@ -11,5 +11,6 @@
         android:layout_width="match_parent"
         android:layout_gravity="bottom"
         android:id="@+id/Navbottom"
+        android:background="#fff"
         design:menu="@menu/menu"></android.support.design.widget.BottomNavigationView>
 </android.support.design.widget.CoordinatorLayout>

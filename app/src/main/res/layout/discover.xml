@@ -1,11 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    xmlns:design="http://schemas.android.com/apk/res-auto">
 
+    <android.support.design.widget.BottomNavigationView
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:layout_gravity="bottom"
+        android:id="@+id/Navbottom"
+        android:background="#fff"
+        design:menu="@menu/menu"></android.support.design.widget.BottomNavigationView>
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
@@ -38,7 +45,6 @@
                 android:textStyle="bold"
                 android:textColor="#000"
                 />
-
             <ImageView
                 android:id="@+id/discover_image_restaurant"
                 android:layout_width="wrap_content"
@@ -69,7 +75,6 @@
             </ListView>
 
 
-
     </LinearLayout>
 
     </ScrollView>
@@ -77,5 +82,5 @@
 
 
 
-</android.support.constraint.ConstraintLayout>
+</android.support.design.widget.CoordinatorLayout>
 

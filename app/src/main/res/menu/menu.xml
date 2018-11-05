@@ -2,7 +2,7 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
           android:title="@string/menu_discover"
-          android:icon="@drawable/ic_action_nav" />
+          android:icon="@drawable/ic_action_explore" />
     <item
         android:title="@string/menu_search"
         android:icon="@drawable/ic_action_search" />
