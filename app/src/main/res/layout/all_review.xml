@@ -1,54 +1,48 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
     android:layout_height="match_parent">
-    <ScrollView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
 
     <LinearLayout
+        android:id="@+id/all_review_action_bar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:orientation="horizontal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
-        <LinearLayout
-            android:layout_width="match_parent"
+        <ImageView
+            android:id="@+id/all_review_btn_back"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="20dp"
+            android:src="@drawable/ic_arrow_back" />
 
-            <ImageView
-                android:id="@+id/all_review_btn_back"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="20dp"
-                android:layout_marginTop="20dp"
-                android:src="@drawable/ic_arrow_back"/>
-
-            <TextView
-                android:id="@+id/all_review_text_restaurant"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="On the table"
-                android:layout_marginLeft="20dp"
-                android:layout_marginTop="15dp"
-                android:textSize="25dp"
-                android:textStyle="bold"
-                android:textColor="#000"/>
-
-        </LinearLayout>
-
-        <ListView
-            android:id="@+id/all_review_list"
-            android:layout_width="match_parent"
-            android:layout_height="455dp"
-            android:layout_marginTop="10dp"
-            android:layout_marginRight="20dp"
-            android:layout_marginLeft="20dp">
-        </ListView>
-
-        //มันต้องมี icon ปากกกา ซึ่งทำไม่เป็น
+        <TextView
+            android:id="@+id/all_review_text_restaurant"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="15dp"
+            android:text="On the table"
+            android:textColor="#000"
+            android:textSize="25dp"
+            android:textStyle="bold" />
 
     </LinearLayout>
 
-    </ScrollView>
+    <ListView
+        android:id="@+id/all_review_list"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="16dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/all_review_action_bar"></ListView>
+
+    <!--มันต้องมี icon ปากกกา ซึ่งทำไม่เป็น-->
 </android.support.constraint.ConstraintLayout>
