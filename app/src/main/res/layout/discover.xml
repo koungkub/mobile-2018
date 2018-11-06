@@ -10,8 +10,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         design:layout_constraintTop_toTopOf="parent"
-        tools:ignore="MissingConstraints"
-        tools:layout_editor_absoluteX="20dp"></SearchView>
+        tools:ignore="MissingConstraints"></SearchView>
 
     <android.support.design.widget.BottomNavigationView
         android:id="@+id/Navbottom"
