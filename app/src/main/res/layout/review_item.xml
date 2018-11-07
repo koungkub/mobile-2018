@@ -41,9 +41,9 @@
 
     <TextView
         android:id="@+id/all_review_item_text_text"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:text="hello hello hello hello hello hello hello hello hello hello hello hello hello hello hello hello hello hello "
+        android:text="review content"
         android:textAppearance="@android:style/TextAppearance.Material.ListItem"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
