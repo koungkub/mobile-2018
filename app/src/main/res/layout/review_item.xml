@@ -27,7 +27,7 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="8dp"
             android:text="4.5"
-            android:textAppearance="@android:style/TextAppearance.Material.ListItemSecondary" />
+            android:textAppearance="@style/TextAppearance.MaterialComponents.Body2" />
 
         <TextView
             android:id="@+id/all_review_item_text_reviewer"
@@ -35,16 +35,16 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="8dp"
             android:text="Pin"
-            android:textAppearance="@android:style/TextAppearance.Material.ListItemSecondary" />
+            android:textAppearance="@style/TextAppearance.MaterialComponents.Body2" />
 
     </LinearLayout>
 
     <TextView
         android:id="@+id/all_review_item_text_text"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:text="hello hello hello hello hello hello hello hello hello hello hello hello hello hello hello hello hello hello "
-        android:textAppearance="@android:style/TextAppearance.Material.ListItem"
+        android:text="review content"
+        android:textAppearance="@style/TextAppearance.MaterialComponents.Body1"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />

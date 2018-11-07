@@ -13,7 +13,7 @@
         android:layout_marginLeft="16dp"
         android:layout_marginStart="16dp"
         android:text="Japanese fusion"
-        android:textAppearance="@android:style/TextAppearance.Material.ListItemSecondary"
+        android:textAppearance="@style/TextAppearance.MaterialComponents.Body2"
         app:layout_constraintStart_toEndOf="@+id/restaurant_list_item_image"
         app:layout_constraintTop_toBottomOf="@+id/restaurant_list_item_text_name" />
 
@@ -24,7 +24,7 @@
         android:layout_marginLeft="8dp"
         android:layout_marginStart="8dp"
         android:text="$$"
-        android:textAppearance="@android:style/TextAppearance.Material.ListItemSecondary"
+        android:textAppearance="@style/TextAppearance.MaterialComponents.Body2"
         app:layout_constraintStart_toEndOf="@+id/restaurant_list_item_text_type"
         app:layout_constraintTop_toBottomOf="@+id/restaurant_list_item_text_name" />
 
@@ -36,7 +36,7 @@
         android:layout_marginStart="16dp"
         android:layout_marginTop="8dp"
         android:text="on the table"
-        android:textAppearance="@android:style/TextAppearance.Material.ListItem"
+        android:textAppearance="@style/TextAppearance.MaterialComponents.Body1"
         app:layout_constraintStart_toEndOf="@+id/restaurant_list_item_image"
         app:layout_constraintTop_toTopOf="parent" />
 
