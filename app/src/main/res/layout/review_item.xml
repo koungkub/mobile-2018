@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingVertical="16dp"
+    android:paddingHorizontal="16dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:orientation="horizontal"
+        app:layout_constraintTop_toBottomOf="@+id/all_review_item_text_text">
+
+
+        <ImageView
+            android:id="@+id/all_review_item_image_star"
+            android:layout_width="16dp"
+            android:layout_height="18dp"
+            android:src="@drawable/ic_star" />
+
+        <TextView
+            android:id="@+id/all_review_item_text_review"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="8dp"
+            android:text="4.5"
+            android:textAppearance="@android:style/TextAppearance.Material.ListItemSecondary" />
+
+        <TextView
+            android:id="@+id/all_review_item_text_reviewer"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="8dp"
+            android:text="Pin"
+            android:textAppearance="@android:style/TextAppearance.Material.ListItemSecondary" />
+
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/all_review_item_text_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="hello hello hello hello hello hello hello hello hello hello hello hello hello hello hello hello hello hello "
+        android:textAppearance="@android:style/TextAppearance.Material.ListItem"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+</android.support.constraint.ConstraintLayout>
