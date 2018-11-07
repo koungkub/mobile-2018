@@ -8,7 +8,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-public class DiscoverFragment extends Fragment {
+import com.review.foodreview.slideshow.SlideShowManage;
+
+public class DiscoverFragment extends Fragment{
     @Nullable
     @Override
     public View onCreateView(
@@ -24,5 +26,6 @@ public class DiscoverFragment extends Fragment {
             @Nullable Bundle savedInstanceState
     ) {
         super.onActivityCreated(savedInstanceState);
+        SlideShowManage slideShow = new SlideShowManage();
     }
 }

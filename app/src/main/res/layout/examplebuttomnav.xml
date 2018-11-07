@@ -6,11 +6,22 @@
     xmlns:design="http://schemas.android.com/apk/res-auto"
     tools:context=".MainActivity">
 
-    <android.support.design.widget.BottomNavigationView
+    <RelativeLayout
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content" >
+
+    <android.support.v4.view.ViewPager
+        android:id="@+id/pager"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_alignParentTop="true" />
+
+    <com.viewpagerindicator.CirclePageIndicator
+        android:id="@+id/indicator"
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:layout_width="match_parent"
-        android:layout_gravity="bottom"
-        android:id="@+id/Navbottom"
-        android:background="#fff"
-        design:menu="@menu/menu"></android.support.design.widget.BottomNavigationView>
-</android.support.design.widget.CoordinatorLayout>
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:gravity="bottom"
+        android:padding="10dip" />
+</RelativeLayout></android.support.design.widget.CoordinatorLayout>

@@ -50,28 +50,40 @@
                 android:textStyle="bold"
                 design:layout_constraintStart_toEndOf="@+id/imageView"
                 design:layout_constraintTop_toTopOf="parent" />
-<android.support.constraint.ConstraintLayout
-    android:layout_width="match_parent"
-    android:layout_height="230dp">
-            <android.support.v4.view.ViewPager
-                android:id="@+id/pager"
+            <RelativeLayout
                 android:layout_width="fill_parent"
-                android:layout_height="fill_parent"
-                android:layout_alignParentTop="true" />
+                android:layout_height="wrap_content" >
 
-            <com.viewpagerindicator.CirclePageIndicator
-                android:id="@+id/indicator"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:layout_alignParentBottom="true"
-                android:layout_centerHorizontal="true"
-                android:gravity="bottom"
-                android:padding="10dip"
-                design:centered="true"
-                design:fillColor="#df0623"
-                design:pageColor="#fff"
-                design:snap="false" />
-</android.support.constraint.ConstraintLayout>
+                <android.support.v4.view.ViewPager
+                    android:id="@+id/pager"
+                    android:layout_width="fill_parent"
+                    android:layout_height="fill_parent"
+                    android:layout_alignParentTop="true" />
+
+                <com.viewpagerindicator.CirclePageIndicator
+                    android:id="@+id/indicator"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentBottom="true"
+                    android:layout_centerHorizontal="true"
+                    android:gravity="bottom"
+                    android:padding="10dip"
+                    design:centered="true"
+                    design:fillColor="#df0623"
+                    design:pageColor="#fff"
+                    design:snap="false" />
+            </RelativeLayout>
+            <ImageView
+                android:id="@+id/discover_image_restaurant"
+                android:layout_width="wrap_content"
+                android:layout_height="230dp"
+                android:layout_gravity="center"
+                android:layout_marginTop="16dp"
+                android:hapticFeedbackEnabled="true"
+                android:scaleType="centerCrop"
+                android:src="@drawable/hello"
+                design:layout_constraintTop_toBottomOf="@+id/discover_text_featured" />
+
             <TextView
                 android:id="@+id/discover_text_discover"
                 android:layout_width="wrap_content"

@@ -30,7 +30,7 @@ public class SlideShowManage extends AppCompatActivity{
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.examplebuttomnav);
 
         imageModelArrayList = new ArrayList<>();
         imageModelArrayList = populateList();
@@ -53,7 +53,7 @@ public class SlideShowManage extends AppCompatActivity{
     }
     private void init() {
 
-        mPager = (ViewPager) findViewById(R.id.pager);
+        mPager =  findViewById(R.id.pager);
         mPager.setAdapter(new SlidingImageAdapter(SlideShowManage.this,imageModelArrayList));
 
         CirclePageIndicator indicator = (CirclePageIndicator)
