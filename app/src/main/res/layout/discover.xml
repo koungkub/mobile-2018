@@ -57,6 +57,7 @@
                 android:layout_height="230dp"
                 android:layout_gravity="center"
                 android:layout_marginTop="16dp"
+                android:hapticFeedbackEnabled="true"
                 android:scaleType="centerCrop"
                 android:src="@drawable/hello"
                 design:layout_constraintTop_toBottomOf="@+id/discover_text_featured" />
