@@ -17,36 +17,46 @@
         design:layout_constraintStart_toStartOf="parent"
         design:menu="@menu/menu"></android.support.design.widget.BottomNavigationView>
 
-    <LinearLayout
+    <android.support.constraint.ConstraintLayout
         android:id="@+id/restaurant_action_bar"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
+        android:layout_height="56dp"
+        android:padding="16dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
         <ImageView
             android:id="@+id/restaurant_btn_back"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="20dp"
-            android:layout_marginTop="20dp"
-            android:src="@drawable/ic_arrow_back" />
+            android:layout_marginBottom="8dp"
+            android:layout_marginLeft="8dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:src="@drawable/ic_arrow_back"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <ImageView
             android:id="@+id/restaurant_btn_bookmark"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="300dp"
-            android:layout_marginTop="20dp"
-            android:src="@drawable/ic_bookmark" />
-
-    </LinearLayout>
+            android:layout_marginBottom="8dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginRight="8dp"
+            android:layout_marginTop="8dp"
+            android:src="@drawable/ic_bookmark"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+    </android.support.constraint.ConstraintLayout>
 
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_marginBottom="56dp"
-        android:layout_marginTop="16dp"
         app:layout_constraintTop_toBottomOf="@+id/restaurant_action_bar"
         design:layout_constraintBottom_toBottomOf="parent"
         design:layout_constraintEnd_toEndOf="parent"
@@ -61,6 +71,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="216dp"
                 android:layout_gravity="center"
+                android:scaleType="centerCrop"
                 android:src="@drawable/hello"
                 app:layout_constraintTop_toTopOf="parent" />
 
