@@ -25,7 +25,7 @@ public class RestaurantListAdapter extends ArrayAdapter<Restaurant> {
                                  int resource,
                                  @NonNull List<Restaurant> restaurants) {
         super(context, resource, restaurants);
-        Log.d(TAG, "New RestaurantListAdapter");
+        Log.d(TAG, "RestaurantListAdapter: New RestaurantListAdapter");
         this.restaurantList = restaurants;
         this.context = context;
     }
