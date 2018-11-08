@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:design="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    xmlns:design="http://schemas.android.com/apk/res-auto">
+    android:layout_height="match_parent">
 
     <SearchView
         android:id="@+id/discover_btn_search"
@@ -34,9 +34,10 @@
         design:layout_constraintStart_toStartOf="parent"
         design:layout_constraintTop_toBottomOf="@+id/discover_btn_search">
 
-        <android.support.constraint.ConstraintLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
 
             <TextView
                 android:id="@+id/discover_text_featured"
@@ -45,44 +46,40 @@
                 android:layout_marginLeft="8dp"
                 android:layout_marginStart="8dp"
                 android:layout_marginTop="8dp"
+                android:drawableStart="@drawable/ic_local_play_black_24dp"
                 android:text="Featured"
                 android:textAppearance="@android:style/TextAppearance.Material.Headline"
-                android:textStyle="bold"
-                design:layout_constraintStart_toEndOf="@+id/imageView"
-                design:layout_constraintTop_toTopOf="parent" />
+                android:textStyle="bold" />
+
             <RelativeLayout
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content" >
+                android:layout_width="wrap_content"
+                android:layout_height="300dp">
+
 
                 <android.support.v4.view.ViewPager
                     android:id="@+id/pager"
-                    android:layout_width="fill_parent"
-                    android:layout_height="fill_parent"
-                    android:layout_alignParentTop="true" />
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:scaleType="centerCrop" />
 
-                <com.viewpagerindicator.CirclePageIndicator
-                    android:id="@+id/indicator"
-                    android:layout_width="fill_parent"
+                <com.tbuonomo.viewpagerdotsindicator.WormDotsIndicator
+                    android:id="@+id/worm_dots_indicator"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentBottom="true"
+                    design:dotsColor="#fff"
+                    design:dotsCornerRadius="8dp"
+                    design:dotsStrokeColor="@color/colordarkgrey"
+                    design:dotsSize="16dp"
+                    design:dotsSpacing="4dp"
+                    design:dotsStrokeWidth="2dp"
+                    design:stiffness="300"
                     android:layout_centerHorizontal="true"
-                    android:gravity="bottom"
-                    android:padding="10dip"
-                    design:centered="true"
-                    design:fillColor="#df0623"
-                    design:pageColor="#fff"
-                    design:snap="false" />
+                    android:layout_marginBottom="10dp"
+
+                    />
             </RelativeLayout>
-            <ImageView
-                android:id="@+id/discover_image_restaurant"
-                android:layout_width="wrap_content"
-                android:layout_height="230dp"
-                android:layout_gravity="center"
-                android:layout_marginTop="16dp"
-                android:hapticFeedbackEnabled="true"
-                android:scaleType="centerCrop"
-                android:src="@drawable/hello"
-                design:layout_constraintTop_toBottomOf="@+id/discover_text_featured" />
+
 
             <TextView
                 android:id="@+id/discover_text_discover"
@@ -93,27 +90,16 @@
                 android:layout_marginTop="16dp"
                 android:text="Discover"
                 android:textAppearance="@android:style/TextAppearance.Material.Headline"
-                android:textStyle="bold"
-                design:layout_constraintStart_toStartOf="parent"
-                design:layout_constraintTop_toBottomOf="@+id/discover_image_restaurant" />
+                android:textStyle="bold" />
+
 
             <ListView
-                android:id="@+id/discover_list"
-                android:layout_width="match_parent"
-                android:layout_height="455dp"
-                android:layout_marginTop="8dp"
-                design:layout_constraintTop_toBottomOf="@+id/discover_text_discover"></ListView>
-
-            <ImageView
-                android:id="@+id/imageView"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="16dp"
-                android:layout_marginStart="16dp"
-                android:layout_marginTop="14dp"
-                design:layout_constraintStart_toStartOf="parent"
-                design:layout_constraintTop_toTopOf="parent"
-                design:srcCompat="@drawable/ic_local_play_black_24dp" />
-        </android.support.constraint.ConstraintLayout>
+            android:id="@+id/discover_list"
+            android:layout_width="match_parent"
+            android:layout_height="455dp"
+            android:layout_marginTop="8dp"
+            design:layout_constraintTop_toBottomOf="@+id/discover_text_discover"></ListView>
+        </LinearLayout>
     </ScrollView>
+
 </android.support.constraint.ConstraintLayout>

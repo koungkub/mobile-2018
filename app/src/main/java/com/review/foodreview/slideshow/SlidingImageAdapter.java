@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 
 import com.review.foodreview.R;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 public class SlidingImageAdapter extends PagerAdapter {
@@ -37,7 +38,7 @@ public class SlidingImageAdapter extends PagerAdapter {
 
     @Override
     public Object instantiateItem(ViewGroup view, int position) {
-        View imageLayout = inflater.inflate(R.layout.slidingimages_layout,
+        View imageLayout = inflater.inflate(R.layout.discover_slideshow,
                 view,
                 false);
         Log.d("ADAPTER", String.valueOf(position));
@@ -47,19 +48,19 @@ public class SlidingImageAdapter extends PagerAdapter {
         if(position == 0){
             Picasso.get()
                     .load("https://www.knorr.com/content/dam/unilever/knorr_world/global/other_foods/all/regional_dishes-thai_north-eastern_dishes-hero_image-858794.jpg")
-                    .placeholder(R.drawable.hello)
+                    .placeholder(R.drawable.slide1)
                     .into(imageView);
         }
         else if(position == 1){
             Picasso.get()
                     .load("https://www.knorr.com/content/dam/unilever/knorr_world/global/other_foods/all/type_of_dishes-international_dishes-hero_image-861954.jpg")
-                    .placeholder(R.drawable.hello2)
+                    .placeholder(R.drawable.slide2)
                     .into(imageView);
         }
         else {
             Picasso.get()
                     .load("https://www.knorr.com/content/dam/unilever/knorr_world/global/other_foods/all/type_of_dishes-stir-fried-hero_image-862950.jpg")
-                    .placeholder(R.drawable.hello3)
+                    .placeholder(R.drawable.slide3)
                     .into(imageView);
         }
 //        imageView.setImageResource(imageModelArrayList
