@@ -58,8 +58,19 @@ public class DiscoverFragment extends Fragment{
         final LinearLayout _restaurantList = getView().findViewById(R.id.discover_list);
         for (Restaurant r : restaurants) {
             final RestaurantListItem restaurantListItem = new RestaurantListItem(getContext(), r, _restaurantList);
-            final View viewItem = restaurantListItem.getComponent();
-            _restaurantList.addView(viewItem);
+            final View restaurantListItemView = restaurantListItem.getComponent();
+            _restaurantList.addView(restaurantListItemView);
+            restaurantListItemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    getActivity()
+                            .getSupportFragmentManager()
+                            .beginTransaction()
+                            .replace(R.id.main_view, new RestaurantFragment())
+                            .addToBackStack(null)
+                            .commit();
+                }
+            });
         }
 
         SlideShowManage slideShow = new SlideShowManage();
