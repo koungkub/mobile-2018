@@ -8,14 +8,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
-import android.widget.TextView;
 import com.review.foodreview.component.RestaurantListItem;
 import com.review.foodreview.slideshow.SlideShowManage;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class DiscoverFragment extends Fragment{
-    private ArrayList<Restaurant> restaurants = new ArrayList<>();
+    private List<Restaurant> restaurants = new ArrayList<>();
 
     @Nullable
     @Override
