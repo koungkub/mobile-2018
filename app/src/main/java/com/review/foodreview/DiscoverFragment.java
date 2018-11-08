@@ -74,8 +74,7 @@ public class DiscoverFragment extends Fragment{
         mPager.setAdapter(new SlidingImageAdapter(
                 getContext(),
                 imageModelArrayList));
-
-        WormDotsIndicator wormDotsIndicator = (WormDotsIndicator) getView().findViewById(R.id.worm_dots_indicator);
+         WormDotsIndicator wormDotsIndicator = (WormDotsIndicator) getView().findViewById(R.id.worm_dots_indicator);
         wormDotsIndicator.setViewPager(mPager);
 
      // Auto start of viewpager open it if you want
