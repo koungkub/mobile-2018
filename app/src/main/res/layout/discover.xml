@@ -60,8 +60,6 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:scaleType="centerCrop"
-                    android:elevation="20dp"
-                    android:translationZ="20dp"
                     />
 
                 <com.tbuonomo.viewpagerdotsindicator.WormDotsIndicator
