@@ -93,9 +93,27 @@
             <ListView
                 android:id="@+id/discover_list"
                 android:layout_width="match_parent"
+<<<<<<< HEAD
                 android:layout_height="455dp"
                 android:layout_marginTop="8dp" />
         </LinearLayout>
+=======
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                design:layout_constraintTop_toBottomOf="@+id/discover_text_discover"></ListView>
+
+            <ImageView
+                android:id="@+id/imageView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="16dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="14dp"
+                design:layout_constraintStart_toStartOf="parent"
+                design:layout_constraintTop_toTopOf="parent"
+                design:srcCompat="@drawable/ic_local_play_black_24dp" />
+        </android.support.constraint.ConstraintLayout>
+>>>>>>> bc1a438183f1f125db7d5560b2f7bdb9ac8c5c6d
     </ScrollView>
 
 </android.support.constraint.ConstraintLayout>

@@ -145,13 +145,24 @@
                     android:textAppearance="@style/TextAppearance.MaterialComponents.Body1" />
 
                 <TextView
+                    android:id="@+id/restaurant_type_price_dot"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="8dp"
+                    android:layout_marginStart="8dp"
+                    android:text="●"
+                    android:textAppearance="@style/TextAppearance.MaterialComponents.Body1"
+                    android:textColor="@android:color/darker_gray"
+                    app:layout_constraintStart_toEndOf="@+id/restaurant_text_type" />
+                <TextView
                     android:id="@+id/restaurant_text_price"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="10dp"
+                    android:layout_marginLeft="8dp"
+                    android:layout_marginStart="8dp"
                     android:text="$$ (121-300)"
                     android:textAppearance="@style/TextAppearance.MaterialComponents.Body1"
-                    app:layout_constraintStart_toEndOf="@+id/restaurant_text_type" />
+                    app:layout_constraintStart_toEndOf="@+id/restaurant_type_price_dot" />
 
             </android.support.constraint.ConstraintLayout>
 
