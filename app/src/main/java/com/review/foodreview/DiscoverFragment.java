@@ -12,7 +12,6 @@ import android.view.ViewGroup;
 
 import com.review.foodreview.slideshow.ImageModel;
 import com.review.foodreview.slideshow.SlidingImageAdapter;
-import com.tbuonomo.viewpagerdotsindicator.SpringDotsIndicator;
 import com.tbuonomo.viewpagerdotsindicator.WormDotsIndicator;
 
 import java.util.ArrayList;
@@ -48,7 +47,9 @@ public class DiscoverFragment extends Fragment{
     ) {
         Log.d(LOG, "Start discover fragment (ActivityCreated)");
         super.onActivityCreated(savedInstanceState);
+
         //setup the discover's slideshow
+        Log.d(LOG, "Do setupSlideshow");
         setupSlideshow();
     }
 
@@ -66,7 +67,7 @@ public class DiscoverFragment extends Fragment{
 
         return list;
     }
-
+//setup slideshow here
     private void setupSlideshow() {
 
         mPager = getView().findViewById(R.id.pager);
@@ -77,7 +78,7 @@ public class DiscoverFragment extends Fragment{
         WormDotsIndicator wormDotsIndicator = (WormDotsIndicator) getView().findViewById(R.id.worm_dots_indicator);
         wormDotsIndicator.setViewPager(mPager);
 
-//        // Auto start of viewpager
+     // Auto start of viewpager open it if you want
 //        final Handler handler = new Handler();
 //        final Runnable Update = new Runnable() {
 //            public void run() {
