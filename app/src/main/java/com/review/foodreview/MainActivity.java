@@ -1,5 +1,6 @@
 package com.review.foodreview;
 
+import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -12,9 +13,9 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         init(savedInstanceState);
     }
-    public void init(Bundle bundle){
-        if(bundle == null){
-            DiscoverFragment fragment = new DiscoverFragment();
+    public void init(Bundle bundle) {
+        if (bundle == null) {
+            Fragment fragment = new DiscoverFragment();
             getSupportFragmentManager()
                     .beginTransaction()
                     .replace(R.id.main_view, fragment).commit();
