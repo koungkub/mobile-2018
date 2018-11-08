@@ -1,6 +1,7 @@
 package com.review.foodreview.slideshow;
 
 public class ImageModel {
+    //now I not use yet
     private int image_drawable;
 
     public int getImage_drawable() {
