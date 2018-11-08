@@ -7,8 +7,8 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ListView;
-import com.review.foodreview.component.RestaurantListAdapter;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import java.util.ArrayList;
 
@@ -53,8 +53,18 @@ public class DiscoverFragment extends Fragment {
         restaurants.add(mcdonalds);
         restaurants.add(otoya);
 
-        final ListView _restaurantList = getView().findViewById(R.id.discover_list);
-        final RestaurantListAdapter restaurantAdapter = new RestaurantListAdapter(getActivity(),R.layout.restaurant_list_item, restaurants);
-        _restaurantList.setAdapter(restaurantAdapter);
+        final LinearLayout _restaurantList = getView().findViewById(R.id.discover_list);
+        for (Restaurant r : restaurants) {
+            final View restaurantListItem = LayoutInflater.from(getContext()).inflate(R.layout.restaurant_list_item, _restaurantList, false);
+            final TextView _restaurantName = restaurantListItem.findViewById(R.id.restaurant_list_item_text_name);
+            final TextView _restaurantType = restaurantListItem.findViewById(R.id.restaurant_list_item_text_type);
+            final TextView _priceRange = restaurantListItem.findViewById(R.id.restaurant_list_item_text_price);
+            final TextView _rating = restaurantListItem.findViewById(R.id.restaurant_list_item_text_score);
+            _restaurantName.setText(r.getRestaurantName());
+            _restaurantType.setText(r.getRestaurantType());
+            _priceRange.setText(r.getPriceRange());
+            _rating.setText(Float.toString(r.getRating()));
+            _restaurantList.addView(restaurantListItem);
+        }
     }
 }
