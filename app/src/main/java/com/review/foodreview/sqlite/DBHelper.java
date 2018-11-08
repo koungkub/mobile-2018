@@ -41,29 +41,29 @@ public class DBHelper extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-        db.execSQL(this.SQL_CREATE_TABLE);
+        db.execSQL(SQL_CREATE_TABLE);
 
         Log.d(TAG, String.format("CREATE TABLE %s", DBLog.TABLE));
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-        db.execSQL(this.SQL_DROP_TABLE);
+        db.execSQL(SQL_DROP_TABLE);
         onCreate(db);
 
-        Log.d(this.TAG, String.format("DROP TABLE %s", DBLog.TABLE));
+        Log.d(TAG, String.format("DROP TABLE %s", DBLog.TABLE));
     }
 
     public List<DBLog> getAllLogs() {
-        this.sqLiteDatabase = this.getWritableDatabase();
-        this.cursor = this.sqLiteDatabase.rawQuery(this.SQL_QUERY, null);
+        sqLiteDatabase = this.getWritableDatabase();
+        cursor = sqLiteDatabase.rawQuery(SQL_QUERY, null);
 
         logList = new ArrayList<>();
 
-        while (this.cursor.moveToNext()) {
-            dbLog.setId(this.cursor.getInt(0));
-            dbLog.setTag(this.cursor.getString(1));
-            dbLog.setMessage(this.cursor.getString(2));
+        while (cursor.moveToNext()) {
+            dbLog.setId(cursor.getInt(0));
+            dbLog.setTag(cursor.getString(1));
+            dbLog.setMessage(cursor.getString(2));
 
             logList.add(dbLog);
         }
@@ -76,14 +76,14 @@ public class DBHelper extends SQLiteOpenHelper {
     }
 
     public void addlogs(DBLog log) {
-        this.sqLiteDatabase = this.getWritableDatabase();
-        this.contentValues = new ContentValues();
+        sqLiteDatabase = this.getWritableDatabase();
+        contentValues = new ContentValues();
 
         contentValues.put(DBLog.Column.ID, log.getId());
         contentValues.put(DBLog.Column.TAG, log.getTag());
         contentValues.put(DBLog.Column.MESSAGE, log.getMessage());
 
-        sqLiteDatabase.insert(DBLog.TABLE, null, this.contentValues);
+        sqLiteDatabase.insert(DBLog.TABLE, null, contentValues);
         sqLiteDatabase.close();
     }
 }
