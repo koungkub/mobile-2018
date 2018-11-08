@@ -55,7 +55,6 @@
                 android:layout_width="wrap_content"
                 android:layout_height="300dp">
 
-
                 <android.support.v4.view.ViewPager
                     android:id="@+id/pager"
                     android:layout_width="match_parent"
@@ -80,7 +79,6 @@
                     />
             </RelativeLayout>
 
-
             <TextView
                 android:id="@+id/discover_text_discover"
                 android:layout_width="wrap_content"
@@ -92,13 +90,11 @@
                 android:textAppearance="@android:style/TextAppearance.Material.Headline"
                 android:textStyle="bold" />
 
-
             <ListView
-            android:id="@+id/discover_list"
-            android:layout_width="match_parent"
-            android:layout_height="455dp"
-            android:layout_marginTop="8dp"
-            design:layout_constraintTop_toBottomOf="@+id/discover_text_discover"></ListView>
+                android:id="@+id/discover_list"
+                android:layout_width="match_parent"
+                android:layout_height="455dp"
+                android:layout_marginTop="8dp" />
         </LinearLayout>
     </ScrollView>
 
