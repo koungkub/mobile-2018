@@ -50,7 +50,29 @@
                 android:textStyle="bold"
                 design:layout_constraintStart_toEndOf="@+id/imageView"
                 design:layout_constraintTop_toTopOf="parent" />
+            <RelativeLayout
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content" >
 
+                <android.support.v4.view.ViewPager
+                    android:id="@+id/pager"
+                    android:layout_width="fill_parent"
+                    android:layout_height="fill_parent"
+                    android:layout_alignParentTop="true" />
+
+                <com.viewpagerindicator.CirclePageIndicator
+                    android:id="@+id/indicator"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentBottom="true"
+                    android:layout_centerHorizontal="true"
+                    android:gravity="bottom"
+                    android:padding="10dip"
+                    design:centered="true"
+                    design:fillColor="#df0623"
+                    design:pageColor="#fff"
+                    design:snap="false" />
+            </RelativeLayout>
             <ImageView
                 android:id="@+id/discover_image_restaurant"
                 android:layout_width="wrap_content"
