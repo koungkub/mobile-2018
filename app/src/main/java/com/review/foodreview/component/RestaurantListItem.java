@@ -15,6 +15,10 @@ public class RestaurantListItem {
     private Context context;
     private LinearLayout _restaurantList;
 
+    /**
+     * Create a single restaurant list item.
+     * Call {@link #getComponent()} to return the View.
+     */
     public RestaurantListItem(Context context, Restaurant restaurant, LinearLayout restaurantList) {
         Log.d(TAG, "RestaurantListItem: New RestaurantListItem");
         this.context = context;
@@ -22,6 +26,10 @@ public class RestaurantListItem {
         this._restaurantList = restaurantList;
     }
 
+    /**
+     * Get a View of {@link #RestaurantListItem}.
+     * @return A single restaurant list item (View)
+     */
     public View getComponent() {
         Log.d(TAG, "RestaurantListItem: getComponent");
         final View restaurantListItem = LayoutInflater.from(context).inflate(R.layout.restaurant_list_item, _restaurantList, false);
