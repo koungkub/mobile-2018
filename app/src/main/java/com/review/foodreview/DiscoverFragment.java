@@ -10,10 +10,11 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import com.review.foodreview.component.RestaurantListItem;
+import com.review.foodreview.slideshow.SlideShowManage;
 
 import java.util.ArrayList;
 
-public class DiscoverFragment extends Fragment {
+public class DiscoverFragment extends Fragment{
     private ArrayList<Restaurant> restaurants = new ArrayList<>();
 
     @Nullable
@@ -60,5 +61,7 @@ public class DiscoverFragment extends Fragment {
             final View viewItem = restaurantListItem.getComponent();
             _restaurantList.addView(viewItem);
         }
+
+        SlideShowManage slideShow = new SlideShowManage();
     }
 }
