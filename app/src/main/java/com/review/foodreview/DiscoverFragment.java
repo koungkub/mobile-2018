@@ -9,19 +9,24 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-
+import android.widget.LinearLayout;
+import com.review.foodreview.component.RestaurantListItem;
+import com.review.foodreview.slideshow.SlideShowManage;
 import com.review.foodreview.slideshow.ImageModel;
 import com.review.foodreview.slideshow.SlidingImageAdapter;
 import com.tbuonomo.viewpagerdotsindicator.WormDotsIndicator;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class DiscoverFragment extends Fragment{
+    private List<Restaurant> restaurants = new ArrayList<>();
     private static final String LOG = "DISCOVERFRAGMENT";
     private static ViewPager mPager;
     private static int NUM_PAGES = 3;
     private ArrayList<ImageModel> imageModelArrayList;
     private int[] myImageList = new int[]{R.drawable.slide1, R.drawable.slide2, R.drawable.slide3};
+
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -47,6 +52,49 @@ public class DiscoverFragment extends Fragment{
     ) {
         Log.d(LOG, "Start discover fragment (ActivityCreated)");
         super.onActivityCreated(savedInstanceState);
+
+        restaurants.clear();
+
+        Restaurant mcdonalds = new Restaurant(
+                "McDonald's",
+                "Fast food",
+                "$ (< 120)",
+                "24 hours",
+                4.2f,
+                318,
+                true
+        );
+        Restaurant otoya = new Restaurant(
+                "Otoya",
+                "Japanese",
+                "$$ (120 - 300)",
+                "10.00 - 21.00",
+                4.6f,
+                282,
+                true
+        );
+        restaurants.add(mcdonalds);
+        restaurants.add(otoya);
+
+        final LinearLayout _restaurantList = getView().findViewById(R.id.discover_list);
+        for (Restaurant r : restaurants) {
+            final RestaurantListItem restaurantListItem = new RestaurantListItem(getContext(), r, _restaurantList);
+            final View restaurantListItemView = restaurantListItem.getComponent();
+            _restaurantList.addView(restaurantListItemView);
+            restaurantListItemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    getActivity()
+                            .getSupportFragmentManager()
+                            .beginTransaction()
+                            .replace(R.id.main_view, new RestaurantFragment())
+                            .addToBackStack(null)
+                            .commit();
+                }
+            });
+        }
+
+        SlideShowManage slideShow = new SlideShowManage();
 
         //setup the discover's slideshow
         Log.d(LOG, "Do setupSlideshow");

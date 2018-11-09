@@ -90,12 +90,26 @@
                 android:textAppearance="@android:style/TextAppearance.Material.Headline"
                 android:textStyle="bold" />
 
-            <ListView
+            <LinearLayout
                 android:id="@+id/discover_list"
                 android:layout_width="match_parent"
-                android:layout_height="455dp"
-                android:layout_marginTop="8dp" />
-        </LinearLayout>
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_marginTop="8dp"
+                design:layout_constraintTop_toBottomOf="@+id/discover_text_discover"></LinearLayout>
+
+            <ImageView
+                android:id="@+id/imageView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="16dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="14dp"
+                design:layout_constraintStart_toStartOf="parent"
+                design:layout_constraintTop_toTopOf="parent"
+                design:srcCompat="@drawable/ic_local_play_black_24dp" />
+        </android.support.constraint.ConstraintLayout>
+
     </ScrollView>
 
 </android.support.constraint.ConstraintLayout>
