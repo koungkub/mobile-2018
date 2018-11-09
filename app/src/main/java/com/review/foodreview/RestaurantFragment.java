@@ -10,6 +10,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.review.foodreview.dto.Restaurant;
+
 public class RestaurantFragment extends Fragment {
     private static final String TAG = "RESTAURANT";
 
