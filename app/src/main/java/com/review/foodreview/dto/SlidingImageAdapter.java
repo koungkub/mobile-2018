@@ -1,4 +1,4 @@
-package com.review.foodreview.slideshow;
+package com.review.foodreview.dto;
 import android.content.Context;
 import android.os.Parcelable;
 import android.support.v4.view.PagerAdapter;
@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 
 import com.review.foodreview.R;
+import com.review.foodreview.dto.ImageModel;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;

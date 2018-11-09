@@ -12,8 +12,8 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import com.review.foodreview.component.RestaurantListItem;
 import com.review.foodreview.dto.Restaurant;
-import com.review.foodreview.slideshow.ImageModel;
-import com.review.foodreview.slideshow.SlidingImageAdapter;
+import com.review.foodreview.dto.ImageModel;
+import com.review.foodreview.dto.SlidingImageAdapter;
 import com.tbuonomo.viewpagerdotsindicator.WormDotsIndicator;
 
 import java.util.ArrayList;
@@ -117,11 +117,11 @@ public class DiscoverFragment extends Fragment{
     private void setupSlideshow() {
 
         mPager = getView().findViewById(R.id.pager);
+        mPager.setPageMargin(-4);
         mPager.setAdapter(new SlidingImageAdapter(
                 getContext(),
                 imageModelArrayList));
-
-        WormDotsIndicator wormDotsIndicator = (WormDotsIndicator) getView().findViewById(R.id.worm_dots_indicator);
+         WormDotsIndicator wormDotsIndicator = (WormDotsIndicator) getView().findViewById(R.id.worm_dots_indicator);
         wormDotsIndicator.setViewPager(mPager);
 
      // Auto start of viewpager open it if you want
