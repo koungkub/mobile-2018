@@ -11,6 +11,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
         init(savedInstanceState);
     }
     public void init(Bundle bundle) {
@@ -18,7 +19,8 @@ public class MainActivity extends AppCompatActivity {
             Fragment fragment = new DiscoverFragment();
             getSupportFragmentManager()
                     .beginTransaction()
-                    .replace(R.id.main_view, fragment).commit();
+                    .replace(R.id.main_view, fragment)
+                    .commit();
         }
     }
 }
