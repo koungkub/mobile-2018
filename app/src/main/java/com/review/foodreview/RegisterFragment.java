@@ -9,15 +9,23 @@ import android.util.Log;
 import android.view.*;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 public class RegisterFragment extends Fragment {
     private static final String TAG = "REGISTER";
     private EditText _email, _password, _username;
     private FloatingActionButton _submitBtn;
+    private FirebaseAuth auth;
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        auth = FirebaseAuth.getInstance();
         return inflater.inflate(R.layout.register, container, false);
     }
 
@@ -42,6 +50,29 @@ public class RegisterFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 Log.d(TAG, "onClick");
+                String email = _email.getText().toString();
+                String password = _password.getText().toString();
+                String username = _username.getText().toString();
+                auth.createUserWithEmailAndPassword(email, password)
+                        .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                            @Override
+                            public void onComplete(@NonNull Task<AuthResult> task) {
+                                if (task.isSuccessful()) {
+                                    Log.d(TAG, "createUserWithEmail:success");
+                                    getActivity()
+                                            .getSupportFragmentManager()
+                                            .beginTransaction()
+                                            .replace(R.id.main_view, new DiscoverFragment())
+                                            .commit();
+                                } else {
+                                    Log.w(TAG, "createUserWithEmail:failure", task.getException());
+                                    Toast.makeText(getActivity(),
+                                            task.getException().getLocalizedMessage(),
+                                            Toast.LENGTH_LONG)
+                                            .show();
+                                }
+                            }
+                        });
             }
         });
     }
