@@ -15,7 +15,8 @@ public class MainActivity extends AppCompatActivity {
     }
     public void init(Bundle bundle) {
         if (bundle == null) {
-            Fragment fragment = new DiscoverFragment();
+            // TODO: Change back to Discover
+            Fragment fragment = new RegisterFragment();
             getSupportFragmentManager()
                     .beginTransaction()
                     .replace(R.id.main_view, fragment).commit();
