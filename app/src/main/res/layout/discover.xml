@@ -4,14 +4,20 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
-
+    <android.support.constraint.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:elevation="10dp">
     <SearchView
         android:id="@+id/discover_btn_search"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         design:layout_constraintTop_toTopOf="parent"
-        tools:ignore="MissingConstraints"></SearchView>
-
+        android:iconifiedByDefault="false"
+        android:queryHint="Search"
+        tools:ignore="MissingConstraints">
+    </SearchView>
+    </android.support.constraint.ConstraintLayout>
     <android.support.design.widget.BottomNavigationView
         android:id="@+id/Navbottom"
         android:layout_width="match_parent"
@@ -44,7 +50,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="16dp"
                 android:layout_marginStart="16dp"
-                android:layout_marginTop="8dp"
+                android:layout_marginTop="20dp"
                 android:drawableStart="@drawable/ic_local_play_black_24dp"
                 android:drawablePadding="8dp"
                 android:text="Featured"
@@ -54,7 +60,7 @@
             <RelativeLayout
                 android:layout_width="wrap_content"
                 android:layout_height="300dp"
-                android:layout_marginTop="16dp">
+                android:layout_marginTop="12dp">
 
                 <android.support.v4.view.ViewPager
                     android:id="@+id/pager"
@@ -69,9 +75,9 @@
                     android:layout_alignParentBottom="true"
                     android:layout_centerHorizontal="true"
                     android:layout_marginBottom="10dp"
-                    design:dotsColor="#fff"
+                    design:dotsColor="@color/colordarkgrey"
                     design:dotsCornerRadius="8dp"
-                    design:dotsSize="16dp"
+                    design:dotsSize="12dp"
                     design:dotsSpacing="4dp"
                     design:dotsStrokeColor="@color/colordarkgrey"
                     design:dotsStrokeWidth="2dp"
