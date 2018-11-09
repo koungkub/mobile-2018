@@ -71,6 +71,7 @@ public class DiscoverFragment extends Fragment{
     private void setupSlideshow() {
 
         mPager = getView().findViewById(R.id.pager);
+        mPager.setPageMargin(-4);
         mPager.setAdapter(new SlidingImageAdapter(
                 getContext(),
                 imageModelArrayList));

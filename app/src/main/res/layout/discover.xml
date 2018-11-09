@@ -53,7 +53,7 @@
 
             <RelativeLayout
                 android:layout_width="wrap_content"
-                android:layout_height="300dp">
+                android:layout_height="320dp">
 
                 <android.support.v4.view.ViewPager
                     android:id="@+id/pager"
@@ -67,35 +67,17 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentBottom="true"
-                    design:dotsColor="#fff"
+                    design:dotsColor="@color/colordarkgrey"
                     design:dotsCornerRadius="8dp"
                     design:dotsStrokeColor="@color/colordarkgrey"
-                    design:dotsSize="16dp"
+                    design:dotsSize="10dp"
                     design:dotsSpacing="4dp"
                     android:layout_marginBottom="20dp"
                     design:dotsStrokeWidth="2dp"
                     design:stiffness="300"
                     android:layout_centerHorizontal="true"
                     />
-                <FrameLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentBottom="true"
-                    android:background="@drawable/opacityslope">
-                    <TextView
-                        android:id="@+id/discover_text_name_restaurant_on_slideshow"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentBottom="true"
-                        android:textColor="#000"
-                        android:layout_marginLeft="40dp"
-                        android:layout_marginStart="40dp"
-                        android:layout_marginTop="16dp"
-                        android:layout_marginBottom="70dp"
-                        android:text="on the table"
-                        android:textSize="20dp"
-                        android:textStyle="bold" />
-                </FrameLayout>
+
                 </RelativeLayout>
 
             <TextView
@@ -108,7 +90,6 @@
                 android:text="Discover"
                 android:textAppearance="@android:style/TextAppearance.Material.Headline"
                 android:textStyle="bold" />
-
             <ListView
                 android:id="@+id/discover_list"
                 android:layout_width="match_parent"
