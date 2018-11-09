@@ -4,7 +4,7 @@ public class Restaurant {
     private String restaurantName, restaurantType, priceRange, openHours;
     private float rating;
     private int reviewCount;
-    private boolean delivery;
+    private boolean deliverable;
 
     public Restaurant(String restaurantName,
                       String restaurantType,
@@ -12,14 +12,14 @@ public class Restaurant {
                       String openHours,
                       float rating,
                       int reviewCount,
-                      boolean delivery) {
+                      boolean deliverable) {
         this.restaurantName = restaurantName;
         this.restaurantType = restaurantType;
         this.priceRange = priceRange;
         this.openHours = openHours;
         this.rating = rating;
         this.reviewCount = reviewCount;
-        this.delivery = delivery;
+        this.deliverable = deliverable;
     }
 
     public String getRestaurantName() {
@@ -46,7 +46,7 @@ public class Restaurant {
         return reviewCount;
     }
 
-    public boolean isDelivery() {
-        return delivery;
+    public boolean isDeliverable() {
+        return deliverable;
     }
 }
