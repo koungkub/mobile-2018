@@ -8,6 +8,7 @@ import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.*;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -20,6 +21,7 @@ public class RegisterFragment extends Fragment {
     private static final String TAG = "REGISTER";
     private EditText _email, _password, _username;
     private FloatingActionButton _submitBtn;
+    private ProgressBar _loading;
     private FirebaseAuth auth;
 
     @Nullable
@@ -43,46 +45,54 @@ public class RegisterFragment extends Fragment {
         _password = getView().findViewById(R.id.register_input_password);
         _username = getView().findViewById(R.id.register_input_username);
         _submitBtn = getView().findViewById(R.id.register_btn);
+        _loading = getView().findViewById(R.id.register_loading);
     }
 
     private void initSubmitBtn() {
         _submitBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Log.d(TAG, "onClick");
+                Log.d(TAG, "onClick: clicked");
                 final String email = _email.getText().toString();
                 final String password = _password.getText().toString();
                 final String username = _username.getText().toString();
-                auth.createUserWithEmailAndPassword(email, password)
-                        .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-                            @Override
-                            public void onComplete(@NonNull Task<AuthResult> task) {
-                                if (task.isSuccessful()) {
-                                    Log.d(TAG, "createUserWithEmail:success");
-                                    FirebaseUser user = auth.getCurrentUser();
-                                    UserProfileChangeRequest changeRequest = new UserProfileChangeRequest.Builder()
-                                            .setDisplayName(username)
-                                            .build();
-                                    user.updateProfile(changeRequest)
-                                            .addOnCompleteListener(new OnCompleteListener<Void>() {
-                                                @Override
-                                                public void onComplete(@NonNull Task<Void> task) {
-                                                    getActivity()
-                                                            .getSupportFragmentManager()
-                                                            .beginTransaction()
-                                                            .replace(R.id.main_view, new DiscoverFragment())
-                                                            .commit();
-                                                }
-                                            });
-                                } else {
-                                    Log.w(TAG, "createUserWithEmail:failure", task.getException());
-                                    Toast.makeText(getActivity(),
-                                            task.getException().getLocalizedMessage(),
-                                            Toast.LENGTH_LONG)
-                                            .show();
+                if (email.isEmpty() || password.isEmpty() || username.isEmpty()) {
+                    Toast.makeText(getActivity(), "Please complete all the fields", Toast.LENGTH_SHORT)
+                            .show();
+                } else {
+                    _loading.setVisibility(View.VISIBLE);
+                    auth.createUserWithEmailAndPassword(email, password)
+                            .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                                @Override
+                                public void onComplete(@NonNull Task<AuthResult> task) {
+                                    _loading.setVisibility(View.GONE);
+                                    if (task.isSuccessful()) {
+                                        Log.d(TAG, "createUserWithEmail:success");
+                                        FirebaseUser user = auth.getCurrentUser();
+                                        UserProfileChangeRequest changeRequest = new UserProfileChangeRequest.Builder()
+                                                .setDisplayName(username)
+                                                .build();
+                                        user.updateProfile(changeRequest)
+                                                .addOnCompleteListener(new OnCompleteListener<Void>() {
+                                                    @Override
+                                                    public void onComplete(@NonNull Task<Void> task) {
+                                                        getActivity()
+                                                                .getSupportFragmentManager()
+                                                                .beginTransaction()
+                                                                .replace(R.id.main_view, new DiscoverFragment())
+                                                                .commit();
+                                                    }
+                                                });
+                                    } else {
+                                        Log.w(TAG, "createUserWithEmail:failure", task.getException());
+                                        Toast.makeText(getActivity(),
+                                                task.getException().getLocalizedMessage(),
+                                                Toast.LENGTH_LONG)
+                                                .show();
+                                    }
                                 }
-                            }
-                        });
+                            });
+                }
             }
         });
     }
