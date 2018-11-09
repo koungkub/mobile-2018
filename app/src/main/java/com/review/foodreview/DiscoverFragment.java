@@ -11,7 +11,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import com.review.foodreview.component.RestaurantListItem;
-import com.review.foodreview.slideshow.SlideShowManage;
 import com.review.foodreview.slideshow.ImageModel;
 import com.review.foodreview.slideshow.SlidingImageAdapter;
 import com.tbuonomo.viewpagerdotsindicator.WormDotsIndicator;
@@ -93,8 +92,6 @@ public class DiscoverFragment extends Fragment{
                 }
             });
         }
-
-        SlideShowManage slideShow = new SlideShowManage();
 
         //setup the discover's slideshow
         Log.d(LOG, "Do setupSlideshow");
