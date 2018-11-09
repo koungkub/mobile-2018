@@ -2,14 +2,27 @@
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:design="http://schemas.android.com/tools">
 
     <SearchView
         android:id="@+id/search_btn_search"
         android:layout_width="match_parent"
+        android:iconifiedByDefault="false"
+        android:queryHint="Search"
         android:layout_height="wrap_content"
         app:layout_constraintTop_toTopOf="parent">
     </SearchView>
+    <android.support.design.widget.BottomNavigationView
+        android:id="@+id/Navbottom"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        android:background="#fff"
+        design:layout_constraintBottom_toBottomOf="parent"
+        design:layout_constraintEnd_toEndOf="parent"
+        design:layout_constraintStart_toStartOf="parent"
+        design:menu="@menu/menu"></android.support.design.widget.BottomNavigationView>
 
     <ScrollView
         android:layout_width="match_parent"
