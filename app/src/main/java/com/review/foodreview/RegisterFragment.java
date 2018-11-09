@@ -7,7 +7,6 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.*;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -51,8 +50,8 @@ public class RegisterFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 Log.d(TAG, "onClick");
-                String email = _email.getText().toString();
-                String password = _password.getText().toString();
+                final String email = _email.getText().toString();
+                final String password = _password.getText().toString();
                 final String username = _username.getText().toString();
                 auth.createUserWithEmailAndPassword(email, password)
                         .addOnCompleteListener(new OnCompleteListener<AuthResult>() {

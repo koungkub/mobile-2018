@@ -86,4 +86,5 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:srcCompat="@drawable/ic_check_white_24dp" />
+    <!--TODO: Add loading indicator-->s
 </android.support.constraint.ConstraintLayout>
