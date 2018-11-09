@@ -27,8 +27,7 @@
         android:id="@+id/discover_scroll_view"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_marginBottom="56dp"
-        design:layout_constraintBottom_toBottomOf="parent"
+        design:layout_constraintBottom_toTopOf="@+id/Navbottom"
         design:layout_constraintEnd_toEndOf="parent"
         design:layout_constraintHorizontal_bias="0.0"
         design:layout_constraintStart_toStartOf="parent"
@@ -36,24 +35,26 @@
 
         <LinearLayout
             android:layout_width="wrap_content"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:orientation="vertical">
 
             <TextView
                 android:id="@+id/discover_text_featured"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="8dp"
-                android:layout_marginStart="8dp"
+                android:layout_marginLeft="16dp"
+                android:layout_marginStart="16dp"
                 android:layout_marginTop="8dp"
                 android:drawableStart="@drawable/ic_local_play_black_24dp"
+                android:drawablePadding="8dp"
                 android:text="Featured"
                 android:textAppearance="@android:style/TextAppearance.Material.Headline"
                 android:textStyle="bold" />
 
             <RelativeLayout
                 android:layout_width="wrap_content"
-                android:layout_height="300dp">
+                android:layout_height="300dp"
+                android:layout_marginTop="16dp">
 
                 <android.support.v4.view.ViewPager
                     android:id="@+id/pager"
@@ -66,17 +67,15 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentBottom="true"
-                    design:dotsColor="#fff"
-                    design:dotsCornerRadius="8dp"
-                    design:dotsStrokeColor="@color/colordarkgrey"
-                    design:dotsSize="16dp"
-                    design:dotsSpacing="4dp"
-                    design:dotsStrokeWidth="2dp"
-                    design:stiffness="300"
                     android:layout_centerHorizontal="true"
                     android:layout_marginBottom="10dp"
-
-                    />
+                    design:dotsColor="#fff"
+                    design:dotsCornerRadius="8dp"
+                    design:dotsSize="16dp"
+                    design:dotsSpacing="4dp"
+                    design:dotsStrokeColor="@color/colordarkgrey"
+                    design:dotsStrokeWidth="2dp"
+                    design:stiffness="300" />
             </RelativeLayout>
 
             <TextView
@@ -94,21 +93,11 @@
                 android:id="@+id/discover_list"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
                 android:layout_marginTop="8dp"
+                android:orientation="vertical"
                 design:layout_constraintTop_toBottomOf="@+id/discover_text_discover"></LinearLayout>
 
-            <ImageView
-                android:id="@+id/imageView"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="16dp"
-                android:layout_marginStart="16dp"
-                android:layout_marginTop="14dp"
-                design:layout_constraintStart_toStartOf="parent"
-                design:layout_constraintTop_toTopOf="parent"
-                design:srcCompat="@drawable/ic_local_play_black_24dp" />
-        </android.support.constraint.ConstraintLayout>
+        </LinearLayout>
 
     </ScrollView>
 
