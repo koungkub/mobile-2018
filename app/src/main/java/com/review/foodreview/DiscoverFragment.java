@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import com.review.foodreview.component.RestaurantListItem;
+import com.review.foodreview.dto.Restaurant;
 import com.review.foodreview.slideshow.ImageModel;
 import com.review.foodreview.slideshow.SlidingImageAdapter;
 import com.tbuonomo.viewpagerdotsindicator.WormDotsIndicator;
