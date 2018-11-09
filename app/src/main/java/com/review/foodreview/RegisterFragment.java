@@ -15,6 +15,7 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.auth.UserProfileChangeRequest;
 
 public class RegisterFragment extends Fragment {
     private static final String TAG = "REGISTER";
@@ -52,18 +53,28 @@ public class RegisterFragment extends Fragment {
                 Log.d(TAG, "onClick");
                 String email = _email.getText().toString();
                 String password = _password.getText().toString();
-                String username = _username.getText().toString();
+                final String username = _username.getText().toString();
                 auth.createUserWithEmailAndPassword(email, password)
                         .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                             @Override
                             public void onComplete(@NonNull Task<AuthResult> task) {
                                 if (task.isSuccessful()) {
                                     Log.d(TAG, "createUserWithEmail:success");
-                                    getActivity()
-                                            .getSupportFragmentManager()
-                                            .beginTransaction()
-                                            .replace(R.id.main_view, new DiscoverFragment())
-                                            .commit();
+                                    FirebaseUser user = auth.getCurrentUser();
+                                    UserProfileChangeRequest changeRequest = new UserProfileChangeRequest.Builder()
+                                            .setDisplayName(username)
+                                            .build();
+                                    user.updateProfile(changeRequest)
+                                            .addOnCompleteListener(new OnCompleteListener<Void>() {
+                                                @Override
+                                                public void onComplete(@NonNull Task<Void> task) {
+                                                    getActivity()
+                                                            .getSupportFragmentManager()
+                                                            .beginTransaction()
+                                                            .replace(R.id.main_view, new DiscoverFragment())
+                                                            .commit();
+                                                }
+                                            });
                                 } else {
                                     Log.w(TAG, "createUserWithEmail:failure", task.getException());
                                     Toast.makeText(getActivity(),
