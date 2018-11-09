@@ -12,6 +12,7 @@ import android.widget.TextView;
 
 public class RestaurantFragment extends Fragment {
     private static final String TAG = "RESTAURANT";
+
     private String restaurantName = "on da table";
     private String restaurantType = "Japanese fusion";
     private String priceRange = "$$ (121-300)";
@@ -20,6 +21,8 @@ public class RestaurantFragment extends Fragment {
     private int reviewCount = 221;
     private boolean delivery = false;
 
+    private Restaurant restaurant;
+
     private TextView _restaurantName, _restaurantType, _priceRange, _rating, _reviewCount;
     private TextView _openHours, _delivery;
 
@@ -27,6 +30,7 @@ public class RestaurantFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         Log.d(TAG, "onCreateView");
+        restaurant = new Restaurant(restaurantName, restaurantType, priceRange, openHours, rating, reviewCount, delivery);
         return inflater.inflate(R.layout.restaurant, container, false);
     }
 
@@ -36,13 +40,13 @@ public class RestaurantFragment extends Fragment {
         super.onActivityCreated(savedInstanceState);
         registerFragmentElements();
 
-        _restaurantName.setText(restaurantName);
-        _restaurantType.setText(restaurantType);
-        _priceRange.setText(priceRange);
-        _rating.setText(Float.toString(rating));
-        _reviewCount.setText("from " + reviewCount + " reviews");
-        _openHours.setText(openHours);
-        if (!delivery) _delivery.setText("Delivery not available");
+        _restaurantName.setText(restaurant.getRestaurantName());
+        _restaurantType.setText(restaurant.getRestaurantType());
+        _priceRange.setText(restaurant.getPriceRange());
+        _rating.setText(Float.toString(restaurant.getRating()));
+        _reviewCount.setText("from " + restaurant.getReviewCount() + " reviews");
+        _openHours.setText(restaurant.getOpenHours());
+        if (!restaurant.isDeliverable()) _delivery.setText("Delivery not available");
     }
 
     private void registerFragmentElements() {
