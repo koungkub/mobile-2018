@@ -10,7 +10,9 @@ import android.view.MenuItem;
 
 public class MainActivity extends AppCompatActivity{
     private BottomNavigationView navigationView;
-    private static final String LOG = "MAIN";
+
+    private static final String LOG = "MAINACTIVITY";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -31,6 +33,7 @@ public class MainActivity extends AppCompatActivity{
 
     private void setupNavbar() {
         Log.d(LOG, "Do setupNavbar");
+
         navigationView = findViewById(R.id.Navbottom);
         navigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
@@ -48,13 +51,12 @@ public class MainActivity extends AppCompatActivity{
 
                 }
                 if(fragment != null){
-                    Log.d(LOG, "Go to another page");
+                    Log.d(LOG, "Change page");
                     getSupportFragmentManager()
                             .beginTransaction()
                             .replace(R.id.main_view, fragment)
                             .commit();
                 }
-
                 return true;
             }
         });

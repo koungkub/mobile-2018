@@ -33,46 +33,6 @@ public class SearchFragment extends Fragment  {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        /*
-        setupnavbar
-//         */
-//        setupNavbar();
-
     }
 
-//    private void setupNavbar() {
-//        Log.d(LOG, "Do setupNavbar");
-//        navigationView = getView().findViewById(R.id.Navbottom);
-//        navigationView.setActivated(true);
-//        navigationView
-//                .setOnNavigationItemSelectedListener(new BottomNavigationView
-//                        .OnNavigationItemSelectedListener() {
-//            @Override
-//            public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
-//                Fragment fragment = null;
-//                switch (menuItem.getItemId()) {
-//                    case R.id.navigation_discover: {
-//                        fragment = new DiscoverFragment();
-//                        break;
-//                    }
-//
-//                }
-//                if(fragment != null){
-//                    Log.d(LOG, "Go from" + LOG);
-//                    getActivity()
-//                            .getSupportFragmentManager()
-//                            .beginTransaction()
-//                            .replace(R.id.main_view, fragment)
-//                            .commit();
-//                }
-//
-//                return true;
-//            }
-//
-//        });
-//    }
-//    @Override
-//    public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
-//        return false;
-//    }
 }
