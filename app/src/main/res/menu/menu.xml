@@ -1,12 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
+          android:id="@+id/navigation_discover"
           android:title="@string/menu_discover"
           android:icon="@drawable/ic_action_explore" />
     <item
+        android:id="@+id/navigation_search"
         android:title="@string/menu_search"
         android:icon="@drawable/ic_action_search" />
     <item
+        android:id="@+id/navigation_me"
         android:title="@string/menu_me"
         android:icon="@drawable/ic_action_face" />
 
