@@ -7,22 +7,15 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
-
-<<<<<<< HEAD
-public class MainActivity extends AppCompatActivity{
-    private BottomNavigationView navigationView;
-
-    private static final String LOG = "MAINACTIVITY";
-=======
+import com.review.foodreview.sqlite.DBHelper;
 import com.review.foodreview.dto.LogDTO;
 import com.review.foodreview.sqlite.DBHelper;
-
 import java.util.List;
 
-public class MainActivity extends AppCompatActivity {
->>>>>>> 91faf6d8b56ecb4b088ec62e40876c900b58478f
-
+public class MainActivity extends AppCompatActivity{
+    private BottomNavigationView navigationView;
     private DBHelper dbHelper;
+    private static final String LOG = "MAINACTIVITY";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -73,6 +66,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
     }
-
     }
+
+
 
