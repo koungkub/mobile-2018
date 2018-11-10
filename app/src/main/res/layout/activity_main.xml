@@ -12,6 +12,18 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
+        <android.support.design.widget.BottomNavigationView
+            android:id="@+id/Navbottom"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:checkableBehavior="single"
+            android:layout_gravity="bottom"
+            android:background="#fff"
+            design:layout_constraintBottom_toBottomOf="parent"
+            design:layout_constraintEnd_toEndOf="parent"
+            design:layout_constraintStart_toStartOf="parent"
+            design:menu="@menu/menu">
+        </android.support.design.widget.BottomNavigationView>
     </FrameLayout>
 
 </android.support.constraint.ConstraintLayout>

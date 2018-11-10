@@ -22,7 +22,7 @@ import com.tbuonomo.viewpagerdotsindicator.WormDotsIndicator;
 import java.util.ArrayList;
 import java.util.List;
 
-public class DiscoverFragment extends Fragment implements NavigationView.OnNavigationItemSelectedListener {
+public class DiscoverFragment extends Fragment{
     private List<Restaurant> restaurants = new ArrayList<>();
     private static final String LOG = "DISCOVERFRAGMENT";
     private static ViewPager mPager;
@@ -99,8 +99,6 @@ public class DiscoverFragment extends Fragment implements NavigationView.OnNavig
         //setup the discover's slideshow
         Log.d(LOG, "Do setupSlideshow");
         setupSlideshow();
-        //setup the discover's navbar to clickable
-        setupNavbar();
     }
 
 
@@ -150,38 +148,4 @@ public class DiscoverFragment extends Fragment implements NavigationView.OnNavig
 
     }
 
-    private void setupNavbar() {
-        Log.d(LOG, "Do setupNavbar");
-        navigationView = getView().findViewById(R.id.Navbottom);
-        navigationView
-                .setOnNavigationItemSelectedListener(new BottomNavigationView
-                .OnNavigationItemSelectedListener() {
-            @Override
-            public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
-                Fragment fragment = null;
-                switch (menuItem.getItemId()) {
-                    case R.id.navigation_search: {
-                        fragment = new SearchFragment();
-                        break;
-                    }
-
-                }
-                if(fragment != null){
-                    Log.d(LOG, "Go from" + LOG);
-                    getActivity()
-                            .getSupportFragmentManager()
-                            .beginTransaction().replace(R.id.main_view, fragment)
-                            .commit();
-                }
-
-                return true;
-            }
-
-        });
-    }
-
-    @Override
-    public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
-        return false;
-    }
 }
