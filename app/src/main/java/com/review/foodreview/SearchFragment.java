@@ -7,8 +7,10 @@ import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.MenuItem;
 import android.view.View;
+import com.review.foodreview.dto.LogDTO;
+import com.review.foodreview.sqlite.DBHelper;
+import java.util.List;
 import android.view.ViewGroup;
 
 public class SearchFragment extends Fragment  {
