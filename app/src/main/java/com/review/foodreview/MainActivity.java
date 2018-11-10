@@ -16,7 +16,7 @@ public class MainActivity extends AppCompatActivity {
     }
     public void init(Bundle bundle) {
         if (bundle == null) {
-            Fragment fragment = new DiscoverFragment();
+            Fragment fragment = new SearchFragment();
             getSupportFragmentManager()
                     .beginTransaction()
                     .replace(R.id.main_view, fragment)

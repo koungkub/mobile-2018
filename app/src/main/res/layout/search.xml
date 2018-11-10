@@ -4,13 +4,15 @@
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:design="http://schemas.android.com/tools">
-
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:elevation="10dp">
     <SearchView
         android:id="@+id/search_btn_search"
         android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:iconifiedByDefault="false"
         android:queryHint="Search"
-        android:layout_height="wrap_content"
         app:layout_constraintTop_toTopOf="parent">
     </SearchView>
     <android.support.design.widget.BottomNavigationView
@@ -22,7 +24,9 @@
         design:layout_constraintBottom_toBottomOf="parent"
         design:layout_constraintEnd_toEndOf="parent"
         design:layout_constraintStart_toStartOf="parent"
-        design:menu="@menu/menu"></android.support.design.widget.BottomNavigationView>
+        design:menu="@menu/menu">
+
+    </android.support.design.widget.BottomNavigationView>
 
     <ScrollView
         android:layout_width="match_parent"

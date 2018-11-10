@@ -153,7 +153,9 @@ public class DiscoverFragment extends Fragment implements NavigationView.OnNavig
     private void setupNavbar() {
         Log.d(LOG, "Do setupNavbar");
         navigationView = getView().findViewById(R.id.Navbottom);
-        navigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
+        navigationView
+                .setOnNavigationItemSelectedListener(new BottomNavigationView
+                .OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
                 Fragment fragment = null;
@@ -165,9 +167,11 @@ public class DiscoverFragment extends Fragment implements NavigationView.OnNavig
 
                 }
                 if(fragment != null){
-                    Log.d(LOG, "Go to " + fragment);
+                    Log.d(LOG, "Go from" + LOG);
                     getActivity()
-                            .getSupportFragmentManager().beginTransaction().replace(R.id.main_view, fragment).commit();
+                            .getSupportFragmentManager()
+                            .beginTransaction().replace(R.id.main_view, fragment)
+                            .commit();
                 }
 
                 return true;
