@@ -24,6 +24,7 @@
         android:elevation="4dp"
         android:minHeight="56dp"
         android:theme="@style/ToolbarTheme.White"
+        android:background="@android:color/white"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
