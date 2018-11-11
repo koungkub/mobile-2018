@@ -4,6 +4,8 @@
     <string name="menu_search">Search</string>
     <string name="menu_me">Me</string>
 
+    <string name="post">Post</string>
+
     <string name="page_review_edit_description">Type your review here</string>
     <string name="page_review_edit_food">How\'s the food?</string>
     <string name="page_review_edit_service">How\'s the service?</string>

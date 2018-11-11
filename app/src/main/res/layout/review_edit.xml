@@ -1,97 +1,97 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                                             xmlns:app="http://schemas.android.com/apk/res-auto"
-                                             xmlns:tools="http://schemas.android.com/tools"
-                                             android:layout_width="match_parent"
-                                             android:layout_height="match_parent">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
 
-    <android.support.v7.widget.Toolbar
-            android:id="@+id/review_edit_toolbar"
-            android:layout_width="0dp"
-            android:layout_height="56dp"
-            android:background="?attr/colorPrimary"
-            android:theme="?android:attr/actionBarTheme"
-            android:minHeight="56dp"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            android:elevation="4dp"/>
+    <android.widget.Toolbar
+        android:id="@+id/review_edit_toolbar"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:background="?attr/colorPrimary"
+        android:elevation="4dp"
+        android:minHeight="56dp"
+        android:theme="?android:attr/actionBarTheme"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <EditText
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:inputType="textMultiLine"
-            android:ems="10"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            android:id="@+id/review_edit_description"
-            android:layout_marginStart="16dp"
-            android:layout_marginEnd="16dp"
-            android:layout_marginTop="16dp"
-            app:layout_constraintTop_toBottomOf="@+id/review_edit_toolbar"
-            android:hint="@string/page_review_edit_description"/>
+        android:id="@+id/review_edit_description"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="16dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:ems="10"
+        android:hint="@string/page_review_edit_description"
+        android:inputType="textMultiLine"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/review_edit_toolbar" />
 
     <RatingBar
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            android:id="@+id/review_edit_star_food"
-            android:layout_marginTop="8dp"
-            app:layout_constraintTop_toBottomOf="@+id/review_edit_text_food"/>
+        android:id="@+id/review_edit_star_food"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/review_edit_text_food" />
 
     <TextView
-            android:text="@string/page_review_edit_food"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            android:id="@+id/review_edit_text_food"
-            android:layout_marginTop="16dp"
-            app:layout_constraintTop_toBottomOf="@+id/review_edit_description"
-            tools:text="@string/page_review_edit_food"
-            android:textAppearance="@style/TextAppearance.MaterialComponents.Body1"/>
+        android:id="@+id/review_edit_text_food"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="@string/page_review_edit_food"
+        android:textAppearance="@style/TextAppearance.MaterialComponents.Body1"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/review_edit_description"
+        tools:text="@string/page_review_edit_food" />
 
     <TextView
-            android:text="@string/page_review_edit_service"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            android:id="@+id/review_edit_service"
-            android:layout_marginTop="16dp"
-            app:layout_constraintTop_toBottomOf="@+id/review_edit_star_food"
-            android:textAppearance="@style/TextAppearance.MaterialComponents.Body1"
-            tools:text="@string/page_review_edit_service"/>
+        android:id="@+id/review_edit_service"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="@string/page_review_edit_service"
+        android:textAppearance="@style/TextAppearance.MaterialComponents.Body1"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/review_edit_star_food"
+        tools:text="@string/page_review_edit_service" />
 
     <RatingBar
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            android:id="@+id/review_edit_star_service"
-            android:layout_marginTop="8dp"
-            app:layout_constraintTop_toBottomOf="@+id/review_edit_service"/>
+        android:id="@+id/review_edit_star_service"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/review_edit_service" />
 
     <TextView
-            android:text="@string/page_review_edit_atmosphere"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            android:id="@+id/review_edit_atmosphere"
-            android:layout_marginTop="16dp"
-            app:layout_constraintTop_toBottomOf="@+id/review_edit_star_service"
-            android:textAppearance="@style/TextAppearance.MaterialComponents.Body1"
-            tools:text="@string/page_review_edit_atmosphere"/>
+        android:id="@+id/review_edit_atmosphere"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="@string/page_review_edit_atmosphere"
+        android:textAppearance="@style/TextAppearance.MaterialComponents.Body1"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/review_edit_star_service"
+        tools:text="@string/page_review_edit_atmosphere" />
 
     <RatingBar
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            android:id="@+id/review_edit_star_atmosphere"
-            android:layout_marginTop="8dp"
-            app:layout_constraintTop_toBottomOf="@+id/review_edit_atmosphere"/>
+        android:id="@+id/review_edit_star_atmosphere"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/review_edit_atmosphere" />
 
 </android.support.constraint.ConstraintLayout>
