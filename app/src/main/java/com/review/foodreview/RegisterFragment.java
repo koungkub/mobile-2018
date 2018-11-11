@@ -20,7 +20,7 @@ import com.google.firebase.auth.UserProfileChangeRequest;
 public class RegisterFragment extends Fragment {
     private static final String TAG = "REGISTER";
     private EditText _email, _password, _username;
-    private Button _submitBtn;
+    private Button _submitBtn, _loginBtn;
     private ProgressBar _loading;
     private FirebaseAuth auth;
 
@@ -45,6 +45,7 @@ public class RegisterFragment extends Fragment {
         _password = getView().findViewById(R.id.login_input_password);
         _username = getView().findViewById(R.id.register_input_username);
         _submitBtn = getView().findViewById(R.id.register_btn);
+        _loginBtn = getView().findViewById(R.id.register_btn_login);
         _loading = getView().findViewById(R.id.register_loading);
     }
 
@@ -57,7 +58,7 @@ public class RegisterFragment extends Fragment {
                 final String password = _password.getText().toString();
                 final String username = _username.getText().toString();
                 if (email.isEmpty() || password.isEmpty() || username.isEmpty()) {
-                    Toast.makeText(getActivity(), "Please complete all the fields", Toast.LENGTH_SHORT)
+                    Toast.makeText(getActivity(), "Please complete all the fields", Toast.LENGTH_LONG)
                             .show();
                 } else {
                     _loading.setVisibility(View.VISIBLE);
@@ -95,6 +96,18 @@ public class RegisterFragment extends Fragment {
                                 }
                             });
                 }
+            }
+        });
+    }
+
+    private void initLoginBtn() {
+        _loginBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                getFragmentManager()
+                        .beginTransaction()
+                        .replace(R.id.main_view, new LoginFragment())
+                        .commit();
             }
         });
     }
