@@ -53,9 +53,6 @@ public class MainActivity extends AppCompatActivity{
                         fragment = new SearchFragment();
                         break;
                     }
-                    case R.id.navigation_me: {
-                        fragment = new RegisterFragment();
-                    }
                 }
                 if(fragment != null){
                     Log.d(LOG, "Change page");
