@@ -7,6 +7,7 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.*;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.Toast;
@@ -20,7 +21,7 @@ import com.google.firebase.auth.UserProfileChangeRequest;
 public class RegisterFragment extends Fragment {
     private static final String TAG = "REGISTER";
     private EditText _email, _password, _username;
-    private FloatingActionButton _submitBtn;
+    private Button _submitBtn;
     private ProgressBar _loading;
     private FirebaseAuth auth;
 
@@ -61,11 +62,13 @@ public class RegisterFragment extends Fragment {
                             .show();
                 } else {
                     _loading.setVisibility(View.VISIBLE);
+                    _submitBtn.setVisibility(View.INVISIBLE);
                     auth.createUserWithEmailAndPassword(email, password)
                             .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                                 @Override
                                 public void onComplete(@NonNull Task<AuthResult> task) {
                                     _loading.setVisibility(View.GONE);
+                                    _submitBtn.setVisibility(View.VISIBLE);
                                     if (task.isSuccessful()) {
                                         Log.d(TAG, "createUserWithEmail:success");
                                         FirebaseUser user = auth.getCurrentUser();

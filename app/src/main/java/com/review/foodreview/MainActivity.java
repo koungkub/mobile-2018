@@ -54,7 +54,7 @@ public class MainActivity extends AppCompatActivity{
                         break;
                     }
                     case R.id.navigation_me: {
-                        fragment = new ReviewEditFragment();
+                        fragment = new RegisterFragment();
                     }
                 }
                 if(fragment != null){
