@@ -37,6 +37,7 @@ public class RegisterFragment extends Fragment {
         Log.d(TAG, "RegisterFragment: onActivityCreated");
         registerFragmentElements();
         initSubmitBtn();
+        initLoginBtn();
     }
 
     private void registerFragmentElements() {
@@ -63,12 +64,14 @@ public class RegisterFragment extends Fragment {
                 } else {
                     _loading.setVisibility(View.VISIBLE);
                     _submitBtn.setVisibility(View.INVISIBLE);
+                    _loginBtn.setVisibility(View.INVISIBLE);
                     auth.createUserWithEmailAndPassword(email, password)
                             .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                                 @Override
                                 public void onComplete(@NonNull Task<AuthResult> task) {
                                     _loading.setVisibility(View.GONE);
                                     _submitBtn.setVisibility(View.VISIBLE);
+                                    _loginBtn.setVisibility(View.VISIBLE);
                                     if (task.isSuccessful()) {
                                         Log.d(TAG, "createUserWithEmail:success");
                                         FirebaseUser user = auth.getCurrentUser();

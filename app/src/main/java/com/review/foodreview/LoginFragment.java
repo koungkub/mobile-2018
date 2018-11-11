@@ -62,12 +62,14 @@ public class LoginFragment extends Fragment {
                 } else {
                     _loading.setVisibility(View.VISIBLE);
                     _submitBtn.setVisibility(View.INVISIBLE);
+                    _registerBtn.setVisibility(View.INVISIBLE);
                     auth.signInWithEmailAndPassword(email, password)
                             .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                                 @Override
                                 public void onComplete(@NonNull Task<AuthResult> task) {
                                     _loading.setVisibility(View.GONE);
                                     _submitBtn.setVisibility(View.VISIBLE);
+                                    _registerBtn.setVisibility(View.VISIBLE);
                                     if (task.isSuccessful()) {
                                         currentUser = auth.getCurrentUser();
                                         getFragmentManager()
