@@ -1,4 +1,4 @@
-package com.review.foodreview;
+package com.review.foodreview.dto;
 
 public class Restaurant {
     private String restaurantName, restaurantType, priceRange, openHours;

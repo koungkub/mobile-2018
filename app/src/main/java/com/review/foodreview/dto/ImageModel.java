@@ -1,4 +1,4 @@
-package com.review.foodreview.slideshow;
+package com.review.foodreview.dto;
 
 public class ImageModel {
     //now I not use yet

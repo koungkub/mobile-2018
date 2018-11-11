@@ -7,7 +7,7 @@ import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import com.review.foodreview.R;
-import com.review.foodreview.Restaurant;
+import com.review.foodreview.dto.Restaurant;
 
 public class RestaurantListItem {
     private static final String TAG = "RESTAURANTLISTITEM";

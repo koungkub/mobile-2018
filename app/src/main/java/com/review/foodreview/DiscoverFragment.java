@@ -3,16 +3,20 @@ package com.review.foodreview;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.design.widget.BottomNavigationView;
+import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import com.review.foodreview.component.RestaurantListItem;
-import com.review.foodreview.slideshow.ImageModel;
-import com.review.foodreview.slideshow.SlidingImageAdapter;
+import com.review.foodreview.dto.Restaurant;
+import com.review.foodreview.dto.ImageModel;
+import com.review.foodreview.dto.SlidingImageAdapter;
 import com.tbuonomo.viewpagerdotsindicator.WormDotsIndicator;
 
 import java.util.ArrayList;
@@ -22,6 +26,8 @@ public class DiscoverFragment extends Fragment{
     private List<Restaurant> restaurants = new ArrayList<>();
     private static final String LOG = "DISCOVERFRAGMENT";
     private static ViewPager mPager;
+    WormDotsIndicator wormDotsIndicator;
+    private BottomNavigationView navigationView;
     private static int NUM_PAGES = 3;
     private ArrayList<ImageModel> imageModelArrayList;
     private int[] myImageList = new int[]{R.drawable.slide1, R.drawable.slide2, R.drawable.slide3};
@@ -49,11 +55,9 @@ public class DiscoverFragment extends Fragment{
     public void onActivityCreated(
             @Nullable Bundle savedInstanceState
     ) {
-        Log.d(LOG, "Start discover fragment (ActivityCreated)");
         super.onActivityCreated(savedInstanceState);
-
+        Log.d(LOG, "Start discover fragment (ActivityCreated)");
         restaurants.clear();
-
         Restaurant mcdonalds = new Restaurant(
                 "McDonald's",
                 "Fast food",
@@ -92,7 +96,6 @@ public class DiscoverFragment extends Fragment{
                 }
             });
         }
-
         //setup the discover's slideshow
         Log.d(LOG, "Do setupSlideshow");
         setupSlideshow();
@@ -100,11 +103,11 @@ public class DiscoverFragment extends Fragment{
 
 
     //get image
-    private ArrayList<ImageModel> populateList(){
+    private ArrayList<ImageModel> populateList() {
 
         ArrayList<ImageModel> list = new ArrayList<>();
 
-        for(int i = 0; i < NUM_PAGES; i++){
+        for (int i = 0; i < NUM_PAGES; i++) {
             ImageModel imageModel = new ImageModel();
             imageModel.setImage_drawable(myImageList[i]);
             list.add(imageModel);
@@ -112,18 +115,19 @@ public class DiscoverFragment extends Fragment{
 
         return list;
     }
-//setup slideshow here
+
+    //setup slideshow here
     private void setupSlideshow() {
 
         mPager = getView().findViewById(R.id.pager);
+        mPager.setPageMargin(-4);
         mPager.setAdapter(new SlidingImageAdapter(
                 getContext(),
                 imageModelArrayList));
+        this.wormDotsIndicator = getView().findViewById(R.id.worm_dots_indicator);
+        this.wormDotsIndicator.setViewPager(mPager);
 
-        WormDotsIndicator wormDotsIndicator = (WormDotsIndicator) getView().findViewById(R.id.worm_dots_indicator);
-        wormDotsIndicator.setViewPager(mPager);
-
-     // Auto start of viewpager open it if you want
+        // Auto start of viewpager open it if you want
 //        final Handler handler = new Handler();
 //        final Runnable Update = new Runnable() {
 //            public void run() {
@@ -143,4 +147,5 @@ public class DiscoverFragment extends Fragment{
 //        }, 3000, 3000);
 
     }
+
 }

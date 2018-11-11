@@ -10,7 +10,7 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 import com.review.foodreview.R;
-import com.review.foodreview.Restaurant;
+import com.review.foodreview.dto.Restaurant;
 
 import java.util.ArrayList;
 import java.util.List;
