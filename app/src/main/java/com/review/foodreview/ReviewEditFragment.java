@@ -4,14 +4,13 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.*;
 import android.widget.Toolbar;
 
 public class ReviewEditFragment extends Fragment {
 
     private static final String TAG = "REVIEWEDIT";
-    private Toolbar toolbar;
+    private Toolbar _toolbar;
 
     @Nullable
     @Override
@@ -26,10 +25,10 @@ public class ReviewEditFragment extends Fragment {
     }
 
     private void createMenu() {
-        toolbar = getActivity().findViewById(R.id.review_edit_toolbar);
-        toolbar.setTitle("Write a review");
-        toolbar.setNavigationIcon(R.drawable.ic_arrow_back_white_24dp);
-        toolbar.inflateMenu(R.menu.review_edit);
-        getActivity().setActionBar(toolbar);
+        _toolbar = getActivity().findViewById(R.id.review_edit_toolbar);
+        _toolbar.setTitle("Write a review");
+        _toolbar.setNavigationIcon(R.drawable.ic_arrow_back_white_24dp);
+        _toolbar.inflateMenu(R.menu.review_edit);
+        getActivity().setActionBar(_toolbar);
     }
 }
