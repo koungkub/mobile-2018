@@ -11,7 +11,7 @@
     <string name="post">Post</string>
     <string name="bookmark">Bookmark</string>
 
-    <string name="page_register_its_free">It\'s free!</string>
+    <string name="page_register_login">or log me in</string>
 
     <string name="page_review_edit_description">Type your review here</string>
     <string name="page_review_edit_food">How\'s the food?</string>
