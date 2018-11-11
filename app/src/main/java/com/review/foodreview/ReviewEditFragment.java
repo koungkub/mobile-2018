@@ -28,7 +28,7 @@ public class ReviewEditFragment extends Fragment {
     private void createMenu() {
         toolbar = getActivity().findViewById(R.id.review_edit_toolbar);
         toolbar.setTitle("Write a review");
-        toolbar.setNavigationIcon(R.drawable.ic_arrow_back);
+        toolbar.setNavigationIcon(R.drawable.ic_arrow_back_white_24dp);
         toolbar.inflateMenu(R.menu.review_edit);
         getActivity().setActionBar(toolbar);
     }
