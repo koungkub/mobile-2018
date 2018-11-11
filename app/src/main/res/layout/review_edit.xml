@@ -14,7 +14,8 @@
             android:minHeight="56dp"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent" />
+            app:layout_constraintStart_toStartOf="parent"
+            android:elevation="4dp"/>
 
     <EditText
             android:layout_width="0dp"
@@ -40,7 +41,7 @@
             app:layout_constraintTop_toBottomOf="@+id/review_edit_text_food"/>
 
     <TextView
-            android:text="TextView"
+            android:text="@string/page_review_edit_food"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:layout_constraintStart_toStartOf="parent"
@@ -52,7 +53,7 @@
             android:textAppearance="@style/TextAppearance.MaterialComponents.Body1"/>
 
     <TextView
-            android:text="TextView"
+            android:text="@string/page_review_edit_service"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:layout_constraintStart_toStartOf="parent"
@@ -73,7 +74,7 @@
             app:layout_constraintTop_toBottomOf="@+id/review_edit_service"/>
 
     <TextView
-            android:text="TextView"
+            android:text="@string/page_review_edit_atmosphere"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:layout_constraintStart_toStartOf="parent"
