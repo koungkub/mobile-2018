@@ -5,6 +5,7 @@
     <string name="menu_me">Me</string>
 
     <string name="post">Post</string>
+    <string name="bookmark">Bookmark</string>
 
     <string name="page_review_edit_description">Type your review here</string>
     <string name="page_review_edit_food">How\'s the food?</string>
