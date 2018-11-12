@@ -8,20 +8,18 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
 import com.review.foodreview.sqlite.DBHelper;
-import com.review.foodreview.dto.LogDTO;
-import com.review.foodreview.sqlite.DBHelper;
-import java.util.List;
+import android.view.View;
 
 public class MainActivity extends AppCompatActivity{
-    private BottomNavigationView navigationView;
+    private static BottomNavigationView navigationView;
     private DBHelper dbHelper;
+    private Fragment fragment;
     private static final String LOG = "MAINACTIVITY";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
         init(savedInstanceState);
         setupNavbar();
     }
@@ -38,12 +36,11 @@ public class MainActivity extends AppCompatActivity{
 
     private void setupNavbar() {
         Log.d(LOG, "Do setupNavbar");
-
         navigationView = findViewById(R.id.Navbottom);
         navigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
-                Fragment fragment = null;
+                fragment = null;
                 switch (menuItem.getItemId()) {
                     case R.id.navigation_discover: {
                         fragment = new DiscoverFragment();
@@ -58,18 +55,22 @@ public class MainActivity extends AppCompatActivity{
                         break;
                     }
                 }
-                if(fragment != null){
+                if (fragment != null) {
                     Log.d(LOG, "Change page");
-                    getSupportFragmentManager()
-                            .beginTransaction()
-                            .replace(R.id.main_view, fragment)
-                            .commit();
+                    getSupportFragmentManager().beginTransaction().replace(R.id.main_view, fragment).commit();
                 }
                 return true;
             }
         });
     }
+
+    public static void onFragmentChanged(String fragmentName) {
+        Log.d(LOG, "onFragmentChanged: " + fragmentName);
+        if (fragmentName.equalsIgnoreCase("RESTAURANT")) {
+            Log.d(LOG, "Invisible");
+            navigationView.setVisibility(View.GONE);
+        } else {
+            navigationView.setVisibility(View.VISIBLE);
+        }
     }
-
-
-
+}
