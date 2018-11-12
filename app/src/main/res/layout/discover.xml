@@ -51,7 +51,7 @@
                 android:drawableStart="@drawable/ic_local_play_black_24dp"
                 android:drawablePadding="8dp"
                 android:text="Featured"
-                android:textAppearance="@android:style/TextAppearance.Material.Headline"
+                android:textAppearance="@style/food.headline"
                 android:textStyle="bold" />
 
             <RelativeLayout
@@ -89,7 +89,7 @@
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="16dp"
                 android:text="Discover"
-                android:textAppearance="@android:style/TextAppearance.Material.Headline"
+                android:textAppearance="@style/food.headline"
                 android:textStyle="bold" />
 
             <LinearLayout
