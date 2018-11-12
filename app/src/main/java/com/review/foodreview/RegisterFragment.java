@@ -11,6 +11,8 @@ import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
@@ -58,8 +60,8 @@ public class RegisterFragment extends Fragment {
                 final String email = _email.getText().toString();
                 final String password = _password.getText().toString();
                 final String username = _username.getText().toString();
-                if (email.isEmpty() || password.isEmpty() || username.isEmpty()) {
-                    Toast.makeText(getActivity(), "Please complete all the fields", Toast.LENGTH_LONG)
+                if (email.isEmpty() || password.isEmpty() || username.isEmpty() || password.length() < 6) {
+                    Toast.makeText(getActivity(), "Please complete all the fields or password less than 6", Toast.LENGTH_LONG)
                             .show();
                 } else {
                     _loading.setVisibility(View.VISIBLE);
