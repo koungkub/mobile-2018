@@ -17,6 +17,7 @@
             design:layout_constraintTop_toTopOf="parent"
             android:iconifiedByDefault="false"
             android:queryHint="Search"
+            android:focusedByDefault="false"
             tools:ignore="MissingConstraints">
         </SearchView>
 
