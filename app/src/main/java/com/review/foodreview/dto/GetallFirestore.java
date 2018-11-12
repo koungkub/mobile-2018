@@ -16,22 +16,32 @@ import javax.annotation.Nullable;
 public class GetallFirestore {
     private boolean wantRestaurant;
     private boolean wantReview;
+    private boolean wantCategory;
+    private boolean wantUser;
     private List<Restaurant> restaurant;
     private List<Review> review;
+    private List<Category> categories;
+    private List<User> users;
+
     FirebaseFirestore mdb = FirebaseFirestore.getInstance();
 
-    public GetallFirestore(Boolean wantRestaurant, Boolean wantReview){
-        restaurant = new ArrayList<>();
-        review = new ArrayList<>();
+    public GetallFirestore(boolean wantRestaurant, boolean wantReview, boolean wantCategory, boolean wantUser) {
         this.wantRestaurant = wantRestaurant;
         this.wantReview = wantReview;
-        getRestaurant();
+        this.wantCategory = wantCategory;
+        this.wantUser = wantUser;
+        restaurant = new ArrayList<>();
+        review = new ArrayList<>();
+        categories = new ArrayList<>();
+        users = new ArrayList<>();
     }
     private void getRestaurant(){
         if(wantRestaurant == true){
-            mdb.collection("restaurant").addSnapshotListener(new EventListener<QuerySnapshot>() {
+            mdb.collection("restaurant")
+                    .addSnapshotListener(new EventListener<QuerySnapshot>() {
                 @Override
-                public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable FirebaseFirestoreException e) {
+                public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots,
+                                    @Nullable FirebaseFirestoreException e) {
                     for(QueryDocumentSnapshot doc : queryDocumentSnapshots){
                         restaurant.add(doc.toObject(Restaurant.class));
                     }
@@ -43,18 +53,47 @@ public class GetallFirestore {
     }
     private void getReview(){
         if(wantReview == true){
-            mdb.collection("review").addSnapshotListener(new EventListener<QuerySnapshot>() {
+            mdb.collection("review")
+                    .addSnapshotListener(new EventListener<QuerySnapshot>() {
                 @Override
-                public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable FirebaseFirestoreException e) {
+                public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots,
+                                    @Nullable FirebaseFirestoreException e) {
                     for(QueryDocumentSnapshot doc : queryDocumentSnapshots){
                         review.add(doc.toObject(Review.class));
                     }
-                    Log.d("ADAPTERFIREBASE", restaurant.get(0).getName());
-                    Log.d("ADAPTERFIREBASE", review.get(0).getId());
-                    Log.d("ADAPTERFIREBASE", "to do something");
                 }
             });
         }
+        getCategory();
+    }
+    private void getCategory(){
+        if(wantCategory == true){
+            mdb.collection("category")
+                    .addSnapshotListener(new EventListener<QuerySnapshot>() {
+                @Override
+                public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots,
+                                    @Nullable FirebaseFirestoreException e) {
+                    for(QueryDocumentSnapshot doc : queryDocumentSnapshots){
+                        categories.add(doc.toObject(Category.class));
+                    }
+                }
+            });
+        }
+    }
+    private void getUser(){
+        if(wantUser == true){
+            mdb.collection("user")
+                    .addSnapshotListener(new EventListener<QuerySnapshot>() {
+                        @Override
+                        public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots,
+                                            @Nullable FirebaseFirestoreException e) {
+                            for(QueryDocumentSnapshot doc : queryDocumentSnapshots){
+                                users.add(doc.toObject(User.class));
+                            }
+                        }
+                    });
+        }
 
+        Log.d("FIRESTORE", "TO DO SOMETHING HERE");
     }
 }

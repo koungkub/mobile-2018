@@ -163,7 +163,7 @@ public class DiscoverFragment extends Fragment{
 
     }
     private void getdiscoverList(){
-        GetallFirestore gall = new GetallFirestore(true,true);
+        GetallFirestore gall = new GetallFirestore(true,true, false, true);
     }
 
     //set bundle and pass to restaurantFragment
