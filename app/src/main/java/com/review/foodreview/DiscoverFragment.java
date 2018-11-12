@@ -11,11 +11,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 
-import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.FirebaseFirestoreException;
-import com.google.firebase.firestore.QueryDocumentSnapshot;
-import com.google.firebase.firestore.QuerySnapshot;
+import com.review.foodreview.component.DiscoverGetListData;
 import com.review.foodreview.component.RestaurantListItem;
 import com.review.foodreview.dto.GetallFirestore;
 import com.review.foodreview.dto.Restaurant;
@@ -146,7 +143,7 @@ public class DiscoverFragment extends Fragment{
 
     }
     private void getdiscoverList(){
-        GetallFirestore gall = new GetallFirestore(true,true, false, true);
+        DiscoverGetListData discoverGetListData = new DiscoverGetListData(false,false, false, true);
     }
 
     //set bundle and pass to restaurantFragment

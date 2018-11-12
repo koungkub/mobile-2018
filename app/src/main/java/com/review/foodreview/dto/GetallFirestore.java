@@ -13,7 +13,8 @@ import java.util.List;
 
 import javax.annotation.Nullable;
 
-public class GetallFirestore {
+public abstract class GetallFirestore {
+    private static final String TAG = "GETALLDATA";
     private boolean wantRestaurant;
     private boolean wantReview;
     private boolean wantCategory;
@@ -35,7 +36,8 @@ public class GetallFirestore {
         categories = new ArrayList<>();
         users = new ArrayList<>();
     }
-    private void getRestaurant(){
+
+    public void getRestaurant(){
         if(wantRestaurant == true){
             mdb.collection("restaurant")
                     .addSnapshotListener(new EventListener<QuerySnapshot>() {
@@ -44,14 +46,18 @@ public class GetallFirestore {
                                     @Nullable FirebaseFirestoreException e) {
                     for(QueryDocumentSnapshot doc : queryDocumentSnapshots){
                         restaurant.add(doc.toObject(Restaurant.class));
+                        Log.d(TAG,"RESTAURANT = " +  doc.getData());
                     }
+                    getReview();
                 }
             });
         }
-        getReview();
+        else {
+            getReview();
+        }
 
     }
-    private void getReview(){
+    public void getReview(){
         if(wantReview == true){
             mdb.collection("review")
                     .addSnapshotListener(new EventListener<QuerySnapshot>() {
@@ -60,13 +66,17 @@ public class GetallFirestore {
                                     @Nullable FirebaseFirestoreException e) {
                     for(QueryDocumentSnapshot doc : queryDocumentSnapshots){
                         review.add(doc.toObject(Review.class));
+                        Log.d(TAG, "REVIEW = " + doc.getData());
+                        getCategory();
                     }
                 }
             });
         }
-        getCategory();
+        else {
+            getCategory();
+        }
     }
-    private void getCategory(){
+    public void getCategory(){
         if(wantCategory == true){
             mdb.collection("category")
                     .addSnapshotListener(new EventListener<QuerySnapshot>() {
@@ -75,12 +85,18 @@ public class GetallFirestore {
                                     @Nullable FirebaseFirestoreException e) {
                     for(QueryDocumentSnapshot doc : queryDocumentSnapshots){
                         categories.add(doc.toObject(Category.class));
+                        Log.d(TAG,"CATEGORY = " + doc.getData());
+                        getUser();
                     }
                 }
             });
         }
+        else {
+            getUser();
+        }
+
     }
-    private void getUser(){
+    public void getUser(){
         if(wantUser == true){
             mdb.collection("user")
                     .addSnapshotListener(new EventListener<QuerySnapshot>() {
@@ -89,11 +105,25 @@ public class GetallFirestore {
                                             @Nullable FirebaseFirestoreException e) {
                             for(QueryDocumentSnapshot doc : queryDocumentSnapshots){
                                 users.add(doc.toObject(User.class));
+                                Log.d(TAG, "USER =" + doc.getData());
+                                doActivity(restaurant,
+                                        review,
+                                        categories,
+                                        users);
                             }
                         }
                     });
         }
+        else {
+            doActivity(restaurant,
+                    review,
+                    categories,
+                    users);
+        }
 
-        Log.d("FIRESTORE", "TO DO SOMETHING HERE");
     }
+    public abstract void doActivity(List<Restaurant> restaurant,
+                                    List<Review> review,
+                                    List<Category> categories,
+                                    List<User> users);
 }
