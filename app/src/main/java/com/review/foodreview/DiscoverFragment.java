@@ -30,7 +30,6 @@ public class DiscoverFragment extends Fragment{
     private List<Restaurant> restaurants = new ArrayList<>();
     private static final String TAG = "DISCOVERFRAGMENT";
     private static ViewPager mPager;
-    private Restaurant restaurantobj;
     private Fragment fragmentrestaurant;
     private Bundle args;
     private FirebaseFirestore mdb;
@@ -93,7 +92,6 @@ public class DiscoverFragment extends Fragment{
         );
         restaurants.add(mcdonalds);
         restaurants.add(otoya);
-
         final LinearLayout _restaurantList = getView().findViewById(R.id.discover_list);
         for (Restaurant r : restaurants) {
             final RestaurantListItem restaurantListItem = new RestaurantListItem(getContext(), r, _restaurantList);
