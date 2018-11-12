@@ -23,12 +23,16 @@ public class Review {
     private List<String> imageUri;
     private DocumentReference restaurant;
 
+    public Review(){
+
+    }
     public Review(
             DocumentReference author,
             Timestamp date,
+            String id,
             List<String> imageUri,
-            DocumentReference restaurant,
-            String id
+            DocumentReference restaurant
+
     ){
         this.author = author;
         this.id = id;
