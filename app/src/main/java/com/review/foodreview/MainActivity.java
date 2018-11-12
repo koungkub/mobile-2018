@@ -14,6 +14,10 @@ public class MainActivity extends AppCompatActivity{
     private static BottomNavigationView navigationView;
     private DBHelper dbHelper;
     private Fragment fragment;
+    private Fragment fragmentDiscover;
+    private Fragment fragmentSearch;
+    private Fragment fragmentMe;
+
     private static final String TAG = "MAINACTIVITY";
 
     @Override
@@ -22,6 +26,9 @@ public class MainActivity extends AppCompatActivity{
         setContentView(R.layout.activity_main);
         init(savedInstanceState);
         setupNavbar();
+        fragmentDiscover = new DiscoverFragment();
+        fragmentSearch = new SearchFragment();
+        fragmentMe = new LoginFragment();
     }
 
     public void init(Bundle bundle) {
@@ -40,18 +47,18 @@ public class MainActivity extends AppCompatActivity{
         navigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
-                fragment = null;
+                Log.d(TAG, String.valueOf(menuItem.getItemId()));
                 switch (menuItem.getItemId()) {
                     case R.id.navigation_discover: {
-                        fragment = new DiscoverFragment();
+                        fragment = fragmentDiscover;
                         break;
                     }
                     case R.id.navigation_search: {
-                        fragment = new SearchFragment();
+                        fragment = fragmentSearch;
                         break;
                     }
                     case R.id.navigation_me: {
-                        fragment = new RegisterFragment();
+                        fragment = fragmentMe;
                         break;
                     }
                 }
