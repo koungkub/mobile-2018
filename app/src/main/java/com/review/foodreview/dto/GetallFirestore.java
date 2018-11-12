@@ -47,7 +47,6 @@ public class GetallFirestore {
                 @Override
                 public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable FirebaseFirestoreException e) {
                     for(QueryDocumentSnapshot doc : queryDocumentSnapshots){
-                        Log.d("ADAPTERFIREBASE", doc.getData().toString());
                         review.add(doc.toObject(Review.class));
                     }
                     Log.d("ADAPTERFIREBASE", restaurant.get(0).getName());
