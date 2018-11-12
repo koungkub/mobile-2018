@@ -15,7 +15,6 @@ import android.view.ViewGroup;
 
 public class SearchFragment extends Fragment  {
     private static final String LOG = "SEARCHFRAGMENT";
-    private BottomNavigationView navigationView;
 
     public SearchFragment(){
 

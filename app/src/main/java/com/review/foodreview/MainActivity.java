@@ -13,11 +13,11 @@ import com.review.foodreview.sqlite.DBHelper;
 import com.review.foodreview.dto.LogDTO;
 import com.review.foodreview.sqlite.DBHelper;
 
-public class MainActivity extends AppCompatActivity{
 
+public class MainActivity extends AppCompatActivity{
     private static BottomNavigationView navigationView;
     private DBHelper dbHelper;
-    Fragment fragment;
+    private Fragment fragment;
     private static final String LOG = "MAINACTIVITY";
 
     @Override

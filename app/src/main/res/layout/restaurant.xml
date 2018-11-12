@@ -5,41 +5,17 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
-    <android.support.constraint.ConstraintLayout
+    <android.widget.Toolbar
         android:id="@+id/restaurant_action_bar"
-        android:layout_width="match_parent"
-        android:layout_height="56dp"
-        android:padding="16dp"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:elevation="4dp"
+        android:minHeight="56dp"
+        android:theme="@style/ToolbarTheme.White"
+        android:background="@android:color/white"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
-
-        <ImageView
-            android:id="@+id/restaurant_btn_back"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="8dp"
-            android:layout_marginLeft="8dp"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="8dp"
-            android:src="@drawable/ic_arrow_back"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <ImageView
-            android:id="@+id/restaurant_btn_bookmark"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="8dp"
-            android:layout_marginEnd="8dp"
-            android:layout_marginRight="8dp"
-            android:layout_marginTop="8dp"
-            android:src="@drawable/ic_bookmark"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-    </android.support.constraint.ConstraintLayout>
+        app:layout_constraintTop_toTopOf="parent" />
 
     <ScrollView
         android:layout_width="match_parent"
@@ -88,8 +64,8 @@
 
                 <ImageView
                     android:id="@+id/restaurant_image_star"
-                    android:layout_width="16dp"
-                    android:layout_height="0dp"
+                    android:layout_width="14dp"
+                    android:layout_height="18dp"
                     android:src="@drawable/ic_star"
                     app:layout_constraintStart_toStartOf="parent" />
 
@@ -97,9 +73,9 @@
                     android:id="@+id/restaurant_text_review"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="10dp"
+                    android:layout_marginStart="4dp"
                     android:text="4.5"
-                    android:textAppearance="@style/TextAppearance.MaterialComponents.Body1"
+                    android:textAppearance="@style/TextAppearance.MaterialComponents.Body2"
                     android:textColor="@color/colorPrimary"
                     app:layout_constraintStart_toEndOf="@+id/restaurant_image_star" />
 
@@ -109,7 +85,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="10dp"
                     android:text="from 15 reviews"
-                    android:textAppearance="@style/TextAppearance.MaterialComponents.Body1"
+                    android:textAppearance="@style/TextAppearance.MaterialComponents.Body2"
                     app:layout_constraintStart_toEndOf="@id/restaurant_text_review" />
 
             </android.support.constraint.ConstraintLayout>
@@ -130,26 +106,24 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Japanese fusion"
-                    android:textAppearance="@style/TextAppearance.MaterialComponents.Body1" />
+                    android:textAppearance="@style/TextAppearance.MaterialComponents.Body2" />
 
                 <TextView
                     android:id="@+id/restaurant_type_price_dot"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="8dp"
                     android:layout_marginStart="8dp"
                     android:text="●"
-                    android:textAppearance="@style/TextAppearance.MaterialComponents.Body1"
-                    android:textColor="@android:color/darker_gray"
+                    android:textAppearance="@style/TextAppearance.MaterialComponents.Body2"
                     app:layout_constraintStart_toEndOf="@+id/restaurant_text_type" />
+
                 <TextView
                     android:id="@+id/restaurant_text_price"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="8dp"
                     android:layout_marginStart="8dp"
                     android:text="$$ (121-300)"
-                    android:textAppearance="@style/TextAppearance.MaterialComponents.Body1"
+                    android:textAppearance="@style/TextAppearance.MaterialComponents.Body2"
                     app:layout_constraintStart_toEndOf="@+id/restaurant_type_price_dot" />
 
             </android.support.constraint.ConstraintLayout>
@@ -176,8 +150,8 @@
 
                     <ImageView
                         android:id="@+id/restaurant_image_time"
-                        android:layout_width="18dp"
-                        android:layout_height="0dp"
+                        android:layout_width="16dp"
+                        android:layout_height="18dp"
                         android:src="@drawable/ic_access_time"
                         app:layout_constraintStart_toStartOf="parent" />
 
@@ -187,7 +161,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="10dp"
                         android:text="10.00 - 22.00"
-                        android:textAppearance="@style/TextAppearance.MaterialComponents.Body1"
+                        android:textAppearance="@style/TextAppearance.MaterialComponents.Body2"
                         app:layout_constraintStart_toEndOf="@+id/restaurant_image_time" />
                 </android.support.constraint.ConstraintLayout>
 
@@ -200,8 +174,8 @@
 
                     <ImageView
                         android:id="@+id/restaurant_image_delivery"
-                        android:layout_width="18dp"
-                        android:layout_height="0dp"
+                        android:layout_width="16dp"
+                        android:layout_height="18dp"
                         android:src="@drawable/ic_directions_bike"
                         app:layout_constraintStart_toStartOf="parent" />
 
@@ -211,7 +185,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="8dp"
                         android:text="Delivery available"
-                        android:textAppearance="@style/TextAppearance.MaterialComponents.Body1"
+                        android:textAppearance="@style/TextAppearance.MaterialComponents.Body2"
                         app:layout_constraintStart_toEndOf="@+id/restaurant_image_delivery" />
                 </android.support.constraint.ConstraintLayout>
 
@@ -246,11 +220,10 @@
                 android:id="@+id/restaurant_text_reviews"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="16dp"
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="16dp"
                 android:text="Reviews"
-                android:textAppearance="@android:style/TextAppearance.Material.Headline"
+                android:textAppearance="@style/TextAppearance.MaterialComponents.Headline6"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/restaurant_wtf_1" />
 

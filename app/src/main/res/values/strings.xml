@@ -3,4 +3,20 @@
     <string name="menu_discover">Discover</string>
     <string name="menu_search">Search</string>
     <string name="menu_me">Me</string>
+
+    <string name="register">Register</string>
+    <string name="login">Login</string>
+    <string name="email">E-mail</string>
+    <string name="password">Password</string>
+    <string name="display_name">Display name</string>
+    <string name="post">Post</string>
+    <string name="bookmark">Bookmark</string>
+
+    <string name="page_register_login">or log me in</string>
+    <string name="page_login_register">or register me</string>
+
+    <string name="page_review_edit_description">Type your review here</string>
+    <string name="page_review_edit_food">How\'s the food?</string>
+    <string name="page_review_edit_service">How\'s the service?</string>
+    <string name="page_review_edit_atmosphere">How\'s the atmosphere?</string>
 </resources>
