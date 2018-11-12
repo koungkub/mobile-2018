@@ -7,38 +7,18 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
-<<<<<<< Updated upstream
-
-<<<<<<< HEAD
-public class MainActivity extends AppCompatActivity{
-    private BottomNavigationView navigationView;
-
-    private static final String LOG = "MAINACTIVITY";
-=======
-=======
-import android.view.View;
-import android.widget.Toast;
-
 import com.review.foodreview.sqlite.DBHelper;
-
->>>>>>> Stashed changes
+import android.view.View;
+import com.review.foodreview.sqlite.DBHelper;
 import com.review.foodreview.dto.LogDTO;
 import com.review.foodreview.sqlite.DBHelper;
 
-import java.util.List;
-
-<<<<<<< Updated upstream
-public class MainActivity extends AppCompatActivity {
->>>>>>> 91faf6d8b56ecb4b088ec62e40876c900b58478f
-
-    private DBHelper dbHelper;
-=======
 public class MainActivity extends AppCompatActivity{
+
     private static BottomNavigationView navigationView;
     private DBHelper dbHelper;
     Fragment fragment;
     private static final String LOG = "MAINACTIVITY";
->>>>>>> Stashed changes
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -76,22 +56,15 @@ public class MainActivity extends AppCompatActivity{
                     }
 
                 }
-                if(fragment != null){
+                if (fragment != null) {
                     Log.d(LOG, "Change page");
-                    getSupportFragmentManager()
-                            .beginTransaction()
-                            .replace(R.id.main_view, fragment)
-                            .commit();
+                    getSupportFragmentManager().beginTransaction().replace(R.id.main_view, fragment).commit();
                 }
                 return true;
             }
         });
     }
-<<<<<<< Updated upstream
 
-    }
-
-=======
     public static void onFragmentChanged(String fragmentName) {
         Log.d(LOG, "onFragmentChanged: " + fragmentName);
         if (fragmentName.equalsIgnoreCase("RESTAURANT")) {
@@ -102,4 +75,3 @@ public class MainActivity extends AppCompatActivity{
         }
     }
 }
->>>>>>> Stashed changes
