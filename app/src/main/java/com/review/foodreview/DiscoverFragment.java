@@ -17,6 +17,7 @@ import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.review.foodreview.component.RestaurantListItem;
+import com.review.foodreview.dto.GetallFirestore;
 import com.review.foodreview.dto.Restaurant;
 import com.review.foodreview.dto.ImageModel;
 import com.review.foodreview.dto.SlidingImageAdapter;
@@ -164,21 +165,7 @@ public class DiscoverFragment extends Fragment{
 
     }
     private void getdiscoverList(){
-        mdb.collection("restaurant").addSnapshotListener(new EventListener<QuerySnapshot>() {
-            @Override
-            public void onEvent(@javax.annotation.Nullable
-                                        QuerySnapshot queryDocumentSnapshots,
-                                @javax.annotation.Nullable FirebaseFirestoreException e) {
-                restaurants.clear();
-                Log.d(TAG, "Query data in discover");
-                for (QueryDocumentSnapshot doc : queryDocumentSnapshots){
-
-                    Log.d(TAG, " from firestore = " + doc.getData());
-                    restaurants.add(doc.toObject(Restaurant.class));
-                }
-
-            }
-        });
+        GetallFirestore gall = new GetallFirestore("HELLO WORLD");
     }
 
     //set bundle and pass to restaurantFragment
