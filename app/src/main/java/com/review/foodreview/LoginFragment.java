@@ -71,12 +71,14 @@ public class LoginFragment extends Fragment {
                                     _submitBtn.setVisibility(View.VISIBLE);
                                     _registerBtn.setVisibility(View.VISIBLE);
                                     if (task.isSuccessful()) {
+                                        Log.d(TAG, "login successful");
                                         currentUser = auth.getCurrentUser();
                                         getFragmentManager()
                                                 .beginTransaction()
                                                 .replace(R.id.main_view, new DiscoverFragment())
                                                 .commit();
                                     } else {
+                                        Log.d(TAG, "login failure");
                                         Toast.makeText(getActivity(), task.getException().getLocalizedMessage(), Toast.LENGTH_LONG)
                                                 .show();
                                     }

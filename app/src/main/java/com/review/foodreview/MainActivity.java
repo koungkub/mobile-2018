@@ -29,6 +29,11 @@ public class MainActivity extends AppCompatActivity{
         fragmentDiscover = new DiscoverFragment();
         fragmentSearch = new SearchFragment();
         fragmentMe = new LoginFragment();
+
+        /**
+         * spike
+         */
+
     }
 
     public void init(Bundle bundle) {
