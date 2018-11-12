@@ -144,7 +144,27 @@ public class DiscoverFragment extends Fragment{
         this.wormDotsIndicator = getView().findViewById(R.id.worm_dots_indicator);
         this.wormDotsIndicator.setViewPager(mPager);
 
-        // Auto start of viewpager open it if you want
+    }
+    private void getdiscoverList(){
+        GetallFirestore gall = new GetallFirestore(true,true, false, true);
+    }
+
+    //set bundle and pass to restaurantFragment
+    private void passbundle(String restaurantId){
+        this.args.putString("id", restaurantId);
+        this.fragmentrestaurant.setArguments(args);
+        getActivity()
+                .getSupportFragmentManager()
+                .beginTransaction()
+                .replace(R.id.main_view, fragmentrestaurant).commit();
+        Log.d(TAG, restaurantId);
+    }
+
+}
+
+
+
+// Auto start of viewpager open it if you want
 //        final Handler handler = new Handler();
 //        final Runnable Update = new Runnable() {
 //            public void run() {
@@ -162,21 +182,3 @@ public class DiscoverFragment extends Fragment{
 //                handler.post(Update);
 //            }
 //        }, 3000, 3000);
-
-    }
-    private void getdiscoverList(){
-        GetallFirestore gall = new GetallFirestore(true,true);
-    }
-
-    //set bundle and pass to restaurantFragment
-    private void passbundle(String restaurantId){
-        this.args.putString("id", restaurantId);
-        this.fragmentrestaurant.setArguments(args);
-        getActivity()
-                .getSupportFragmentManager()
-                .beginTransaction()
-                .replace(R.id.main_view, fragmentrestaurant).commit();
-        Log.d(TAG, restaurantId);
-    }
-
-}
