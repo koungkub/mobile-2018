@@ -9,10 +9,6 @@ import android.util.Log;
 import android.view.MenuItem;
 import com.review.foodreview.sqlite.DBHelper;
 import android.view.View;
-import com.review.foodreview.sqlite.DBHelper;
-import com.review.foodreview.dto.LogDTO;
-import com.review.foodreview.sqlite.DBHelper;
-
 
 public class MainActivity extends AppCompatActivity{
     private static BottomNavigationView navigationView;
