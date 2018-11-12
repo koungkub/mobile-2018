@@ -14,7 +14,7 @@ public class MainActivity extends AppCompatActivity{
     private static BottomNavigationView navigationView;
         private DBHelper dbHelper;
     private Fragment fragment;
-    private static final String LOG = "MAINACTIVITY";
+    private static final String TAG = "MAINACTIVITY";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,7 +35,7 @@ public class MainActivity extends AppCompatActivity{
     }
 
     private void setupNavbar() {
-        Log.d(LOG, "Do setupNavbar");
+        Log.d(TAG, "Do setupNavbar");
         navigationView = findViewById(R.id.Navbottom);
         navigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
@@ -56,7 +56,7 @@ public class MainActivity extends AppCompatActivity{
                     }
                 }
                 if (fragment != null) {
-                    Log.d(LOG, "Change page");
+                    Log.d(TAG, "Change page");
                     getSupportFragmentManager().beginTransaction().replace(R.id.main_view, fragment).commit();
                 }
                 return true;
@@ -65,11 +65,12 @@ public class MainActivity extends AppCompatActivity{
     }
 
     public static void onFragmentChanged(String fragmentName) {
-        Log.d(LOG, "onFragmentChanged: " + fragmentName);
+        Log.d(TAG, "onFragmentChanged: " + fragmentName);
         if (fragmentName.equalsIgnoreCase("RESTAURANT")) {
-            Log.d(LOG, "Invisible");
+            Log.d(TAG, "Invisible nav");
             navigationView.setVisibility(View.GONE);
         } else {
+            Log.d(TAG, "Visible nav");
             navigationView.setVisibility(View.VISIBLE);
         }
     }
