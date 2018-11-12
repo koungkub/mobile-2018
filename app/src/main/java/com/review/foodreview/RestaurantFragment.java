@@ -33,6 +33,7 @@ public class RestaurantFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         Log.d(TAG, "onCreateView");
         restaurant = new Restaurant(restaurantName, restaurantType, priceRange, openHours, rating, reviewCount, delivery);
+        MainActivity.onFragmentChanged(TAG);
         return inflater.inflate(R.layout.restaurant, container, false);
     }
 
@@ -60,5 +61,7 @@ public class RestaurantFragment extends Fragment {
         _reviewCount = getView().findViewById(R.id.restaurant_text_reviewer);
         _openHours = getView().findViewById(R.id.restaurant_text_time);
         _delivery = getView().findViewById(R.id.restaurant_text_delivery);
+    }
+    private void disablenavbar(){
     }
 }
