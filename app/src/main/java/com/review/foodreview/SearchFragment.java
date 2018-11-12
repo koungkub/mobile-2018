@@ -8,13 +8,10 @@ import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
-import com.review.foodreview.dto.LogDTO;
-import com.review.foodreview.sqlite.DBHelper;
-import java.util.List;
 import android.view.ViewGroup;
 
 public class SearchFragment extends Fragment  {
-    private static final String LOG = "SEARCHFRAGMENT";
+    private static final String TAG = "SEARCHFRAGMENT";
 
     public SearchFragment(){
 
@@ -25,7 +22,7 @@ public class SearchFragment extends Fragment  {
     public View onCreateView(@NonNull LayoutInflater inflater,
                              @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
-        Log.d(LOG, "Start SearchFragment");
+        Log.d(TAG, "Start SearchFragment");
         return inflater.inflate(R.layout.search,
                 container,
                 false);
@@ -34,6 +31,8 @@ public class SearchFragment extends Fragment  {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+        MainActivity.onFragmentChanged(TAG);
+
     }
 
 }

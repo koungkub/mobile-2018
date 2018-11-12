@@ -24,10 +24,9 @@ import java.util.List;
 
 public class DiscoverFragment extends Fragment{
     private List<Restaurant> restaurants = new ArrayList<>();
-    private static final String LOG = "DISCOVERFRAGMENT";
+    private static final String TAG = "DISCOVERFRAGMENT";
     private static ViewPager mPager;
     WormDotsIndicator wormDotsIndicator;
-    private BottomNavigationView navigationView;
     private static int NUM_PAGES = 3;
     private ArrayList<ImageModel> imageModelArrayList;
     private int[] myImageList = new int[]{R.drawable.slide1, R.drawable.slide2, R.drawable.slide3};
@@ -35,7 +34,7 @@ public class DiscoverFragment extends Fragment{
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Log.d(LOG, "Start discover fragment (Create)");
+        Log.d(TAG, "Start discover fragment (Create)");
         imageModelArrayList = new ArrayList<>();
         imageModelArrayList = populateList();
     }
@@ -47,7 +46,7 @@ public class DiscoverFragment extends Fragment{
             @Nullable ViewGroup container,
             @Nullable Bundle savedInstanceState
     ) {
-        Log.d(LOG, "Start discover fragment (CreateView)");
+        Log.d(TAG, "Start discover fragment (CreateView)");
         return inflater.inflate(R.layout.discover, container, false);
     }
 
@@ -56,7 +55,8 @@ public class DiscoverFragment extends Fragment{
             @Nullable Bundle savedInstanceState
     ) {
         super.onActivityCreated(savedInstanceState);
-        Log.d(LOG, "Start discover fragment (ActivityCreated)");
+        MainActivity.onFragmentChanged(TAG);
+        Log.d(TAG, "Start discover fragment (ActivityCreated)");
         restaurants.clear();
         Restaurant mcdonalds = new Restaurant(
                 "McDonald's",
@@ -97,7 +97,7 @@ public class DiscoverFragment extends Fragment{
             });
         }
         //setup the discover's slideshow
-        Log.d(LOG, "Do setupSlideshow");
+        Log.d(TAG, "Do setupSlideshow");
         setupSlideshow();
     }
 
