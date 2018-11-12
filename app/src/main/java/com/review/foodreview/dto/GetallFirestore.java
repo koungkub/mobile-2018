@@ -37,7 +37,7 @@ public abstract class GetallFirestore {
         users = new ArrayList<>();
     }
 
-    public void getRestaurant(){
+    public void restaurantList(){
         if(wantRestaurant == true){
             mdb.collection("restaurant")
                     .addSnapshotListener(new EventListener<QuerySnapshot>() {
@@ -48,16 +48,16 @@ public abstract class GetallFirestore {
                         restaurant.add(doc.toObject(Restaurant.class));
                         Log.d(TAG,"RESTAURANT = " +  doc.getData());
                     }
-                    getReview();
+                    reviewList();
                 }
             });
         }
         else {
-            getReview();
+            reviewList();
         }
 
     }
-    public void getReview(){
+    public void reviewList(){
         if(wantReview == true){
             mdb.collection("review")
                     .addSnapshotListener(new EventListener<QuerySnapshot>() {
@@ -67,16 +67,16 @@ public abstract class GetallFirestore {
                     for(QueryDocumentSnapshot doc : queryDocumentSnapshots){
                         review.add(doc.toObject(Review.class));
                         Log.d(TAG, "REVIEW = " + doc.getData());
-                        getCategory();
+                        categoryList();
                     }
                 }
             });
         }
         else {
-            getCategory();
+            categoryList();
         }
     }
-    public void getCategory(){
+    public void categoryList(){
         if(wantCategory == true){
             mdb.collection("category")
                     .addSnapshotListener(new EventListener<QuerySnapshot>() {
@@ -86,17 +86,17 @@ public abstract class GetallFirestore {
                     for(QueryDocumentSnapshot doc : queryDocumentSnapshots){
                         categories.add(doc.toObject(Category.class));
                         Log.d(TAG,"CATEGORY = " + doc.getData());
-                        getUser();
+                        userList();
                     }
                 }
             });
         }
         else {
-            getUser();
+            userList();
         }
 
     }
-    public void getUser(){
+    public void userList(){
         if(wantUser == true){
             mdb.collection("user")
                     .addSnapshotListener(new EventListener<QuerySnapshot>() {

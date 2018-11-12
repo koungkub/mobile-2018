@@ -8,6 +8,7 @@ import com.review.foodreview.dto.Restaurant;
 import com.review.foodreview.dto.Review;
 import com.review.foodreview.dto.User;
 
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -19,7 +20,11 @@ public class DiscoverGetListData extends GetallFirestore {
 
     public DiscoverGetListData(boolean wantRestaurant, boolean wantReview, boolean wantCategory, boolean wantUser){
         super(wantRestaurant, wantReview, wantCategory, wantUser);
-        getRestaurant();
+        restaurant = new ArrayList<>();
+        review = new ArrayList<>();
+        categories = new ArrayList<>();
+        users = new ArrayList<>();
+        restaurantList();
     }
 
     @Override
@@ -30,4 +35,5 @@ public class DiscoverGetListData extends GetallFirestore {
         Log.d("LISTDATA", "User = " + users);
         Log.d("LISTDATA", "This is a Example");
     }
+
 }
