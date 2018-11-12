@@ -3,13 +3,10 @@ package com.review.foodreview;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.design.widget.BottomNavigationView;
-import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
@@ -26,10 +23,14 @@ public class DiscoverFragment extends Fragment{
     private List<Restaurant> restaurants = new ArrayList<>();
     private static final String TAG = "DISCOVERFRAGMENT";
     private static ViewPager mPager;
-    WormDotsIndicator wormDotsIndicator;
-    private static int NUM_PAGES = 3;
+    private WormDotsIndicator wormDotsIndicator;
+    private static final int NUM_PAGES = 3;
     private ArrayList<ImageModel> imageModelArrayList;
-    private int[] myImageList = new int[]{R.drawable.slide1, R.drawable.slide2, R.drawable.slide3};
+    private int[] myImageList = new int[] {
+            R.drawable.slide1,
+            R.drawable.slide2,
+            R.drawable.slide3
+    };
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
