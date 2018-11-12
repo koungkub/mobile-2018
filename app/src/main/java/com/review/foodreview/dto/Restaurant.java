@@ -14,6 +14,7 @@ public class Restaurant {
     private List<DocumentReference> review;
     private float rating;
     private int reviewCount;
+
     public Restaurant(String name,
                       String restaurantType,
                       String priceRange,
@@ -88,10 +89,6 @@ public class Restaurant {
     public boolean isDelivery() { return delivery; }
 
     public String getId() { return id; }
-
-    public void setId(String id) {
-        this.id = id;
-    }
 
     public String getTelephone() { return telephone; }
 

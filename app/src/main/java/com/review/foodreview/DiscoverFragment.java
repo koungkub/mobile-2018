@@ -175,8 +175,8 @@ public class DiscoverFragment extends Fragment{
 
                     Log.d(TAG, " from firestore = " + doc.getData());
                     restaurants.add(doc.toObject(Restaurant.class));
-
                 }
+
             }
         });
     }
