@@ -12,7 +12,7 @@ import android.view.View;
 
 public class MainActivity extends AppCompatActivity{
     private static BottomNavigationView navigationView;
-    private DBHelper dbHelper;
+        private DBHelper dbHelper;
     private Fragment fragment;
     private static final String LOG = "MAINACTIVITY";
 
