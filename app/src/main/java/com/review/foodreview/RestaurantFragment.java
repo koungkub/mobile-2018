@@ -48,7 +48,7 @@ public class RestaurantFragment extends Fragment {
         registerFragmentElements();
         createMenu();
 
-        _restaurantName.setText(restaurant.getRestaurantName());
+        _restaurantName.setText(restaurant.getName());
         _restaurantType.setText(restaurant.getRestaurantType());
         _priceRange.setText(restaurant.getPriceRange());
         _rating.setText(Float.toString(restaurant.getRating()));
@@ -84,11 +84,9 @@ public class RestaurantFragment extends Fragment {
 
     private void createMenu() {
         _toolbar = getActivity().findViewById(R.id.restaurant_action_bar);
-        _toolbar.setTitle(restaurant.getRestaurantName());
+        _toolbar.setTitle(restaurant.getName());
         _toolbar.setNavigationIcon(R.drawable.ic_arrow_back);
         _toolbar.inflateMenu(R.menu.restaurant);
         getActivity().setActionBar(_toolbar);
-    }
-    private void disablenavbar(){
     }
 }

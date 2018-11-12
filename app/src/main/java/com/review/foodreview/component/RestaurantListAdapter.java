@@ -40,7 +40,7 @@ public class RestaurantListAdapter extends ArrayAdapter<Restaurant> {
         final TextView _priceRange = restaurantListItem.findViewById(R.id.restaurant_list_item_text_price);
         final TextView _rating = restaurantListItem.findViewById(R.id.restaurant_list_item_text_score);
         final Restaurant restaurant = restaurantList.get(position);
-        _restaurantName.setText(restaurant.getRestaurantName());
+        _restaurantName.setText(restaurant.getName());
         _restaurantType.setText(restaurant.getRestaurantType());
         _priceRange.setText(restaurant.getPriceRange());
         _rating.setText(Float.toString(restaurant.getRating()));

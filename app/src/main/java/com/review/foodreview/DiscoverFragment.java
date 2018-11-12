@@ -10,6 +10,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
+
+import com.google.firebase.firestore.EventListener;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreException;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 import com.review.foodreview.component.RestaurantListItem;
 import com.review.foodreview.dto.Restaurant;
 import com.review.foodreview.dto.ImageModel;
@@ -23,6 +29,10 @@ public class DiscoverFragment extends Fragment{
     private List<Restaurant> restaurants = new ArrayList<>();
     private static final String TAG = "DISCOVERFRAGMENT";
     private static ViewPager mPager;
+    private Restaurant restaurantobj;
+    private Fragment fragmentrestaurant;
+    private Bundle args;
+    private FirebaseFirestore mdb;
     private WormDotsIndicator wormDotsIndicator;
     private static final int NUM_PAGES = 3;
     private ArrayList<ImageModel> imageModelArrayList;
@@ -36,8 +46,11 @@ public class DiscoverFragment extends Fragment{
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Log.d(TAG, "Start discover fragment (Create)");
+        mdb = FirebaseFirestore.getInstance();
+        args = new Bundle();
         imageModelArrayList = new ArrayList<>();
         imageModelArrayList = populateList();
+        fragmentrestaurant = new RestaurantFragment();
     }
 
     @Nullable
@@ -100,6 +113,8 @@ public class DiscoverFragment extends Fragment{
         //setup the discover's slideshow
         Log.d(TAG, "Do setupSlideshow");
         setupSlideshow();
+        //get Discover List
+        getdiscoverList();
     }
 
 
@@ -147,6 +162,34 @@ public class DiscoverFragment extends Fragment{
 //            }
 //        }, 3000, 3000);
 
+    }
+    private void getdiscoverList(){
+        mdb.collection("restaurant").addSnapshotListener(new EventListener<QuerySnapshot>() {
+            @Override
+            public void onEvent(@javax.annotation.Nullable
+                                        QuerySnapshot queryDocumentSnapshots,
+                                @javax.annotation.Nullable FirebaseFirestoreException e) {
+                restaurants.clear();
+                Log.d(TAG, "Query data in discover");
+                for (QueryDocumentSnapshot doc : queryDocumentSnapshots){
+
+                    Log.d(TAG, " from firestore = " + doc.getData());
+                    restaurants.add(doc.toObject(Restaurant.class));
+
+                }
+            }
+        });
+    }
+
+    //set bundle and pass to restaurantFragment
+    private void passbundle(String restaurantId){
+        this.args.putString("id", restaurantId);
+        this.fragmentrestaurant.setArguments(args);
+        getActivity()
+                .getSupportFragmentManager()
+                .beginTransaction()
+                .replace(R.id.main_view, fragmentrestaurant).commit();
+        Log.d(TAG, restaurantId);
     }
 
 }

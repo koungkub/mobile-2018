@@ -37,7 +37,7 @@ public class RestaurantListItem {
         final TextView _restaurantType = restaurantListItem.findViewById(R.id.restaurant_list_item_text_type);
         final TextView _priceRange = restaurantListItem.findViewById(R.id.restaurant_list_item_text_price);
         final TextView _rating = restaurantListItem.findViewById(R.id.restaurant_list_item_text_score);
-        _restaurantName.setText(restaurant.getRestaurantName());
+        _restaurantName.setText(restaurant.getName());
         _restaurantType.setText(restaurant.getRestaurantType());
         _priceRange.setText(restaurant.getPriceRange());
         _rating.setText(Float.toString(restaurant.getRating()));
