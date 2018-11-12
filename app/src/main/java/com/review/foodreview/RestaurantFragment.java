@@ -8,6 +8,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 
 import android.widget.Toolbar;
@@ -29,6 +30,7 @@ public class RestaurantFragment extends Fragment {
     private TextView _restaurantName, _restaurantType, _priceRange, _rating, _reviewCount;
     private TextView _openHours, _delivery;
     private Toolbar _toolbar;
+    private Button _writeBtn, _viewAllBtn;
 
     @Nullable
     @Override
@@ -52,6 +54,17 @@ public class RestaurantFragment extends Fragment {
         _reviewCount.setText("from " + restaurant.getReviewCount() + " reviews");
         _openHours.setText(restaurant.getOpenHours());
         if (!restaurant.isDeliverable()) _delivery.setText("Delivery not available");
+
+        _writeBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                getFragmentManager()
+                        .beginTransaction()
+                        .addToBackStack(null)
+                        .replace(R.id.main_view, new ReviewEditFragment())
+                        .commit();
+            }
+        });
     }
 
     private void registerFragmentElements() {
@@ -64,6 +77,8 @@ public class RestaurantFragment extends Fragment {
         _openHours = getView().findViewById(R.id.restaurant_text_time);
         _delivery = getView().findViewById(R.id.restaurant_text_delivery);
         _toolbar = getView().findViewById(R.id.restaurant_action_bar);
+        _writeBtn = getView().findViewById(R.id.restaurant_review_btn_add);
+        _viewAllBtn = getView().findViewById(R.id.restaurant_review_btn_all);
     }
 
     private void createMenu() {

@@ -3,10 +3,10 @@ package com.review.foodreview;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.*;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.Toast;
@@ -20,7 +20,7 @@ import com.google.firebase.auth.UserProfileChangeRequest;
 public class RegisterFragment extends Fragment {
     private static final String TAG = "REGISTER";
     private EditText _email, _password, _username;
-    private FloatingActionButton _submitBtn;
+    private Button _submitBtn, _loginBtn;
     private ProgressBar _loading;
     private FirebaseAuth auth;
 
@@ -37,14 +37,16 @@ public class RegisterFragment extends Fragment {
         Log.d(TAG, "RegisterFragment: onActivityCreated");
         registerFragmentElements();
         initSubmitBtn();
+        initLoginBtn();
     }
 
     private void registerFragmentElements() {
         Log.d(TAG, "RegisterFragment: registerFragmentElements");
-        _email = getView().findViewById(R.id.register_input_email);
-        _password = getView().findViewById(R.id.register_input_password);
+        _email = getView().findViewById(R.id.login_input_email);
+        _password = getView().findViewById(R.id.login_input_password);
         _username = getView().findViewById(R.id.register_input_username);
         _submitBtn = getView().findViewById(R.id.register_btn);
+        _loginBtn = getView().findViewById(R.id.register_btn_login);
         _loading = getView().findViewById(R.id.register_loading);
     }
 
@@ -57,15 +59,19 @@ public class RegisterFragment extends Fragment {
                 final String password = _password.getText().toString();
                 final String username = _username.getText().toString();
                 if (email.isEmpty() || password.isEmpty() || username.isEmpty()) {
-                    Toast.makeText(getActivity(), "Please complete all the fields", Toast.LENGTH_SHORT)
+                    Toast.makeText(getActivity(), "Please complete all the fields", Toast.LENGTH_LONG)
                             .show();
                 } else {
                     _loading.setVisibility(View.VISIBLE);
+                    _submitBtn.setVisibility(View.INVISIBLE);
+                    _loginBtn.setVisibility(View.INVISIBLE);
                     auth.createUserWithEmailAndPassword(email, password)
                             .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                                 @Override
                                 public void onComplete(@NonNull Task<AuthResult> task) {
                                     _loading.setVisibility(View.GONE);
+                                    _submitBtn.setVisibility(View.VISIBLE);
+                                    _loginBtn.setVisibility(View.VISIBLE);
                                     if (task.isSuccessful()) {
                                         Log.d(TAG, "createUserWithEmail:success");
                                         FirebaseUser user = auth.getCurrentUser();
@@ -93,6 +99,18 @@ public class RegisterFragment extends Fragment {
                                 }
                             });
                 }
+            }
+        });
+    }
+
+    private void initLoginBtn() {
+        _loginBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                getFragmentManager()
+                        .beginTransaction()
+                        .replace(R.id.main_view, new LoginFragment())
+                        .commit();
             }
         });
     }
