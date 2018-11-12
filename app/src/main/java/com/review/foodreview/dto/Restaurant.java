@@ -8,20 +8,22 @@ import java.util.List;
 public class Restaurant {
     private DocumentReference category;
     private boolean delivery;
-    private String name, restaurantType, priceRange, openHours, id, telephone;
+    private String id, name, restaurantType, priceRange, openHours, telephone;
     private List<String> imageUri;
     private GeoPoint location;
     private List<DocumentReference> review;
     private float rating;
     private int reviewCount;
 
-    public Restaurant(String name,
+    public Restaurant(String id,
+                      String name,
                       String restaurantType,
                       String priceRange,
                       String openHours,
                       float rating,
                       int reviewCount,
                       boolean deliverable) {
+        this.id = id;
         this.name = name;
         this.restaurantType = restaurantType;
         this.priceRange = priceRange;
@@ -30,10 +32,9 @@ public class Restaurant {
         this.reviewCount = reviewCount;
         this.delivery = deliverable;
     }
-    public Restaurant(){
+    public Restaurant() {}
 
-    }
-//use this in delivery
+    // use this in delivery
     public Restaurant(
             DocumentReference category,
             Boolean delivery,

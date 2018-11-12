@@ -73,6 +73,7 @@ public class DiscoverFragment extends Fragment{
         Log.d(TAG, "Start discover fragment (ActivityCreated)");
         restaurants.clear();
         Restaurant mcdonalds = new Restaurant(
+                "testId1",
                 "McDonald's",
                 "Fast food",
                 "$ (< 120)",
@@ -82,6 +83,7 @@ public class DiscoverFragment extends Fragment{
                 true
         );
         Restaurant otoya = new Restaurant(
+                "testId2",
                 "Otoya",
                 "Japanese",
                 "$$ (120 - 300)",

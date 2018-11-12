@@ -12,6 +12,10 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import android.widget.Toolbar;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.EventListener;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.review.foodreview.dto.Restaurant;
 
 public class RestaurantFragment extends Fragment {
@@ -26,6 +30,7 @@ public class RestaurantFragment extends Fragment {
     private boolean delivery = false;
 
     private Restaurant restaurant;
+    private FirebaseFirestore firestore = FirebaseFirestore.getInstance();
 
     private TextView _restaurantName, _restaurantType, _priceRange, _rating, _reviewCount;
     private TextView _openHours, _delivery;
@@ -36,7 +41,7 @@ public class RestaurantFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         Log.d(TAG, "onCreateView");
-        restaurant = new Restaurant(restaurantName, restaurantType, priceRange, openHours, rating, reviewCount, delivery);
+//        restaurant = new Restaurant(restaurantName, restaurantType, priceRange, openHours, rating, reviewCount, delivery);
         MainActivity.onFragmentChanged(TAG);
         return inflater.inflate(R.layout.restaurant, container, false);
     }
@@ -45,16 +50,35 @@ public class RestaurantFragment extends Fragment {
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         Log.d(TAG, "onActivityCreated");
         super.onActivityCreated(savedInstanceState);
-        registerFragmentElements();
-        createMenu();
 
-        _restaurantName.setText(restaurant.getName());
-        _restaurantType.setText(restaurant.getRestaurantType());
-        _priceRange.setText(restaurant.getPriceRange());
-        _rating.setText(Float.toString(restaurant.getRating()));
-        _reviewCount.setText("from " + restaurant.getReviewCount() + " reviews");
-        _openHours.setText(restaurant.getOpenHours());
-        if (!restaurant.isDeliverable()) _delivery.setText("Delivery not available");
+        registerFragmentElements();
+
+        Log.d(TAG, "fetchRestaurant: fetching");
+        firestore.collection("restaurant")
+                .document("PxZsYjM909P3IfsvJdPb")
+                .addSnapshotListener(new EventListener<DocumentSnapshot>() {
+                    @Override
+                    public void onEvent(@javax.annotation.Nullable DocumentSnapshot documentSnapshot, @javax.annotation.Nullable FirebaseFirestoreException e) {
+                        if (documentSnapshot.exists()) {
+                            Log.d(TAG, documentSnapshot.get("name").toString());
+                            restaurant = new Restaurant(
+                                    documentSnapshot.getId(),
+                                    documentSnapshot.getString("name"),
+                                    // documentSnapshot.getString("category"),
+                                    "Japanese fusion",
+                                    documentSnapshot.getString("priceRange"),
+                                    documentSnapshot.getString("openHours"),
+                                    4.5f,
+                                    20,
+                                    documentSnapshot.getBoolean("delivery")
+                            );
+                            createMenu();
+                            setTexts(restaurant);
+                        } else {
+                            Log.d(TAG, "Object doesn't exist");
+                        }
+                    }
+                });
 
         _writeBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -88,5 +112,15 @@ public class RestaurantFragment extends Fragment {
         _toolbar.setNavigationIcon(R.drawable.ic_arrow_back);
         _toolbar.inflateMenu(R.menu.restaurant);
         getActivity().setActionBar(_toolbar);
+    }
+
+    private void setTexts(Restaurant restaurant) {
+        _restaurantName.setText(restaurant.getName());
+        _restaurantType.setText(restaurant.getRestaurantType());
+        _priceRange.setText(restaurant.getPriceRange());
+        _rating.setText(Float.toString(restaurant.getRating()));
+        _reviewCount.setText("from " + restaurant.getReviewCount() + " reviews");
+        _openHours.setText(restaurant.getOpenHours());
+        if (!restaurant.isDeliverable()) _delivery.setText("Delivery not available");
     }
 }
