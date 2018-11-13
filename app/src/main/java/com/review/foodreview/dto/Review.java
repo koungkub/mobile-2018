@@ -10,88 +10,49 @@ import java.util.List;
  * @return Review
  */
 public class Review {
-    private String id;
-    private String authorId;
-    private String restaurantId;
-    private String description;
-    private String _date;
+    private String reviewId, authorId, restaurantId, description;
+    private Timestamp date;
     private List<String> imageUriList;
     private RestaurantRating rating;
-    // use this you should fix your code argument
-    private DocumentReference author;
-    private Timestamp date;
-    private List<String> imageUri;
-    private DocumentReference restaurant;
 
-    public Review(){
-
-    }
-    public Review(
-            DocumentReference author,
-            Timestamp date,
-            String id,
-            List<String> imageUri,
-            DocumentReference restaurant
-
-    ){
-        this.author = author;
-        this.id = id;
-        this.date = date;
-        this.imageUri = imageUri;
-        this.restaurant = restaurant;
-    }
-
-    public Review(String id,
+    public Review(String reviewId,
                   String authorId,
                   String restaurantId,
                   String description,
-                  String date,
+                  Timestamp date,
                   List<String> imageUriList,
                   RestaurantRating rating) {
-        this.id = id;
+        this.reviewId = reviewId;
         this.authorId = authorId;
         this.restaurantId = restaurantId;
         this.description = description;
-        this._date = date;
+        this.date = date;
         this.imageUriList = imageUriList;
         this.rating = rating;
     }
 
-    public DocumentReference getAuthor() { return author; }
-
-    public List<String> getImageUri() { return imageUri; }
-
-    public DocumentReference getRestaurant() { return restaurant; }
-
-    public Timestamp getDate() {
-        return date;
-    }
-
-    /**
-     * Get review ID
-     * @return String
-     */
-    public String getId() {
-        return id;
+    public String getReviewId() {
+        return reviewId;
     }
 
     public String getAuthorId() {
         return authorId;
     }
 
+    public String getRestaurantId() {
+        return restaurantId;
+    }
+
     public String getDescription() {
         return description;
     }
 
-    public String get_date() { return _date; }
-
+    public Timestamp getDate() {
+        return date;
+    }
 
     public List<String> getImageUriList() {
         return imageUriList;
-    }
-
-    public String getRestaurantId() {
-        return restaurantId;
     }
 
     public RestaurantRating getRating() {
