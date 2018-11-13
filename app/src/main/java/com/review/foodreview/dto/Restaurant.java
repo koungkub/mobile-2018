@@ -32,7 +32,6 @@ public class Restaurant {
         this.reviewCount = reviewCount;
         this.delivery = deliverable;
     }
-    public Restaurant() {}
 
     // use this in delivery
     public Restaurant(
@@ -44,8 +43,7 @@ public class Restaurant {
             String name,
             String openHours,
             List<DocumentReference> review,
-            String telephone
-    ){
+            String telephone) {
         this.category = category;
         this.delivery = delivery;
         this.id = id;
