@@ -75,8 +75,11 @@ public class RegisterFragment extends Fragment {
                                     _submitBtn.setVisibility(View.VISIBLE);
                                     _loginBtn.setVisibility(View.VISIBLE);
                                     if (task.isSuccessful()) {
-                                        Log.d(TAG, "createUserWithEmail:success");
+                                        Log.d(TAG, "createUserWithEmail: success");
                                         FirebaseUser user = auth.getCurrentUser();
+                                        user.sendEmailVerification();
+                                        // TODO: Display a modal telling user to check email
+                                        // update user displayName
                                         UserProfileChangeRequest changeRequest = new UserProfileChangeRequest.Builder()
                                                 .setDisplayName(username)
                                                 .build();
@@ -84,6 +87,9 @@ public class RegisterFragment extends Fragment {
                                                 .addOnCompleteListener(new OnCompleteListener<Void>() {
                                                     @Override
                                                     public void onComplete(@NonNull Task<Void> task) {
+                                                        // save user to db
+
+                                                        // redirect to Discover
                                                         getActivity()
                                                                 .getSupportFragmentManager()
                                                                 .beginTransaction()
@@ -92,7 +98,7 @@ public class RegisterFragment extends Fragment {
                                                     }
                                                 });
                                     } else {
-                                        Log.w(TAG, "createUserWithEmail:failure", task.getException());
+                                        Log.w(TAG, "createUserWithEmail: failure", task.getException());
                                         Toast.makeText(getActivity(),
                                                 task.getException().getLocalizedMessage(),
                                                 Toast.LENGTH_LONG)
