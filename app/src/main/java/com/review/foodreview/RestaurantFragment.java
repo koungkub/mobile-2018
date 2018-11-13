@@ -41,7 +41,6 @@ public class RestaurantFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         Log.d(TAG, "onCreateView");
-//        restaurant = new Restaurant(restaurantName, restaurantType, priceRange, openHours, rating, reviewCount, delivery);
         MainActivity.onFragmentChanged(TAG);
         return inflater.inflate(R.layout.restaurant, container, false);
     }
@@ -58,7 +57,8 @@ public class RestaurantFragment extends Fragment {
                 .document("PxZsYjM909P3IfsvJdPb")
                 .addSnapshotListener(new EventListener<DocumentSnapshot>() {
                     @Override
-                    public void onEvent(@javax.annotation.Nullable DocumentSnapshot documentSnapshot, @javax.annotation.Nullable FirebaseFirestoreException e) {
+                    public void onEvent(@javax.annotation.Nullable DocumentSnapshot documentSnapshot,
+                                        @javax.annotation.Nullable FirebaseFirestoreException e) {
                         if (documentSnapshot.exists()) {
                             Log.d(TAG, documentSnapshot.get("name").toString());
                             restaurant = new Restaurant(
@@ -72,24 +72,25 @@ public class RestaurantFragment extends Fragment {
                                     20,
                                     documentSnapshot.getBoolean("delivery")
                             );
-                            createMenu();
-                            setTexts(restaurant);
                         } else {
                             Log.d(TAG, "Object doesn't exist");
+                            restaurant = new Restaurant(
+                                    "no id",
+                                    "no name",
+                                    "no category",
+                                    "no price",
+                                    "never opens",
+                                    0f,
+                                    0,
+                                    false
+                            );
                         }
+                        createMenu();
+                        setTexts(restaurant);
                     }
                 });
-
-        _writeBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                getFragmentManager()
-                        .beginTransaction()
-                        .addToBackStack(null)
-                        .replace(R.id.main_view, new ReviewEditFragment())
-                        .commit();
-            }
-        });
+        // TODO: Fetch reviews here
+        initWriteBtn();
     }
 
     private void registerFragmentElements() {
@@ -122,5 +123,18 @@ public class RestaurantFragment extends Fragment {
         _reviewCount.setText("from " + restaurant.getReviewCount() + " reviews");
         _openHours.setText(restaurant.getOpenHours());
         if (!restaurant.isDeliverable()) _delivery.setText("Delivery not available");
+    }
+
+    private void initWriteBtn() {
+        _writeBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                getFragmentManager()
+                        .beginTransaction()
+                        .addToBackStack(null)
+                        .replace(R.id.main_view, new ReviewEditFragment())
+                        .commit();
+            }
+        });
     }
 }
