@@ -55,20 +55,19 @@ public class DiscoverFragment extends Fragment{
     public View onCreateView(
             @NonNull LayoutInflater inflater,
             @Nullable ViewGroup container,
-            @Nullable Bundle savedInstanceState
-    ) {
+            @Nullable Bundle savedInstanceState) {
         Log.d(TAG, "Start discover fragment (CreateView)");
         return inflater.inflate(R.layout.discover, container, false);
     }
 
     @Override
-    public void onActivityCreated(
-            @Nullable Bundle savedInstanceState
-    ) {
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         MainActivity.onFragmentChanged(TAG);
         Log.d(TAG, "Start discover fragment (ActivityCreated)");
+        // clear the list to prevent duplicate data
         restaurants.clear();
+        // dummy data
         Restaurant mcdonalds = new Restaurant(
                 "testId1",
                 "McDonald's",
@@ -92,6 +91,8 @@ public class DiscoverFragment extends Fragment{
         restaurants.add(mcdonalds);
         restaurants.add(otoya);
         final LinearLayout _restaurantList = getView().findViewById(R.id.discover_list);
+
+        // add restaurant items to the LinearLayout _restaurantList
         for (Restaurant r : restaurants) {
             final RestaurantListItem restaurantListItem = new RestaurantListItem(getContext(), r, _restaurantList);
             final View restaurantListItemView = restaurantListItem.getComponent();
@@ -108,10 +109,10 @@ public class DiscoverFragment extends Fragment{
                 }
             });
         }
-        //setup the discover's slideshow
+        // set up Featured slideshow
         Log.d(TAG, "Do setupSlideshow");
         setupSlideshow();
-        //get Discover List
+        // get Discover List
         getdiscoverList();
     }
 
@@ -158,8 +159,6 @@ public class DiscoverFragment extends Fragment{
     }
 
 }
-
-
 
 // Auto start of viewpager open it if you want
 //        final Handler handler = new Handler();
