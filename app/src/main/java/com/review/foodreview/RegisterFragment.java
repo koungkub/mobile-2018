@@ -42,6 +42,7 @@ public class RegisterFragment extends Fragment {
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         Log.d(TAG, "RegisterFragment: onActivityCreated");
+        MainActivity.onFragmentChanged(TAG);
         firestore = FirebaseFirestore.getInstance();
         registerFragmentElements();
         initSubmitBtn();
