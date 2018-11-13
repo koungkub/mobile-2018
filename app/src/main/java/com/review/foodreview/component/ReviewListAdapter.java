@@ -39,6 +39,7 @@ public class ReviewListAdapter extends ArrayAdapter<Review> {
         final Review review = reviewList.get(position);
         _description.setText(review.getDescription());
         // TODO: Get author name
+        // TODO: Show rating
         return reviewItem;
     }
 }
