@@ -111,6 +111,7 @@ public class RegisterFragment extends Fragment {
                                                                         public void onComplete(@NonNull Task<Void> task) {
                                                                             if (task.isSuccessful()) {
                                                                                 Log.d(TAG, "saved user to database");
+                                                                                auth.signOut();
                                                                                 displaySuccessDialog();
                                                                             } else {
                                                                                 Log.d(TAG, "save to db failed: " + task.getException().getMessage());
