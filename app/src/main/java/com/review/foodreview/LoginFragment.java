@@ -1,5 +1,7 @@
 package com.review.foodreview;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -71,12 +73,16 @@ public class LoginFragment extends Fragment {
                                     _submitBtn.setVisibility(View.VISIBLE);
                                     _registerBtn.setVisibility(View.VISIBLE);
                                     if (task.isSuccessful()) {
-                                        Log.d(TAG, "login successful");
-                                        currentUser = auth.getCurrentUser();
-                                        getFragmentManager()
-                                                .beginTransaction()
-                                                .replace(R.id.main_view, new DiscoverFragment())
-                                                .commit();
+                                        Log.d(TAG, "login success");
+                                        if (auth.getCurrentUser().isEmailVerified()) {
+                                            getFragmentManager()
+                                                    .beginTransaction()
+                                                    .replace(R.id.main_view, new DiscoverFragment())
+                                                    .commit();
+                                        } else {
+                                            auth.signOut();
+                                            displayFailureDialog("You must verify your email first through the link sent to your email.");
+                                        }
                                     } else {
                                         Log.d(TAG, "login failure");
                                         Toast.makeText(getActivity(), task.getException().getLocalizedMessage(), Toast.LENGTH_LONG)
@@ -99,5 +105,16 @@ public class LoginFragment extends Fragment {
                         .commit();
             }
         });
+    }
+
+    private void displayFailureDialog(String message) {
+        final AlertDialog.Builder builder = new AlertDialog.Builder(getContext(), android.R.style.Theme_Material_Light_Dialog_Alert);
+        builder.setTitle("Could not log in")
+                .setMessage(message)
+                .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {}
+                })
+                .show();
     }
 }

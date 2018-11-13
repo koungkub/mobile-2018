@@ -73,9 +73,7 @@ public class RegisterFragment extends Fragment {
                             Toast.LENGTH_SHORT)
                             .show();
                 } else {
-                    _loading.setVisibility(View.VISIBLE);
-                    _submitBtn.setVisibility(View.INVISIBLE);
-                    _loginBtn.setVisibility(View.INVISIBLE);
+                    hideButtons(true);
                     auth.createUserWithEmailAndPassword(email, password)
                             .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                                 @Override
@@ -117,21 +115,21 @@ public class RegisterFragment extends Fragment {
                                                                                 Log.d(TAG, "save to db failed: " + task.getException().getMessage());
                                                                                 displayFailureDialog(task.getException().getLocalizedMessage());
                                                                             }
+                                                                            hideButtons(false);
                                                                         }
                                                                     });
                                                         } else {
                                                             Log.d(TAG, "update profile failed: " + task.getException().getMessage());
                                                             displayFailureDialog(task.getException().getLocalizedMessage());
+                                                            hideButtons(false);
                                                         }
                                                     }
                                                 });
                                     } else {
                                         Log.w(TAG, "createUserWithEmail: failure", task.getException());
                                         displayFailureDialog(task.getException().getLocalizedMessage());
+                                        hideButtons(false);
                                     }
-                                    _loading.setVisibility(View.GONE);
-                                    _submitBtn.setVisibility(View.VISIBLE);
-                                    _loginBtn.setVisibility(View.VISIBLE);
                                 }
                             });
                 }
@@ -177,5 +175,17 @@ public class RegisterFragment extends Fragment {
                     public void onClick(DialogInterface dialog, int which) {}
                 })
                 .show();
+    }
+
+    private void hideButtons(boolean hide) {
+        if (hide == true) {
+            _loading.setVisibility(View.VISIBLE);
+            _submitBtn.setVisibility(View.INVISIBLE);
+            _loginBtn.setVisibility(View.INVISIBLE);
+        } else {
+            _loading.setVisibility(View.GONE);
+            _submitBtn.setVisibility(View.VISIBLE);
+            _loginBtn.setVisibility(View.VISIBLE);
+        }
     }
 }
