@@ -3,6 +3,7 @@ package com.review.foodreview.dto;
 import com.google.firebase.Timestamp;
 import com.google.firebase.firestore.DocumentReference;
 
+import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -14,7 +15,8 @@ public class Review {
     private DocumentReference authorRef, restaurantRef;
     private Timestamp date;
     private List<String> imageUriList;
-    private RestaurantRating rating;
+    // private RestaurantRating rating;
+    private HashMap<String, Long> rating;
 
     public Review(String reviewId,
                   DocumentReference authorRef,
@@ -22,7 +24,7 @@ public class Review {
                   String description,
                   Timestamp date,
                   List<String> imageUriList,
-                  RestaurantRating rating) {
+                  HashMap<String, Long> rating) {
         this.reviewId = reviewId;
         this.authorRef = authorRef;
         this.restaurantRef = restaurantRef;
@@ -56,7 +58,7 @@ public class Review {
         return imageUriList;
     }
 
-    public RestaurantRating getRating() {
+    public HashMap<String, Long> getRating() {
         return rating;
     }
 }

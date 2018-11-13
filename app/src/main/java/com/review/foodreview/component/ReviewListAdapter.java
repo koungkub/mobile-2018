@@ -20,7 +20,7 @@ import java.util.List;
 
 public class ReviewListAdapter extends ArrayAdapter<Review> {
     private final String TAG = "REVIEWLISTADAPTER";
-    private List<Review> reviewList = new ArrayList<>();
+    private List<Review> reviewList;
     private Context context;
 
     public ReviewListAdapter(@NonNull Context context, int resource, @NonNull List<Review> reviews) {
@@ -38,6 +38,7 @@ public class ReviewListAdapter extends ArrayAdapter<Review> {
         final TextView _author = reviewItem.findViewById(R.id.all_review_item_text_reviewer);
         final Review review = reviewList.get(position);
         _description.setText(review.getDescription());
+        // TODO: Get author name
         return reviewItem;
     }
 }
