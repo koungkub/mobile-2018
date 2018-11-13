@@ -21,14 +21,6 @@ import com.review.foodreview.dto.Restaurant;
 public class RestaurantFragment extends Fragment {
     private static final String TAG = "RESTAURANT";
 
-    private String restaurantName = "on da table";
-    private String restaurantType = "Japanese fusion";
-    private String priceRange = "$$ (121-300)";
-    private String openHours = "09.00 - 22.00";
-    private float rating = 4.3f;
-    private int reviewCount = 221;
-    private boolean delivery = false;
-
     private Restaurant restaurant;
     private FirebaseFirestore firestore = FirebaseFirestore.getInstance();
 
@@ -85,8 +77,10 @@ public class RestaurantFragment extends Fragment {
                                     false
                             );
                         }
+                        // methods that require data from Firestore
                         createMenu();
                         setTexts(restaurant);
+                        initViewAllBtn();
                     }
                 });
         // TODO: Fetch reviews here
@@ -108,7 +102,6 @@ public class RestaurantFragment extends Fragment {
     }
 
     private void createMenu() {
-        _toolbar = getActivity().findViewById(R.id.restaurant_action_bar);
         _toolbar.setTitle(restaurant.getName());
         _toolbar.setNavigationIcon(R.drawable.ic_arrow_back);
         _toolbar.inflateMenu(R.menu.restaurant);
@@ -133,6 +126,24 @@ public class RestaurantFragment extends Fragment {
                         .beginTransaction()
                         .addToBackStack(null)
                         .replace(R.id.main_view, new ReviewEditFragment())
+                        .commit();
+            }
+        });
+    }
+
+    private void initViewAllBtn() {
+        final Bundle bundle = new Bundle();
+        bundle.putString("restaurantName", restaurant.getName());
+        bundle.putString("restaurantId", restaurant.getId());
+        _viewAllBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Fragment fragment = new ReviewsFragment();
+                fragment.setArguments(bundle);
+                getFragmentManager()
+                        .beginTransaction()
+                        .addToBackStack(null)
+                        .replace(R.id.main_view, fragment)
                         .commit();
             }
         });
