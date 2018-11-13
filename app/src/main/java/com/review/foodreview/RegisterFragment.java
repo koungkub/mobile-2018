@@ -67,7 +67,10 @@ public class RegisterFragment extends Fragment {
                 final String password = _password.getText().toString();
                 final String username = _username.getText().toString();
                 if (email.isEmpty() || password.isEmpty() || username.isEmpty() || password.length() < 6) {
-                    Toast.makeText(getActivity(), "Please complete all the fields or password less than 6", Toast.LENGTH_LONG)
+                    Toast.makeText(
+                            getActivity(),
+                            "Fill in all the fields. Make sure the password is longer than 6 characters",
+                            Toast.LENGTH_SHORT)
                             .show();
                 } else {
                     _loading.setVisibility(View.VISIBLE);
@@ -81,42 +84,49 @@ public class RegisterFragment extends Fragment {
                                         Log.d(TAG, "createUserWithEmail: success");
                                         final FirebaseUser currentUser = auth.getCurrentUser();
 
+                                        Log.d(TAG, "sending verification email");
                                         currentUser.sendEmailVerification();
 
-                                        Log.d(TAG, "create profile change request");
                                         final UserProfileChangeRequest changeRequest = new UserProfileChangeRequest.Builder()
                                                 .setDisplayName(username)
                                                 .build();
-                                        Log.d(TAG, "submit profile change request");
+
+                                        Log.d(TAG, "submitting profile change request");
                                         currentUser.updateProfile(changeRequest)
                                                 .addOnCompleteListener(new OnCompleteListener<Void>() {
                                                     @Override
                                                     public void onComplete(@NonNull Task<Void> task) {
-                                                        Log.d(TAG, "submitted profile change request");
-                                                        Map<String, Object> u = new HashMap<>();
-                                                        u.put("displayName", username);
-                                                        u.put("email", email);
-                                                        Log.d(TAG, "saving user " + currentUser.getUid()+ " to database");
-                                                        firestore.collection("user")
-                                                                .document(currentUser.getUid())
-                                                                .set(u)
-                                                                .addOnCompleteListener(new OnCompleteListener<Void>() {
-                                                                    @Override
-                                                                    public void onComplete(@NonNull Task<Void> task) {
-                                                                        if (task.isSuccessful()) {
-                                                                            Log.d(TAG, "saved user to database");
-                                                                            displaySuccessDialog();
+                                                        if (task.isSuccessful()) {
+                                                            Log.d(TAG, "submitted profile change request");
+                                                            Map<String, Object> u = new HashMap<>();
+                                                            u.put("displayName", username);
+                                                            u.put("email", email);
+
+                                                            Log.d(TAG, "saving user " + currentUser.getUid() + " to database");
+                                                            firestore.collection("user")
+                                                                    .document(currentUser.getUid())
+                                                                    .set(u)
+                                                                    .addOnCompleteListener(new OnCompleteListener<Void>() {
+                                                                        @Override
+                                                                        public void onComplete(@NonNull Task<Void> task) {
+                                                                            if (task.isSuccessful()) {
+                                                                                Log.d(TAG, "saved user to database");
+                                                                                displaySuccessDialog();
+                                                                            } else {
+                                                                                Log.d(TAG, "save to db failed: " + task.getException().getMessage());
+                                                                                displayFailureDialog(task.getException().getLocalizedMessage());
+                                                                            }
                                                                         }
-                                                                    }
-                                                                });
+                                                                    });
+                                                        } else {
+                                                            Log.d(TAG, "update profile failed: " + task.getException().getMessage());
+                                                            displayFailureDialog(task.getException().getLocalizedMessage());
+                                                        }
                                                     }
                                                 });
                                     } else {
                                         Log.w(TAG, "createUserWithEmail: failure", task.getException());
-                                        Toast.makeText(getActivity(),
-                                                task.getException().getLocalizedMessage(),
-                                                Toast.LENGTH_LONG)
-                                                .show();
+                                        displayFailureDialog(task.getException().getLocalizedMessage());
                                     }
                                     _loading.setVisibility(View.GONE);
                                     _submitBtn.setVisibility(View.VISIBLE);
@@ -141,7 +151,7 @@ public class RegisterFragment extends Fragment {
     }
 
     private void displaySuccessDialog() {
-        final AlertDialog.Builder builder = new AlertDialog.Builder(getContext(), android.R.style.Theme_Material_Dialog_Alert);
+        final AlertDialog.Builder builder = new AlertDialog.Builder(getContext(), android.R.style.Theme_Material_Light_Dialog_Alert);
         builder.setTitle("Check your email")
                 .setMessage("Successfully registered. Please click the link we sent to your email to verify your account.")
                 .setPositiveButton("OK", new DialogInterface.OnClickListener() {
@@ -153,6 +163,17 @@ public class RegisterFragment extends Fragment {
                                 .replace(R.id.main_view, new DiscoverFragment())
                                 .commit();
                     }
+                })
+                .show();
+    }
+
+    private void displayFailureDialog(String message) {
+        final AlertDialog.Builder builder = new AlertDialog.Builder(getContext(), android.R.style.Theme_Material_Light_Dialog_Alert);
+        builder.setTitle("Error")
+                .setMessage(message)
+                .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {}
                 })
                 .show();
     }
