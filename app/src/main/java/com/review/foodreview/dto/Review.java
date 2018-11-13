@@ -10,21 +10,22 @@ import java.util.List;
  * @return Review
  */
 public class Review {
-    private String reviewId, authorId, restaurantId, description;
+    private String reviewId, description;
+    private DocumentReference authorRef, restaurantRef;
     private Timestamp date;
     private List<String> imageUriList;
     private RestaurantRating rating;
 
     public Review(String reviewId,
-                  String authorId,
-                  String restaurantId,
+                  DocumentReference authorRef,
+                  DocumentReference restaurantRef,
                   String description,
                   Timestamp date,
                   List<String> imageUriList,
                   RestaurantRating rating) {
         this.reviewId = reviewId;
-        this.authorId = authorId;
-        this.restaurantId = restaurantId;
+        this.authorRef = authorRef;
+        this.restaurantRef = restaurantRef;
         this.description = description;
         this.date = date;
         this.imageUriList = imageUriList;
@@ -35,12 +36,12 @@ public class Review {
         return reviewId;
     }
 
-    public String getAuthorId() {
-        return authorId;
+    public DocumentReference getAuthorRef() {
+        return authorRef;
     }
 
-    public String getRestaurantId() {
-        return restaurantId;
+    public DocumentReference getRestaurantRef() {
+        return restaurantRef;
     }
 
     public String getDescription() {
