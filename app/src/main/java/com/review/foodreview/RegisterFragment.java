@@ -13,13 +13,15 @@ import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.UserProfileChangeRequest;
+import com.google.firebase.firestore.FirebaseFirestore;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class RegisterFragment extends Fragment {
     private static final String TAG = "REGISTER";
@@ -27,6 +29,7 @@ public class RegisterFragment extends Fragment {
     private Button _submitBtn, _loginBtn;
     private ProgressBar _loading;
     private FirebaseAuth auth;
+    private FirebaseFirestore firestore;
 
     @Nullable
     @Override
@@ -39,6 +42,7 @@ public class RegisterFragment extends Fragment {
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         Log.d(TAG, "RegisterFragment: onActivityCreated");
+        firestore = FirebaseFirestore.getInstance();
         registerFragmentElements();
         initSubmitBtn();
         initLoginBtn();
@@ -75,20 +79,36 @@ public class RegisterFragment extends Fragment {
                                 public void onComplete(@NonNull Task<AuthResult> task) {
                                     if (task.isSuccessful()) {
                                         Log.d(TAG, "createUserWithEmail: success");
-                                        final FirebaseUser user = auth.getCurrentUser();
+                                        final FirebaseUser currentUser = auth.getCurrentUser();
 
-                                        user.sendEmailVerification();
+                                        currentUser.sendEmailVerification();
 
-                                        // update user displayName
+                                        Log.d(TAG, "create profile change request");
                                         final UserProfileChangeRequest changeRequest = new UserProfileChangeRequest.Builder()
                                                 .setDisplayName(username)
                                                 .build();
-                                        user.updateProfile(changeRequest)
+                                        Log.d(TAG, "submit profile change request");
+                                        currentUser.updateProfile(changeRequest)
                                                 .addOnCompleteListener(new OnCompleteListener<Void>() {
                                                     @Override
                                                     public void onComplete(@NonNull Task<Void> task) {
-                                                        // TODO: Save user to db
-                                                        displaySuccessDialog();
+                                                        Log.d(TAG, "submitted profile change request");
+                                                        Map<String, Object> u = new HashMap<>();
+                                                        u.put("displayName", username);
+                                                        u.put("email", email);
+                                                        Log.d(TAG, "saving user " + currentUser.getUid()+ " to database");
+                                                        firestore.collection("user")
+                                                                .document(currentUser.getUid())
+                                                                .set(u)
+                                                                .addOnCompleteListener(new OnCompleteListener<Void>() {
+                                                                    @Override
+                                                                    public void onComplete(@NonNull Task<Void> task) {
+                                                                        if (task.isSuccessful()) {
+                                                                            Log.d(TAG, "saved user to database");
+                                                                            displaySuccessDialog();
+                                                                        }
+                                                                    }
+                                                                });
                                                     }
                                                 });
                                     } else {
