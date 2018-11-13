@@ -10,7 +10,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
+
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.review.foodreview.component.DiscoverGetListData;
 import com.review.foodreview.component.RestaurantListItem;
+import com.review.foodreview.dto.GetallFirestore;
 import com.review.foodreview.dto.Restaurant;
 import com.review.foodreview.dto.ImageModel;
 import com.review.foodreview.dto.SlidingImageAdapter;
@@ -23,6 +27,9 @@ public class DiscoverFragment extends Fragment{
     private List<Restaurant> restaurants = new ArrayList<>();
     private static final String TAG = "DISCOVERFRAGMENT";
     private static ViewPager mPager;
+    private Fragment fragmentrestaurant;
+    private Bundle args;
+    private FirebaseFirestore mdb;
     private WormDotsIndicator wormDotsIndicator;
     private static final int NUM_PAGES = 3;
     private ArrayList<ImageModel> imageModelArrayList;
@@ -36,8 +43,11 @@ public class DiscoverFragment extends Fragment{
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Log.d(TAG, "Start discover fragment (Create)");
+        mdb = FirebaseFirestore.getInstance();
+        args = new Bundle();
         imageModelArrayList = new ArrayList<>();
         imageModelArrayList = populateList();
+        fragmentrestaurant = new RestaurantFragment();
     }
 
     @Nullable
@@ -45,21 +55,21 @@ public class DiscoverFragment extends Fragment{
     public View onCreateView(
             @NonNull LayoutInflater inflater,
             @Nullable ViewGroup container,
-            @Nullable Bundle savedInstanceState
-    ) {
+            @Nullable Bundle savedInstanceState) {
         Log.d(TAG, "Start discover fragment (CreateView)");
         return inflater.inflate(R.layout.discover, container, false);
     }
 
     @Override
-    public void onActivityCreated(
-            @Nullable Bundle savedInstanceState
-    ) {
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         MainActivity.onFragmentChanged(TAG);
         Log.d(TAG, "Start discover fragment (ActivityCreated)");
+        // clear the list to prevent duplicate data
         restaurants.clear();
+        // dummy data
         Restaurant mcdonalds = new Restaurant(
+                "testId1",
                 "McDonald's",
                 "Fast food",
                 "$ (< 120)",
@@ -69,6 +79,7 @@ public class DiscoverFragment extends Fragment{
                 true
         );
         Restaurant otoya = new Restaurant(
+                "testId2",
                 "Otoya",
                 "Japanese",
                 "$$ (120 - 300)",
@@ -79,8 +90,9 @@ public class DiscoverFragment extends Fragment{
         );
         restaurants.add(mcdonalds);
         restaurants.add(otoya);
-
         final LinearLayout _restaurantList = getView().findViewById(R.id.discover_list);
+
+        // add restaurant items to the LinearLayout _restaurantList
         for (Restaurant r : restaurants) {
             final RestaurantListItem restaurantListItem = new RestaurantListItem(getContext(), r, _restaurantList);
             final View restaurantListItemView = restaurantListItem.getComponent();
@@ -97,9 +109,11 @@ public class DiscoverFragment extends Fragment{
                 }
             });
         }
-        //setup the discover's slideshow
+        // set up Featured slideshow
         Log.d(TAG, "Do setupSlideshow");
         setupSlideshow();
+        // get Discover List
+        getdiscoverList();
     }
 
 
@@ -128,7 +142,25 @@ public class DiscoverFragment extends Fragment{
         this.wormDotsIndicator = getView().findViewById(R.id.worm_dots_indicator);
         this.wormDotsIndicator.setViewPager(mPager);
 
-        // Auto start of viewpager open it if you want
+    }
+    private void getdiscoverList(){
+        DiscoverGetListData discoverGetListData = new DiscoverGetListData(false,false, false, true);
+    }
+
+    //set bundle and pass to restaurantFragment
+    private void passbundle(String restaurantId){
+        this.args.putString("id", restaurantId);
+        this.fragmentrestaurant.setArguments(args);
+        getActivity()
+                .getSupportFragmentManager()
+                .beginTransaction()
+                .replace(R.id.main_view, fragmentrestaurant).commit();
+        Log.d(TAG, restaurantId);
+    }
+
+}
+
+// Auto start of viewpager open it if you want
 //        final Handler handler = new Handler();
 //        final Runnable Update = new Runnable() {
 //            public void run() {
@@ -146,7 +178,3 @@ public class DiscoverFragment extends Fragment{
 //                handler.post(Update);
 //            }
 //        }, 3000, 3000);
-
-    }
-
-}
