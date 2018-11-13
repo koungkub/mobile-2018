@@ -1,5 +1,7 @@
 package com.review.foodreview;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -71,30 +73,22 @@ public class RegisterFragment extends Fragment {
                             .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                                 @Override
                                 public void onComplete(@NonNull Task<AuthResult> task) {
-                                    _loading.setVisibility(View.GONE);
-                                    _submitBtn.setVisibility(View.VISIBLE);
-                                    _loginBtn.setVisibility(View.VISIBLE);
                                     if (task.isSuccessful()) {
                                         Log.d(TAG, "createUserWithEmail: success");
-                                        FirebaseUser user = auth.getCurrentUser();
+                                        final FirebaseUser user = auth.getCurrentUser();
+
                                         user.sendEmailVerification();
-                                        // TODO: Display a modal telling user to check email
+
                                         // update user displayName
-                                        UserProfileChangeRequest changeRequest = new UserProfileChangeRequest.Builder()
+                                        final UserProfileChangeRequest changeRequest = new UserProfileChangeRequest.Builder()
                                                 .setDisplayName(username)
                                                 .build();
                                         user.updateProfile(changeRequest)
                                                 .addOnCompleteListener(new OnCompleteListener<Void>() {
                                                     @Override
                                                     public void onComplete(@NonNull Task<Void> task) {
-                                                        // save user to db
-
-                                                        // redirect to Discover
-                                                        getActivity()
-                                                                .getSupportFragmentManager()
-                                                                .beginTransaction()
-                                                                .replace(R.id.main_view, new DiscoverFragment())
-                                                                .commit();
+                                                        // TODO: Save user to db
+                                                        displaySuccessDialog();
                                                     }
                                                 });
                                     } else {
@@ -104,6 +98,9 @@ public class RegisterFragment extends Fragment {
                                                 Toast.LENGTH_LONG)
                                                 .show();
                                     }
+                                    _loading.setVisibility(View.GONE);
+                                    _submitBtn.setVisibility(View.VISIBLE);
+                                    _loginBtn.setVisibility(View.VISIBLE);
                                 }
                             });
                 }
@@ -121,5 +118,22 @@ public class RegisterFragment extends Fragment {
                         .commit();
             }
         });
+    }
+
+    private void displaySuccessDialog() {
+        final AlertDialog.Builder builder = new AlertDialog.Builder(getContext(), android.R.style.Theme_Material_Dialog_Alert);
+        builder.setTitle("Check your email")
+                .setMessage("Successfully registered. Please click the link we sent to your email to verify your account.")
+                .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        getActivity()
+                                .getSupportFragmentManager()
+                                .beginTransaction()
+                                .replace(R.id.main_view, new DiscoverFragment())
+                                .commit();
+                    }
+                })
+                .show();
     }
 }
