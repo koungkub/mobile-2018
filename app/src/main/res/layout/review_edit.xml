@@ -96,6 +96,8 @@
                 android:layout_marginTop="8dp"
                 android:numStars="5"
                 android:stepSize="1" />
+
+            <!--TODO: add some parameter and edit ID-->
         </LinearLayout>
 
     </ScrollView>
