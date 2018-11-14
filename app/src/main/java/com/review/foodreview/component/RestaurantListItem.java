@@ -44,9 +44,10 @@ public class RestaurantListItem {
                 .load("https://www.freelancebay.com/user_files/thumbs/portfolio/2017/06/image/186015_80_700x0.png")
                 .into(_imageUri);
         _restaurantName.setText(restaurant.getName());
-        _restaurantType.setText(restaurant.getRestaurantType());
+        _restaurantType.setText(restaurant.getCategoryName());
         _priceRange.setText(restaurant.getPriceRange());
-        _rating.setText(Float.toString(restaurant.getRating()));
+        // TODO: Display restaurant rating
+        // _rating.setText(Float.toString(restaurant.getRating()));
         return restaurantListItem;
     }
 }

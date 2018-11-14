@@ -64,25 +64,34 @@ public class RestaurantFragment extends Fragment {
                             restaurant = new Restaurant(
                                     documentSnapshot.getId(),
                                     documentSnapshot.getString("name"),
-                                    // documentSnapshot.getString("category"),
-                                    "Japanese fusion",
                                     documentSnapshot.getString("priceRange"),
                                     documentSnapshot.getString("openHours"),
-                                    4.5f,
-                                    20,
-                                    documentSnapshot.getBoolean("delivery")
+                                    documentSnapshot.getString("telephone"),
+                                    documentSnapshot.getString("categoryName"),
+                                    documentSnapshot.getBoolean("delivery"),
+                                    documentSnapshot.getDocumentReference("category"),
+                                    documentSnapshot.getGeoPoint("location"),
+                                    (HashMap<String, Long>) documentSnapshot.get("rating"),
+                                    (List<String>) documentSnapshot.get("imageUri"),
+                                    (List<DocumentReference>) documentSnapshot.get("review"),
+                                    20
                             );
                         } else {
-                            Log.d(TAG, "Object doesn't exist");
+                            Log.d(TAG, "Restaurant doesn't exist");
                             restaurant = new Restaurant(
                                     "no id",
                                     "no name",
-                                    "no category",
                                     "no price",
                                     "never opens",
-                                    0f,
-                                    0,
-                                    false
+                                    "no phone",
+                                    "no category",
+                                    false,
+                                    null,
+                                    null,
+                                    null,
+                                    null,
+                                    null,
+                                    0
                             );
                         }
                         // methods that require restaurant data from Firestore
@@ -153,7 +162,7 @@ public class RestaurantFragment extends Fragment {
 
     private void setTexts(Restaurant restaurant) {
         _restaurantName.setText(restaurant.getName());
-        _restaurantType.setText(restaurant.getRestaurantType());
+        _restaurantType.setText(restaurant.getCategoryName());
         _priceRange.setText(restaurant.getPriceRange());
         _rating.setText(String.format(Locale.ENGLISH, "%.1f", restaurant.getRating()));
         _reviewCount.setText(
@@ -163,7 +172,7 @@ public class RestaurantFragment extends Fragment {
                         restaurant.getReviewCount())
         );
         _openHours.setText(restaurant.getOpenHours());
-        if (!restaurant.isDeliverable()) _delivery.setText(R.string.page_restaurant_no_delivery);
+        if (!restaurant.isDelivery()) _delivery.setText(R.string.page_restaurant_no_delivery);
     }
 
     private void initWriteBtn() {
