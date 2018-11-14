@@ -113,11 +113,9 @@ public class DiscoverFragment extends Fragment{
                 Restaurant restaurant;
                 Log.d(TAG, "Do query in Restaurant");
                 for(QueryDocumentSnapshot doc : queryDocumentSnapshots) {
-                    
                     restaurant = doc.toObject(Restaurant.class);
                     restaurant.setId(doc.getId());
                     restaurants.add(restaurant);
-
                 }
                 final LinearLayout _restaurantList = getView().findViewById(R.id.discover_list);
                 // add restaurant items to the LinearLayout _restaurantList

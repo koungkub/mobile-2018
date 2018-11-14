@@ -7,12 +7,21 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.TextView;
 
+import com.google.firebase.firestore.EventListener;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreException;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 import com.review.foodreview.R;
 import com.review.foodreview.dto.ImageModel;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
+
+import javax.annotation.Nullable;
+
 public class SlidingImageAdapter extends PagerAdapter {
 
 
@@ -38,32 +47,44 @@ public class SlidingImageAdapter extends PagerAdapter {
     }
 
     @Override
-    public Object instantiateItem(ViewGroup view, int position) {
-        View imageLayout = inflater.inflate(R.layout.discover_slideshow,
+    public Object instantiateItem(ViewGroup view, final int position) {
+        FirebaseFirestore mdb = FirebaseFirestore.getInstance();
+        final View imageLayout = inflater.inflate(R.layout.discover_slideshow,
                 view,
                 false);
         Log.d("ADAPTER", String.valueOf(position));
         assert imageLayout != null;
-        final ImageView imageView = (ImageView) imageLayout
-                .findViewById(R.id.image);
-        if(position == 0){
-            Picasso.get()
-                    .load("https://www.knorr.com/content/dam/unilever/knorr_world/global/other_foods/all/regional_dishes-thai_north-eastern_dishes-hero_image-858794.jpg")
-                    .placeholder(R.drawable.slide1)
-                    .into(imageView);
-        }
-        else if(position == 1){
-            Picasso.get()
-                    .load("https://www.knorr.com/content/dam/unilever/knorr_world/global/other_foods/all/type_of_dishes-international_dishes-hero_image-861954.jpg")
-                    .placeholder(R.drawable.slide2)
-                    .into(imageView);
-        }
-        else {
-            Picasso.get()
-                    .load("https://www.knorr.com/content/dam/unilever/knorr_world/global/other_foods/all/type_of_dishes-stir-fried-hero_image-862950.jpg")
-                    .placeholder(R.drawable.slide3)
-                    .into(imageView);
-        }
+        mdb.collection("restaurant").limit(3).addSnapshotListener(new EventListener<QuerySnapshot>() {
+            @Override
+            public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable FirebaseFirestoreException e) {
+                for(QueryDocumentSnapshot doc : queryDocumentSnapshots){
+                    Restaurant restaurant = doc.toObject(Restaurant.class);
+                    final TextView name = imageLayout
+                            .findViewById(R.id.discover_text_name_restaurant_on_slideshow);
+                    final ImageView imageView = imageLayout
+                            .findViewById(R.id.image);
+                    name.setText(restaurant.getName());
+                    if(position == 0){
+                        Picasso.get()
+                                .load(restaurant.getImageUri().get(0))
+                                .placeholder(R.drawable.slide1)
+                                .into(imageView);
+                    }
+                    else if(position == 1){
+                        Picasso.get()
+                                .load(restaurant.getImageUri().get(0))
+                                .placeholder(R.drawable.slide2)
+                                .into(imageView);
+                    }
+                    else {
+                        Picasso.get()
+                                .load(restaurant.getImageUri().get(0))
+                                .placeholder(R.drawable.slide3)
+                                .into(imageView);
+                    }
+                }
+            }
+        });
 //        imageView.setImageResource(imageModelArrayList
 //                .get(position)
 //                .getImage_drawable());
