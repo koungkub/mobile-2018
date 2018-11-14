@@ -9,6 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 import android.widget.Toolbar;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -29,6 +30,7 @@ public class ReviewsFragment extends Fragment {
     private List<Review> reviewList = new ArrayList<>();
     private Toolbar _toolbar;
     private ListView _reviewListView;
+    private ProgressBar _loading;
     private Bundle bundle;
     private FirebaseFirestore firestore;
 
@@ -52,6 +54,8 @@ public class ReviewsFragment extends Fragment {
         restaurantId = bundle.getString("restaurantId");
         registerFragmentElements();
         createMenu();
+
+        _reviewListView.setVisibility(View.INVISIBLE);
 
         final DocumentReference restaurantRef = firestore.collection("restaurant").document(restaurantId);
         firestore.collection("review")
@@ -79,6 +83,9 @@ public class ReviewsFragment extends Fragment {
                         } else {
                             // TODO: Handle unsuccessful task
                         }
+                        // hide progress bar and make content visible
+                        _reviewListView.setVisibility(View.VISIBLE);
+                        _loading.setVisibility(View.GONE);
                     }
                 });
     }
@@ -95,5 +102,6 @@ public class ReviewsFragment extends Fragment {
         Log.d(TAG, "registerFragmentElements");
         _toolbar = getView().findViewById(R.id.reviews_action_bar);
         _reviewListView = getView().findViewById(R.id.reviews_list);
+        _loading = getView().findViewById(R.id.reviews_loading);
     }
 }
