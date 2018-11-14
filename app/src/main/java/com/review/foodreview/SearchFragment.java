@@ -51,9 +51,23 @@ public class SearchFragment extends Fragment  {
                 });
     }
 
-    private Button createCategoryButton(String categoryName, String categoryId) {
+    private Button createCategoryButton(String categoryName, final String categoryId) {
         Button button = new Button(getContext());
         button.setText(categoryName);
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                 final Fragment fragment = new SearchResultsFragment();
+                 final Bundle bundle = new Bundle();
+                 bundle.putString("categoryId", categoryId);
+                 fragment.setArguments(bundle);
+                 getFragmentManager()
+                         .beginTransaction()
+                         .replace(R.id.main_view, fragment)
+                         .addToBackStack(null)
+                         .commit();
+            }
+        });
         return button;
     }
 
