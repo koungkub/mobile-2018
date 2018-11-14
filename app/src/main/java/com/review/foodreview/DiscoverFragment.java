@@ -110,10 +110,12 @@ public class DiscoverFragment extends Fragment{
             @Override
             public void onEvent(@javax.annotation.Nullable QuerySnapshot queryDocumentSnapshots, @javax.annotation.Nullable FirebaseFirestoreException e) {
                 restaurants.clear();
+                Restaurant restaurant;
                 for(QueryDocumentSnapshot doc : queryDocumentSnapshots) {
+                    restaurant = doc.toObject(Restaurant.class);
+                    restaurant.setId(doc.getId());
+                    restaurants.add(restaurant);
 
-                    restaurants.add(doc.toObject(Restaurant.class));
-                    Log.d(TAG, doc.getId());
                 }
                 final LinearLayout _restaurantList = getView().findViewById(R.id.discover_list);
                 // add restaurant items to the LinearLayout _restaurantList

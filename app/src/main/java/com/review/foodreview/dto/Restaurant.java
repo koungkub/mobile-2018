@@ -23,9 +23,10 @@ public class Restaurant {
     private DocumentReference category;
 
     private int reviewCount;
-    public Restaurant(){
 
+    public Restaurant(){
     }
+
     public Restaurant(String id,
                       String name,
                       String priceRange,
@@ -75,9 +76,6 @@ public class Restaurant {
         this.review = review;
         this.telephone = telephone;
     } */
-    public void  setId(String id){
-        this.id = id;
-    }
     public String getId() {
         return id;
     }
@@ -101,7 +99,9 @@ public class Restaurant {
     public boolean isDelivery() {
         return delivery;
     }
-
+    public void setId(String id){
+        this.id = id;
+    }
     public GeoPoint getLocation() {
         // TODO: Handle null imageUri
         return location;
