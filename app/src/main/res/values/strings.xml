@@ -11,6 +11,9 @@
     <string name="display_name">Display name</string>
     <string name="post">Post</string>
     <string name="bookmark">Bookmark</string>
+    <string name="food">Food</string>
+    <string name="service">Service</string>
+    <string name="atmosphere">Atmosphere</string>
 
     <string name="page_register_login">or log me in</string>
     <string name="page_login_register">or register me</string>
