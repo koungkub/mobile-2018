@@ -111,6 +111,7 @@ public class DiscoverFragment extends Fragment{
             public void onEvent(@javax.annotation.Nullable QuerySnapshot queryDocumentSnapshots, @javax.annotation.Nullable FirebaseFirestoreException e) {
                 restaurants.clear();
                 Restaurant restaurant;
+                Log.d(TAG, "Do query in Restaurant");
                 for(QueryDocumentSnapshot doc : queryDocumentSnapshots) {
                     restaurant = doc.toObject(Restaurant.class);
                     restaurant.setId(doc.getId());
@@ -136,6 +137,7 @@ public class DiscoverFragment extends Fragment{
 
     //set bundle and pass to restaurantFragment
     private void passbundle(String restaurantId){
+        Log.d(TAG, "Send data to RestaurantFragment");
         this.args.putString("id", restaurantId);
         this.fragmentrestaurant.setArguments(args);
         getActivity()
