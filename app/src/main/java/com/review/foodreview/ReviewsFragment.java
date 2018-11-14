@@ -9,9 +9,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 import android.widget.Toolbar;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
@@ -28,13 +30,14 @@ public class ReviewsFragment extends Fragment {
     private List<Review> reviewList = new ArrayList<>();
     private Toolbar _toolbar;
     private ListView _reviewListView;
+    private ProgressBar _loading;
     private Bundle bundle;
     private FirebaseFirestore firestore;
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.all_review, container, false);
+        return inflater.inflate(R.layout.restaurant_reviews, container, false);
     }
 
     @Override
@@ -42,6 +45,7 @@ public class ReviewsFragment extends Fragment {
         super.onActivityCreated(savedInstanceState);
         Log.d(TAG, "onActivityCreated");
         MainActivity.onFragmentChanged(TAG);
+
         reviewList.clear();
         firestore = FirebaseFirestore.getInstance();
 
@@ -51,7 +55,11 @@ public class ReviewsFragment extends Fragment {
         registerFragmentElements();
         createMenu();
 
+        _reviewListView.setVisibility(View.INVISIBLE);
+
+        final DocumentReference restaurantRef = firestore.collection("restaurant").document(restaurantId);
         firestore.collection("review")
+                .whereEqualTo("restaurant", restaurantRef)
                 .get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                     @Override
@@ -75,6 +83,9 @@ public class ReviewsFragment extends Fragment {
                         } else {
                             // TODO: Handle unsuccessful task
                         }
+                        // hide progress bar and make content visible
+                        _reviewListView.setVisibility(View.VISIBLE);
+                        _loading.setVisibility(View.GONE);
                     }
                 });
     }
@@ -91,5 +102,6 @@ public class ReviewsFragment extends Fragment {
         Log.d(TAG, "registerFragmentElements");
         _toolbar = getView().findViewById(R.id.reviews_action_bar);
         _reviewListView = getView().findViewById(R.id.reviews_list);
+        _loading = getView().findViewById(R.id.reviews_loading);
     }
 }

@@ -9,13 +9,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.firestore.DocumentSnapshot;
 import com.review.foodreview.R;
 import com.review.foodreview.dto.Review;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class ReviewListAdapter extends ArrayAdapter<Review> {
@@ -34,12 +30,17 @@ public class ReviewListAdapter extends ArrayAdapter<Review> {
     @Override
     public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
         final View reviewItem = LayoutInflater.from(context).inflate(R.layout.review_item, parent, false);
-        final TextView _description = reviewItem.findViewById(R.id.all_review_item_text_text);
-        final TextView _author = reviewItem.findViewById(R.id.all_review_item_text_reviewer);
+        final TextView _description = reviewItem.findViewById(R.id.review_item_text_description);
+        final TextView _author = reviewItem.findViewById(R.id.review_item_text_author);
+        final TextView _ratingFood = reviewItem.findViewById(R.id.review_item_rating_food);
+        final TextView _ratingService = reviewItem.findViewById(R.id.review_item_rating_service);
+        final TextView _ratingAtmosphere = reviewItem.findViewById(R.id.review_item_rating_atmosphere);
         final Review review = reviewList.get(position);
         _description.setText(review.getDescription());
+        _ratingFood.setText(review.getRating().get("food").toString());
+        _ratingService.setText(review.getRating().get("service").toString());
+        _ratingAtmosphere.setText(review.getRating().get("atmosphere").toString());
         // TODO: Get author name
-        // TODO: Show rating
         return reviewItem;
     }
 }
