@@ -11,7 +11,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 
+import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.GeoPoint;
 import com.review.foodreview.component.DiscoverGetListData;
 import com.review.foodreview.component.RestaurantListItem;
 import com.review.foodreview.dto.GetallFirestore;
@@ -21,6 +23,7 @@ import com.review.foodreview.dto.SlidingImageAdapter;
 import com.tbuonomo.viewpagerdotsindicator.WormDotsIndicator;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 public class DiscoverFragment extends Fragment{
@@ -67,26 +70,45 @@ public class DiscoverFragment extends Fragment{
         Log.d(TAG, "Start discover fragment (ActivityCreated)");
         // clear the list to prevent duplicate data
         restaurants.clear();
+
         // dummy data
+        final DocumentReference dummyCategory = mdb.collection("category").document("path");
+        final HashMap<String, Long> dummyRating = new HashMap<>();
+        dummyRating.put("food", 4L); dummyRating.put("service", 3L); dummyRating.put("atmosphere", 3L);
+        final ArrayList<String> dummyImageUri = new ArrayList<>();
+        dummyImageUri.add("/path/to/image.jpg");
+        final ArrayList<DocumentReference> dummyReviews = new ArrayList<>();
+        dummyReviews.add(dummyCategory);
+
         Restaurant mcdonalds = new Restaurant(
-                "testId1",
-                "McDonald's",
-                "Fast food",
-                "$ (< 120)",
-                "24 hours",
-                4.2f,
-                318,
-                true
+                "testId2",
+                "Otoya",
+                "$$ (120 - 300)",
+                "10.00 - 21.00",
+                "0123456789",
+                "Japanese",
+                true,
+                dummyCategory,
+                new GeoPoint(10, 10),
+                dummyRating,
+                dummyImageUri,
+                dummyReviews,
+                20
         );
         Restaurant otoya = new Restaurant(
                 "testId2",
                 "Otoya",
-                "Japanese",
                 "$$ (120 - 300)",
                 "10.00 - 21.00",
-                4.6f,
-                282,
-                true
+                "0123456789",
+                "Japanese",
+                true,
+                dummyCategory,
+                new GeoPoint(10, 10),
+                dummyRating,
+                dummyImageUri,
+                dummyReviews,
+                20
         );
         restaurants.add(mcdonalds);
         restaurants.add(otoya);
