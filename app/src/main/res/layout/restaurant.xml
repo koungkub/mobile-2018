@@ -44,7 +44,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="16dp"
-                android:text="on the table"
+                android:text="name"
                 android:textAppearance="@style/food.headline"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/restaurant_image_restaurant" />
@@ -82,7 +82,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="10dp"
-                    android:text="from 15 reviews"
+                    android:text="@string/page_restaurant_from_d_reviews"
                     android:textAppearance="@style/TextAppearance.MaterialComponents.Body2"
                     app:layout_constraintStart_toEndOf="@id/restaurant_text_review" />
 
@@ -103,7 +103,7 @@
                     android:id="@+id/restaurant_text_type"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Japanese fusion"
+                    android:text="category"
                     android:textAppearance="@style/TextAppearance.MaterialComponents.Body2" />
 
                 <TextView
@@ -120,7 +120,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="8dp"
-                    android:text="$$ (121-300)"
+                    android:text="loading price"
                     android:textAppearance="@style/TextAppearance.MaterialComponents.Body2"
                     app:layout_constraintStart_toEndOf="@+id/restaurant_type_price_dot" />
 
@@ -158,7 +158,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="10dp"
-                        android:text="10.00 - 22.00"
+                        android:text="loading"
                         android:textAppearance="@style/TextAppearance.MaterialComponents.Body2"
                         app:layout_constraintStart_toEndOf="@+id/restaurant_image_time" />
                 </android.support.constraint.ConstraintLayout>
