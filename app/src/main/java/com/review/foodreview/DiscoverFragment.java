@@ -113,6 +113,7 @@ public class DiscoverFragment extends Fragment{
                 Restaurant restaurant;
                 Log.d(TAG, "Do query in Restaurant");
                 for(QueryDocumentSnapshot doc : queryDocumentSnapshots) {
+                    
                     restaurant = doc.toObject(Restaurant.class);
                     restaurant.setId(doc.getId());
                     restaurants.add(restaurant);
