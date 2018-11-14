@@ -35,6 +35,7 @@ public class RestaurantFragment extends Fragment {
     private Toolbar _toolbar;
     private Button _writeBtn, _viewAllBtn;
     private LinearLayout _reviewList;
+    private ProgressBar _reviewLoading;
 
     @Nullable
     @Override
@@ -120,8 +121,8 @@ public class RestaurantFragment extends Fragment {
                             // TODO: Handle unsuccessful task
                         }
                         // hide progress bar and make content visible
+                        _reviewLoading.setVisibility(View.GONE);
                         _reviewList.setVisibility(View.VISIBLE);
-                        // _loading.setVisibility(View.GONE);
                     }
                 });
         initWriteBtn();
@@ -140,6 +141,7 @@ public class RestaurantFragment extends Fragment {
         _writeBtn = getView().findViewById(R.id.restaurant_review_btn_add);
         _viewAllBtn = getView().findViewById(R.id.restaurant_review_btn_all);
         _reviewList = getView().findViewById(R.id.restaurant_recent_reviews);
+        _reviewLoading = getView().findViewById(R.id.restaurant_loading_reviews);
     }
 
     private void createMenu() {
