@@ -8,15 +8,13 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.ListView;
-import android.widget.TextView;
+import android.widget.*;
 
-import android.widget.Toolbar;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.*;
 import com.review.foodreview.component.ReviewListAdapter;
+import com.review.foodreview.component.ReviewListItem;
 import com.review.foodreview.dto.Restaurant;
 import com.review.foodreview.dto.Review;
 
@@ -36,7 +34,7 @@ public class RestaurantFragment extends Fragment {
     private TextView _openHours, _delivery;
     private Toolbar _toolbar;
     private Button _writeBtn, _viewAllBtn;
-    private ListView _reviewListView;
+    private LinearLayout _reviewList;
 
     private List<Review> reviewList = new ArrayList<>();
 
@@ -54,6 +52,7 @@ public class RestaurantFragment extends Fragment {
         super.onActivityCreated(savedInstanceState);
 
         restaurantId = "PxZsYjM909P3IfsvJdPb"; // TODO: Replace with bundle
+        reviewList.clear();
         registerFragmentElements();
 
         Log.d(TAG, "fetching restaurant");
@@ -116,13 +115,16 @@ public class RestaurantFragment extends Fragment {
                                 );
                                 reviewList.add(review);
                             }
-                            ReviewListAdapter reviewListAdapter = new ReviewListAdapter(getActivity(), R.layout.review_item, reviewList);
-                            _reviewListView.setAdapter(reviewListAdapter);
+                            for (Review review : reviewList) {
+                                final ReviewListItem reviewListItem = new ReviewListItem(getContext(), review, _reviewList);
+                                final View restaurantListItemView = reviewListItem.getComponent();
+                                _reviewList.addView(restaurantListItemView);
+                            }
                         } else {
                             // TODO: Handle unsuccessful task
                         }
                         // hide progress bar and make content visible
-                        _reviewListView.setVisibility(View.VISIBLE);
+                        _reviewList.setVisibility(View.VISIBLE);
                         // _loading.setVisibility(View.GONE);
                     }
                 });
@@ -141,7 +143,7 @@ public class RestaurantFragment extends Fragment {
         _toolbar = getView().findViewById(R.id.restaurant_action_bar);
         _writeBtn = getView().findViewById(R.id.restaurant_review_btn_add);
         _viewAllBtn = getView().findViewById(R.id.restaurant_review_btn_all);
-        _reviewListView = getView().findViewById(R.id.restaurant_recent_reviews);
+        _reviewList = getView().findViewById(R.id.restaurant_recent_reviews);
     }
 
     private void createMenu() {

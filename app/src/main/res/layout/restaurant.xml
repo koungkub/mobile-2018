@@ -225,14 +225,15 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/restaurant_wtf_1" />
 
-            <ListView
+            <LinearLayout
                 android:id="@+id/restaurant_recent_reviews"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:orientation="vertical"
                 android:layout_marginTop="16dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/restaurant_text_reviews"></ListView>
+                app:layout_constraintTop_toBottomOf="@+id/restaurant_text_reviews"></LinearLayout>
 
             <LinearLayout
                 android:id="@+id/restaurant_review_btns"
