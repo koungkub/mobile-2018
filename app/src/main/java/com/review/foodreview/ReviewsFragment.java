@@ -51,6 +51,7 @@ public class ReviewsFragment extends Fragment {
         registerFragmentElements();
         createMenu();
 
+        // TODO: Query only this restaurant
         firestore.collection("review")
                 .get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
