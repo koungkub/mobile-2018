@@ -36,8 +36,6 @@ public class RestaurantFragment extends Fragment {
     private Button _writeBtn, _viewAllBtn;
     private LinearLayout _reviewList;
 
-    private List<Review> reviewList = new ArrayList<>();
-
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -52,7 +50,6 @@ public class RestaurantFragment extends Fragment {
         super.onActivityCreated(savedInstanceState);
 
         restaurantId = "PxZsYjM909P3IfsvJdPb"; // TODO: Replace with bundle
-        reviewList.clear();
         registerFragmentElements();
 
         Log.d(TAG, "fetching restaurant");
@@ -87,7 +84,7 @@ public class RestaurantFragment extends Fragment {
                                     false
                             );
                         }
-                        // methods that require data from Firestore
+                        // methods that require restaurant data from Firestore
                         createMenu();
                         setTexts(restaurant);
                         initViewAllBtn();
@@ -97,6 +94,7 @@ public class RestaurantFragment extends Fragment {
         Log.d(TAG, "fetching reviews");
         firestore.collection("review")
                 .whereEqualTo("restaurant", restaurantRef)
+                .limit(5)
                 .get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                     @Override
@@ -113,9 +111,7 @@ public class RestaurantFragment extends Fragment {
                                         (ArrayList<String>) reviewSnapshot.get("imageUri"),
                                         (HashMap<String, Long>) reviewSnapshot.get("rating")
                                 );
-                                reviewList.add(review);
-                            }
-                            for (Review review : reviewList) {
+                                // add to _reviewList LinearLayout
                                 final ReviewListItem reviewListItem = new ReviewListItem(getContext(), review, _reviewList);
                                 final View restaurantListItemView = reviewListItem.getComponent();
                                 _reviewList.addView(restaurantListItemView);
