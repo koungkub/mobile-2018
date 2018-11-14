@@ -102,11 +102,23 @@ public class ReviewEditFragment extends Fragment {
             @Override
             public void onSuccess(DocumentReference documentReference) {
                 Log.d(TAG, "add data to firestore success");
+                Toast
+                        .makeText(getActivity(), "add review successful", Toast.LENGTH_SHORT)
+                        .show();
+                getActivity()
+                        .getSupportFragmentManager()
+                        .beginTransaction()
+                        .addToBackStack(null)
+                        .replace(R.id.main_view, new RestaurantFragment())
+                        .commit();
             }
         }).addOnFailureListener(new OnFailureListener() {
             @Override
             public void onFailure(@NonNull Exception e) {
                 Log.d(TAG, "add data to firestore failure");
+                Toast
+                        .makeText(getActivity(), "Can't add review. Something wrong!", Toast.LENGTH_SHORT)
+                        .show();
             }
         });
 
