@@ -1,6 +1,12 @@
 package com.review.foodreview.dto;
+import android.app.Activity;
 import android.content.Context;
+import android.os.Bundle;
 import android.os.Parcelable;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentActivity;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.PagerAdapter;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -15,10 +21,11 @@ import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.review.foodreview.R;
-import com.review.foodreview.dto.ImageModel;
+import com.review.foodreview.RestaurantFragment;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import javax.annotation.Nullable;
 
@@ -28,7 +35,7 @@ public class SlidingImageAdapter extends PagerAdapter {
     private ArrayList<ImageModel> imageModelArrayList;
     private LayoutInflater inflater;
     private Context context;
-
+    private static FragmentManager fragmentManager;
 
     public SlidingImageAdapter(Context context, ArrayList<ImageModel> imageModelArrayList) {
         this.context = context;
@@ -47,7 +54,7 @@ public class SlidingImageAdapter extends PagerAdapter {
     }
 
     @Override
-    public Object instantiateItem(ViewGroup view, final int position) {
+    public Object instantiateItem(final ViewGroup view, final int position) {
         FirebaseFirestore mdb = FirebaseFirestore.getInstance();
         final View imageLayout = inflater.inflate(R.layout.discover_slideshow,
                 view,
@@ -57,31 +64,67 @@ public class SlidingImageAdapter extends PagerAdapter {
         mdb.collection("restaurant").limit(3).addSnapshotListener(new EventListener<QuerySnapshot>() {
             @Override
             public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable FirebaseFirestoreException e) {
+                final List<Restaurant> restaurants = new ArrayList<>();
+                final Bundle args = new Bundle();
+                Restaurant restaurant;
+                final Fragment restaurantFragment = new RestaurantFragment();
                 for(QueryDocumentSnapshot doc : queryDocumentSnapshots){
-                    Restaurant restaurant = doc.toObject(Restaurant.class);
-                    final TextView name = imageLayout
-                            .findViewById(R.id.discover_text_name_restaurant_on_slideshow);
-                    final ImageView imageView = imageLayout
-                            .findViewById(R.id.image);
-                    name.setText(restaurant.getName());
-                    if(position == 0){
-                        Picasso.get()
-                                .load(restaurant.getImageUri().get(0))
-                                .placeholder(R.drawable.slide1)
-                                .into(imageView);
-                    }
-                    else if(position == 1){
-                        Picasso.get()
-                                .load(restaurant.getImageUri().get(0))
-                                .placeholder(R.drawable.slide2)
-                                .into(imageView);
-                    }
-                    else {
-                        Picasso.get()
-                                .load(restaurant.getImageUri().get(0))
-                                .placeholder(R.drawable.slide3)
-                                .into(imageView);
-                    }
+                    restaurant = doc.toObject(Restaurant.class);
+                    restaurant.setId(doc.getId());
+                    restaurants.add(restaurant);
+                }
+                final TextView name = imageLayout
+                        .findViewById(R.id.discover_text_name_restaurant_on_slideshow);
+
+                final ImageView imageView = imageLayout
+                        .findViewById(R.id.image);
+                if(position == 0){
+                    Log.d("DISCOVER", String.valueOf(fragmentManager));
+                    name.setText(restaurants.get(0).getName());
+                    Picasso.get()
+                            .load(restaurants.get(0).getImageUri().get(0))
+                            .placeholder(R.drawable.slide1)
+                            .into(imageView);
+                    imageLayout.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            args.putString("id", restaurants.get(0).getId());
+                            restaurantFragment.setArguments(args);
+                            fragmentManager.beginTransaction().replace(R.id.main_view, restaurantFragment).commit();
+                        }
+                    });
+                }
+
+                else if(position == 1){
+                    name.setText(restaurants.get(1).getName());
+                    Picasso.get()
+                            .load(restaurants.get(1).getImageUri().get(0))
+                            .placeholder(R.drawable.slide2)
+                            .into(imageView);
+                    imageLayout.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            args.putString("id", restaurants.get(1).getId());
+                            restaurantFragment.setArguments(args);
+                            fragmentManager.beginTransaction().replace(R.id.main_view, restaurantFragment).commit();
+                        }
+                    });
+                }
+
+                else {
+                    name.setText(restaurants.get(2).getName());
+                    Picasso.get()
+                            .load(restaurants.get(2).getImageUri().get(0))
+                            .placeholder(R.drawable.slide3)
+                            .into(imageView);
+                    imageLayout.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            args.putString("id", restaurants.get(2).getId());
+                            restaurantFragment.setArguments(args);
+                            fragmentManager.beginTransaction().replace(R.id.main_view, restaurantFragment).commit();
+                        }
+                    });
                 }
             }
         });
@@ -106,6 +149,8 @@ public class SlidingImageAdapter extends PagerAdapter {
     public Parcelable saveState() {
         return null;
     }
-
+    public void setFragmentmanager(FragmentManager fragmentManager){
+        this.fragmentManager = fragmentManager;
+    }
 
 }

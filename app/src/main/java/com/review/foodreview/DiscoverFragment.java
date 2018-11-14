@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentActivity;
 import android.support.v4.view.ViewPager;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -94,12 +95,13 @@ public class DiscoverFragment extends Fragment{
 
     //setup slideshow here
     private void setupSlideshow() {
-
         mPager = getView().findViewById(R.id.pager);
+        Log.d(TAG, String.valueOf(mPager.getCurrentItem()));
         mPager.setPageMargin(-4);
-        mPager.setAdapter(new SlidingImageAdapter(
-                getContext(),
-                imageModelArrayList));
+        SlidingImageAdapter slidingImageAdapter = new SlidingImageAdapter(getContext(),
+                imageModelArrayList);
+        slidingImageAdapter.setFragmentmanager(getActivity().getSupportFragmentManager());
+        mPager.setAdapter(slidingImageAdapter);
         this.wormDotsIndicator = getView().findViewById(R.id.worm_dots_indicator);
         this.wormDotsIndicator.setViewPager(mPager);
 
@@ -113,10 +115,13 @@ public class DiscoverFragment extends Fragment{
                 Restaurant restaurant;
                 Log.d(TAG, "Do query in Restaurant");
                 for(QueryDocumentSnapshot doc : queryDocumentSnapshots) {
+
                     restaurant = doc.toObject(Restaurant.class);
                     restaurant.setId(doc.getId());
                     restaurants.add(restaurant);
+
                 }
+
                 final LinearLayout _restaurantList = getView().findViewById(R.id.discover_list);
                 // add restaurant items to the LinearLayout _restaurantList
                 for (final Restaurant r : restaurants) {
@@ -126,6 +131,7 @@ public class DiscoverFragment extends Fragment{
                     restaurantListItemView.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
+
                             passbundle(r.getId());
                         }
                     });
@@ -145,24 +151,4 @@ public class DiscoverFragment extends Fragment{
                 .replace(R.id.main_view, fragmentrestaurant).commit();
         Log.d(TAG, restaurantId);
     }
-
 }
-
-// Auto start of viewpager open it if you want
-//        final Handler handler = new Handler();
-//        final Runnable Update = new Runnable() {
-//            public void run() {
-//                if (currentPage == NUM_PAGES) {
-//                    currentPage = 0;
-//                }
-//                mPager
-//                        .setCurrentItem(currentPage++, true);
-//            }
-//        };
-//        Timer swipeTimer = new Timer();
-//        swipeTimer.schedule(new TimerTask() {
-//            @Override
-//            public void run() {
-//                handler.post(Update);
-//            }
-//        }, 3000, 3000);
