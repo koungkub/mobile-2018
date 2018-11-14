@@ -12,6 +12,7 @@ import android.widget.ListView;
 import android.widget.Toolbar;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
@@ -42,6 +43,7 @@ public class ReviewsFragment extends Fragment {
         super.onActivityCreated(savedInstanceState);
         Log.d(TAG, "onActivityCreated");
         MainActivity.onFragmentChanged(TAG);
+
         reviewList.clear();
         firestore = FirebaseFirestore.getInstance();
 
@@ -51,8 +53,9 @@ public class ReviewsFragment extends Fragment {
         registerFragmentElements();
         createMenu();
 
-        // TODO: Query only this restaurant
+        final DocumentReference restaurantRef = firestore.collection("restaurant").document(restaurantId);
         firestore.collection("review")
+                .whereEqualTo("restaurant", restaurantRef)
                 .get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                     @Override
