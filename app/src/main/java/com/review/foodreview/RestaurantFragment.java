@@ -77,7 +77,7 @@ public class RestaurantFragment extends Fragment {
                                     (HashMap<String, Long>) documentSnapshot.get("rating"),
                                     (List<String>) documentSnapshot.get("imageUri"),
                                     (List<DocumentReference>) documentSnapshot.get("review"),
-                                    20
+                                    0
                             );
                         } else {
                             Log.d(TAG, "Restaurant doesn't exist");
