@@ -8,19 +8,25 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.TextView;
+import android.widget.*;
 
-import android.widget.Toolbar;
-import com.google.firebase.firestore.DocumentSnapshot;
-import com.google.firebase.firestore.EventListener;
-import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.FirebaseFirestoreException;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.firestore.*;
+import com.review.foodreview.component.ReviewListAdapter;
+import com.review.foodreview.component.ReviewListItem;
 import com.review.foodreview.dto.Restaurant;
+import com.review.foodreview.dto.Review;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Locale;
 
 public class RestaurantFragment extends Fragment {
     private static final String TAG = "RESTAURANT";
 
+    private String restaurantId; // to be assigned with bundle
     private Restaurant restaurant;
     private FirebaseFirestore firestore = FirebaseFirestore.getInstance();
 
@@ -28,6 +34,7 @@ public class RestaurantFragment extends Fragment {
     private TextView _openHours, _delivery;
     private Toolbar _toolbar;
     private Button _writeBtn, _viewAllBtn;
+    private LinearLayout _reviewList;
 
     @Nullable
     @Override
@@ -42,12 +49,12 @@ public class RestaurantFragment extends Fragment {
         Log.d(TAG, "onActivityCreated");
         super.onActivityCreated(savedInstanceState);
 
+        restaurantId = "PxZsYjM909P3IfsvJdPb"; // TODO: Replace with bundle
         registerFragmentElements();
 
-        Log.d(TAG, "fetchRestaurant: fetching");
-        firestore.collection("restaurant")
-                .document("PxZsYjM909P3IfsvJdPb")
-                .addSnapshotListener(new EventListener<DocumentSnapshot>() {
+        Log.d(TAG, "fetching restaurant");
+        final DocumentReference restaurantRef = firestore.collection("restaurant").document(restaurantId);
+        restaurantRef.addSnapshotListener(new EventListener<DocumentSnapshot>() {
                     @Override
                     public void onEvent(@javax.annotation.Nullable DocumentSnapshot documentSnapshot,
                                         @javax.annotation.Nullable FirebaseFirestoreException e) {
@@ -77,13 +84,46 @@ public class RestaurantFragment extends Fragment {
                                     false
                             );
                         }
-                        // methods that require data from Firestore
+                        // methods that require restaurant data from Firestore
                         createMenu();
                         setTexts(restaurant);
                         initViewAllBtn();
                     }
                 });
-        // TODO: Fetch reviews here
+
+        Log.d(TAG, "fetching reviews");
+        firestore.collection("review")
+                .whereEqualTo("restaurant", restaurantRef)
+                .limit(5)
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if (task.isSuccessful()) {
+                            Log.d(TAG, "Successfully retrieved reviews");
+                            for (QueryDocumentSnapshot reviewSnapshot : task.getResult()) {
+                                Review review = new Review(
+                                        reviewSnapshot.getId(),
+                                        reviewSnapshot.getDocumentReference("author"),
+                                        reviewSnapshot.getDocumentReference("restaurant"),
+                                        reviewSnapshot.getString("description"),
+                                        reviewSnapshot.getTimestamp("date"),
+                                        (ArrayList<String>) reviewSnapshot.get("imageUri"),
+                                        (HashMap<String, Long>) reviewSnapshot.get("rating")
+                                );
+                                // add to _reviewList LinearLayout
+                                final ReviewListItem reviewListItem = new ReviewListItem(getContext(), review, _reviewList);
+                                final View restaurantListItemView = reviewListItem.getComponent();
+                                _reviewList.addView(restaurantListItemView);
+                            }
+                        } else {
+                            // TODO: Handle unsuccessful task
+                        }
+                        // hide progress bar and make content visible
+                        _reviewList.setVisibility(View.VISIBLE);
+                        // _loading.setVisibility(View.GONE);
+                    }
+                });
         initWriteBtn();
     }
 
@@ -99,6 +139,7 @@ public class RestaurantFragment extends Fragment {
         _toolbar = getView().findViewById(R.id.restaurant_action_bar);
         _writeBtn = getView().findViewById(R.id.restaurant_review_btn_add);
         _viewAllBtn = getView().findViewById(R.id.restaurant_review_btn_all);
+        _reviewList = getView().findViewById(R.id.restaurant_recent_reviews);
     }
 
     private void createMenu() {
@@ -112,10 +153,15 @@ public class RestaurantFragment extends Fragment {
         _restaurantName.setText(restaurant.getName());
         _restaurantType.setText(restaurant.getRestaurantType());
         _priceRange.setText(restaurant.getPriceRange());
-        _rating.setText(Float.toString(restaurant.getRating()));
-        _reviewCount.setText("from " + restaurant.getReviewCount() + " reviews");
+        _rating.setText(String.format(Locale.ENGLISH, "%.1f", restaurant.getRating()));
+        _reviewCount.setText(
+                String.format(
+                        Locale.ENGLISH,
+                        getString(R.string.page_restaurant_from_d_reviews),
+                        restaurant.getReviewCount())
+        );
         _openHours.setText(restaurant.getOpenHours());
-        if (!restaurant.isDeliverable()) _delivery.setText("Delivery not available");
+        if (!restaurant.isDeliverable()) _delivery.setText(R.string.page_restaurant_no_delivery);
     }
 
     private void initWriteBtn() {
