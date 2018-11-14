@@ -32,10 +32,15 @@ public class ReviewListAdapter extends ArrayAdapter<Review> {
         final View reviewItem = LayoutInflater.from(context).inflate(R.layout.review_item, parent, false);
         final TextView _description = reviewItem.findViewById(R.id.review_item_text_description);
         final TextView _author = reviewItem.findViewById(R.id.review_item_text_author);
+        final TextView _ratingFood = reviewItem.findViewById(R.id.review_item_rating_food);
+        final TextView _ratingService = reviewItem.findViewById(R.id.review_item_rating_service);
+        final TextView _ratingAtmosphere = reviewItem.findViewById(R.id.review_item_rating_atmosphere);
         final Review review = reviewList.get(position);
         _description.setText(review.getDescription());
+        _ratingFood.setText(review.getRating().get("food").toString());
+        _ratingService.setText(review.getRating().get("service").toString());
+        _ratingAtmosphere.setText(review.getRating().get("atmosphere").toString());
         // TODO: Get author name
-        // TODO: Show rating
         return reviewItem;
     }
 }
