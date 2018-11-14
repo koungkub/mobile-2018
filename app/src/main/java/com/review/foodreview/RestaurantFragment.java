@@ -13,22 +13,19 @@ import android.widget.*;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.*;
-import com.review.foodreview.component.ReviewListAdapter;
+import com.google.firebase.firestore.EventListener;
 import com.review.foodreview.component.ReviewListItem;
 import com.review.foodreview.dto.Restaurant;
 import com.review.foodreview.dto.Review;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Locale;
+import java.util.*;
 
 public class RestaurantFragment extends Fragment {
     private static final String TAG = "RESTAURANT";
 
     private String restaurantId; // to be assigned with bundle
     private Restaurant restaurant;
-    private FirebaseFirestore firestore = FirebaseFirestore.getInstance();
+    private final FirebaseFirestore firestore = FirebaseFirestore.getInstance();
 
     private TextView _restaurantName, _restaurantType, _priceRange, _rating, _reviewCount;
     private TextView _openHours, _delivery;
@@ -165,7 +162,7 @@ public class RestaurantFragment extends Fragment {
         _toolbar.setTitle(restaurant.getName());
         _toolbar.setNavigationIcon(R.drawable.ic_arrow_back);
         _toolbar.inflateMenu(R.menu.restaurant);
-        getActivity().setActionBar(_toolbar);
+        Objects.requireNonNull(getActivity()).setActionBar(_toolbar);
     }
 
     private void setTexts(Restaurant restaurant) {

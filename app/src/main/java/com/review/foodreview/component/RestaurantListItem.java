@@ -13,9 +13,9 @@ import com.squareup.picasso.Picasso;
 
 public class RestaurantListItem {
     private static final String TAG = "RESTAURANTLISTITEM";
-    private Restaurant restaurant;
-    private Context context;
-    private LinearLayout _restaurantList;
+    private final Restaurant restaurant;
+    private final Context context;
+    private final LinearLayout _restaurantList;
 
     /**
      * Create a single restaurant list item.

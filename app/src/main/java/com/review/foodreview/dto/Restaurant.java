@@ -9,15 +9,20 @@ import java.util.HashMap;
 import java.util.List;
 
 public class Restaurant {
-    private String id, name, priceRange, openHours, telephone, categoryName;
-    private boolean delivery;
-    private GeoPoint location;
-    private List<String> imageUri;
-    private List<DocumentReference> reviews;
-    private HashMap<String, Long> rating;
-    private DocumentReference category;
+    private final String id;
+    private final String name;
+    private final String priceRange;
+    private final String openHours;
+    private final String telephone;
+    private final String categoryName;
+    private final boolean delivery;
+    private final GeoPoint location;
+    private final List<String> imageUri;
+    private final List<DocumentReference> reviews;
+    private final HashMap<String, Long> rating;
+    private final DocumentReference category;
 
-    private int reviewCount;
+    private final int reviewCount;
 
     public Restaurant(String id,
                       String name,

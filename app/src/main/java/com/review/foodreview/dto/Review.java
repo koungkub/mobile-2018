@@ -11,12 +11,14 @@ import java.util.List;
  * @return Review
  */
 public class Review {
-    private String reviewId, description;
-    private DocumentReference authorRef, restaurantRef;
-    private Timestamp date;
-    private List<String> imageUriList;
+    private final String reviewId;
+    private final String description;
+    private final DocumentReference authorRef;
+    private final DocumentReference restaurantRef;
+    private final Timestamp date;
+    private final List<String> imageUriList;
     // private RestaurantRating rating;
-    private HashMap<String, Long> rating;
+    private final HashMap<String, Long> rating;
 
     public Review(String reviewId,
                   DocumentReference authorRef,

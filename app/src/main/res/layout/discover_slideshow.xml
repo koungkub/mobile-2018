@@ -38,7 +38,7 @@
                 android:layout_marginTop="16dp"
                 android:text="on the table"
                 android:textColor="#000"
-                android:textSize="20dp"
+                android:textSize="20sp"
                 android:textStyle="bold" />
 </RelativeLayout>
     </RelativeLayout>
