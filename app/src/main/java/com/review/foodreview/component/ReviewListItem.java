@@ -11,9 +11,9 @@ import com.review.foodreview.dto.Review;
 
 public class ReviewListItem {
     private static final String TAG = "REVIEWLISTITEM";
-    private Review review;
-    private Context context;
-    private LinearLayout _reviewList;
+    private final Review review;
+    private final Context context;
+    private final LinearLayout _reviewList;
 
     /**
      * Create a single review list item.

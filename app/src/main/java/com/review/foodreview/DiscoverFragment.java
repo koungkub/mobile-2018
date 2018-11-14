@@ -27,7 +27,7 @@ import java.util.HashMap;
 import java.util.List;
 
 public class DiscoverFragment extends Fragment{
-    private List<Restaurant> restaurants = new ArrayList<>();
+    private final List<Restaurant> restaurants = new ArrayList<>();
     private static final String TAG = "DISCOVERFRAGMENT";
     private static ViewPager mPager;
     private Fragment fragmentrestaurant;
@@ -36,7 +36,7 @@ public class DiscoverFragment extends Fragment{
     private WormDotsIndicator wormDotsIndicator;
     private static final int NUM_PAGES = 3;
     private ArrayList<ImageModel> imageModelArrayList;
-    private int[] myImageList = new int[] {
+    private final int[] myImageList = new int[] {
             R.drawable.slide1,
             R.drawable.slide2,
             R.drawable.slide3

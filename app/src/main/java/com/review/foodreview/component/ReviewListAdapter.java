@@ -16,8 +16,8 @@ import java.util.List;
 
 public class ReviewListAdapter extends ArrayAdapter<Review> {
     private final String TAG = "REVIEWLISTADAPTER";
-    private List<Review> reviewList;
-    private Context context;
+    private final List<Review> reviewList;
+    private final Context context;
 
     public ReviewListAdapter(@NonNull Context context, int resource, @NonNull List<Review> reviews) {
         super(context, resource, reviews);

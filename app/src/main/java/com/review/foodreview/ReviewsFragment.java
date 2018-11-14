@@ -27,7 +27,7 @@ import java.util.List;
 public class ReviewsFragment extends Fragment {
     private static final String TAG = "REVIEWS";
     private String restaurantName, restaurantId;
-    private List<Review> reviewList = new ArrayList<>();
+    private final List<Review> reviewList = new ArrayList<>();
     private Toolbar _toolbar;
     private ListView _reviewListView;
     private ProgressBar _loading;

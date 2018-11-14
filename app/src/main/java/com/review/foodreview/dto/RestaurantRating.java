@@ -5,7 +5,9 @@ package com.review.foodreview.dto;
  * @return RestaurantRating
  */
 public class RestaurantRating {
-    private float food, service, atmosphere;
+    private final float food;
+    private final float service;
+    private final float atmosphere;
 
     public RestaurantRating(float food, float service, float atmosphere) {
         this.food = food;

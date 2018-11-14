@@ -25,7 +25,7 @@ public class RestaurantFragment extends Fragment {
 
     private String restaurantId; // to be assigned with bundle
     private Restaurant restaurant;
-    private FirebaseFirestore firestore = FirebaseFirestore.getInstance();
+    private final FirebaseFirestore firestore = FirebaseFirestore.getInstance();
 
     private TextView _restaurantName, _restaurantType, _priceRange, _rating, _reviewCount;
     private TextView _openHours, _delivery;

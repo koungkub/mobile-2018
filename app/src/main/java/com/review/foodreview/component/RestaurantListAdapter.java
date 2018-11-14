@@ -19,7 +19,7 @@ public class RestaurantListAdapter extends ArrayAdapter<Restaurant> {
 
     private final String TAG = "RESTAURANTLISTADAPTER";
     private List<Restaurant> restaurantList = new ArrayList<>();
-    private Context context;
+    private final Context context;
 
     public RestaurantListAdapter(@NonNull Context context,
                                  int resource,
