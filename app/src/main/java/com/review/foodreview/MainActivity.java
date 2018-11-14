@@ -8,13 +8,10 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
 
-import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.firestore.DocumentReference;
-import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.QueryDocumentSnapshot;
-import com.google.firebase.firestore.QuerySnapshot;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 import com.review.foodreview.sqlite.DBHelper;
 import android.view.View;
 
@@ -37,6 +34,32 @@ public class MainActivity extends AppCompatActivity{
         fragmentDiscover = new DiscoverFragment();
         fragmentSearch = new SearchFragment();
         fragmentMe = new LoginFragment();
+
+//        FirebaseStorage storage = FirebaseStorage.getInstance();
+//        StorageReference storageReference = storage.getReference();
+//
+//        StorageReference restaurant = storageReference.child("restaurant");
+//
+//        StorageReference koung = restaurant.child("cat.jpg");
+//
+//        Log.d("PHOTO", koung.getName());
+//        Log.d("PHOTO", koung.getPath());
+//        Log.d("PHOTO", koung.getBucket());
+//        final long ONE_MEGABYTE = 1024 * 1024;
+//
+//        koung.getBytes(ONE_MEGABYTE).addOnSuccessListener(new OnSuccessListener<byte[]>() {
+//            @Override
+//            public void onSuccess(byte[] bytes) {
+//                Log.d("PHOTO", "success");
+//            }
+//        }).addOnFailureListener(new OnFailureListener() {
+//            @Override
+//            public void onFailure(@NonNull Exception e) {
+//                Log.d("PHOTO", "failure");
+//                e.printStackTrace();
+//            }
+//        });
+
     }
 
     public void init(Bundle bundle) {
