@@ -46,6 +46,12 @@ public class RestaurantFragment extends Fragment {
     }
 
     @Override
+    public void onDestroyView() {
+        Log.d(TAG, "onDestroyView");
+        super.onDestroyView();
+    }
+
+    @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         Log.d(TAG, "onActivityCreated");
         super.onActivityCreated(savedInstanceState);
@@ -122,9 +128,11 @@ public class RestaurantFragment extends Fragment {
                                         (HashMap<String, Long>) reviewSnapshot.get("rating")
                                 );
                                 // add to _reviewList LinearLayout
-                                final ReviewListItem reviewListItem = new ReviewListItem(getContext(), review, _reviewList);
-                                final View restaurantListItemView = reviewListItem.getComponent();
-                                _reviewList.addView(restaurantListItemView);
+                                if (getContext() != null) {
+                                    final ReviewListItem reviewListItem = new ReviewListItem(getContext(), review, _reviewList);
+                                    final View restaurantListItemView = reviewListItem.getComponent();
+                                    _reviewList.addView(restaurantListItemView);
+                                }
                             }
                         } else {
                             // TODO: Handle unsuccessful task
@@ -164,7 +172,8 @@ public class RestaurantFragment extends Fragment {
         _restaurantName.setText(restaurant.getName());
         _restaurantType.setText(restaurant.getCategoryName());
         _priceRange.setText(restaurant.getPriceRange());
-        _rating.setText(String.format(Locale.ENGLISH, "%.1f", restaurant.getRating()));
+        // TODO: Calculate restaurant rating
+        // _rating.setText(String.format(Locale.ENGLISH, "%.1f", restaurant.getRating().get("food")));
         _reviewCount.setText(
                 String.format(
                         Locale.ENGLISH,

@@ -78,8 +78,10 @@ public class ReviewsFragment extends Fragment {
                                 );
                                 reviewList.add(review);
                             }
-                            ReviewListAdapter reviewListAdapter = new ReviewListAdapter(getActivity(), R.layout.review_item, reviewList);
-                            _reviewListView.setAdapter(reviewListAdapter);
+                            if (getContext() != null) {
+                                ReviewListAdapter reviewListAdapter = new ReviewListAdapter(getActivity(), R.layout.review_item, reviewList);
+                                _reviewListView.setAdapter(reviewListAdapter);
+                            }
                         } else {
                             // TODO: Handle unsuccessful task
                         }
