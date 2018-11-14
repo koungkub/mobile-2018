@@ -18,6 +18,8 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.review.foodreview.dto.Restaurant;
 
+import java.util.Locale;
+
 public class RestaurantFragment extends Fragment {
     private static final String TAG = "RESTAURANT";
 
@@ -112,10 +114,15 @@ public class RestaurantFragment extends Fragment {
         _restaurantName.setText(restaurant.getName());
         _restaurantType.setText(restaurant.getRestaurantType());
         _priceRange.setText(restaurant.getPriceRange());
-        _rating.setText(Float.toString(restaurant.getRating()));
-        _reviewCount.setText("from " + restaurant.getReviewCount() + " reviews");
+        _rating.setText(String.format(Locale.ENGLISH, "%.1f", restaurant.getRating()));
+        _reviewCount.setText(
+                String.format(
+                        Locale.ENGLISH,
+                        getString(R.string.page_restaurant_from_d_reviews),
+                        restaurant.getReviewCount())
+        );
         _openHours.setText(restaurant.getOpenHours());
-        if (!restaurant.isDeliverable()) _delivery.setText("Delivery not available");
+        if (!restaurant.isDeliverable()) _delivery.setText(R.string.page_restaurant_no_delivery);
     }
 
     private void initWriteBtn() {
