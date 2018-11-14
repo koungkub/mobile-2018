@@ -12,11 +12,13 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 
 import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.GeoPoint;
-import com.review.foodreview.component.DiscoverGetListData;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 import com.review.foodreview.component.RestaurantListItem;
-import com.review.foodreview.dto.GetallFirestore;
 import com.review.foodreview.dto.Restaurant;
 import com.review.foodreview.dto.ImageModel;
 import com.review.foodreview.dto.SlidingImageAdapter;
@@ -68,69 +70,6 @@ public class DiscoverFragment extends Fragment{
         super.onActivityCreated(savedInstanceState);
         MainActivity.onFragmentChanged(TAG);
         Log.d(TAG, "Start discover fragment (ActivityCreated)");
-        // clear the list to prevent duplicate data
-        restaurants.clear();
-
-        // dummy data
-        final DocumentReference dummyCategory = mdb.collection("category").document("path");
-        final HashMap<String, Long> dummyRating = new HashMap<>();
-        dummyRating.put("food", 4L); dummyRating.put("service", 3L); dummyRating.put("atmosphere", 3L);
-        final ArrayList<String> dummyImageUri = new ArrayList<>();
-        dummyImageUri.add("/path/to/image.jpg");
-        final ArrayList<DocumentReference> dummyReviews = new ArrayList<>();
-        dummyReviews.add(dummyCategory);
-
-        Restaurant mcdonalds = new Restaurant(
-                "testId2",
-                "Otoya",
-                "$$ (120 - 300)",
-                "10.00 - 21.00",
-                "0123456789",
-                "Japanese",
-                true,
-                dummyCategory,
-                new GeoPoint(10, 10),
-                dummyRating,
-                dummyImageUri,
-                dummyReviews,
-                20
-        );
-        Restaurant otoya = new Restaurant(
-                "testId2",
-                "Otoya",
-                "$$ (120 - 300)",
-                "10.00 - 21.00",
-                "0123456789",
-                "Japanese",
-                true,
-                dummyCategory,
-                new GeoPoint(10, 10),
-                dummyRating,
-                dummyImageUri,
-                dummyReviews,
-                20
-        );
-        restaurants.add(mcdonalds);
-        restaurants.add(otoya);
-        final LinearLayout _restaurantList = getView().findViewById(R.id.discover_list);
-
-        // add restaurant items to the LinearLayout _restaurantList
-        for (Restaurant r : restaurants) {
-            final RestaurantListItem restaurantListItem = new RestaurantListItem(getContext(), r, _restaurantList);
-            final View restaurantListItemView = restaurantListItem.getComponent();
-            _restaurantList.addView(restaurantListItemView);
-            restaurantListItemView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    getActivity()
-                            .getSupportFragmentManager()
-                            .beginTransaction()
-                            .replace(R.id.main_view, new RestaurantFragment())
-                            .addToBackStack(null)
-                            .commit();
-                }
-            });
-        }
         // set up Featured slideshow
         Log.d(TAG, "Do setupSlideshow");
         setupSlideshow();
@@ -166,7 +105,31 @@ public class DiscoverFragment extends Fragment{
 
     }
     private void getdiscoverList(){
-        DiscoverGetListData discoverGetListData = new DiscoverGetListData(false,false, false, true);
+        // clear the list to prevent duplicate data
+        mdb.collection("restaurant").addSnapshotListener(new EventListener<QuerySnapshot>() {
+            @Override
+            public void onEvent(@javax.annotation.Nullable QuerySnapshot queryDocumentSnapshots, @javax.annotation.Nullable FirebaseFirestoreException e) {
+                restaurants.clear();
+                for(QueryDocumentSnapshot doc : queryDocumentSnapshots) {
+
+                    restaurants.add(doc.toObject(Restaurant.class));
+                    Log.d(TAG, doc.getId());
+                }
+                final LinearLayout _restaurantList = getView().findViewById(R.id.discover_list);
+                // add restaurant items to the LinearLayout _restaurantList
+                for (final Restaurant r : restaurants) {
+                    final RestaurantListItem restaurantListItem = new RestaurantListItem(getContext(), r, _restaurantList);
+                    final View restaurantListItemView = restaurantListItem.getComponent();
+                    _restaurantList.addView(restaurantListItemView);
+                    restaurantListItemView.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            passbundle(r.getId());
+                        }
+                    });
+                }
+            }
+        });
     }
 
     //set bundle and pass to restaurantFragment

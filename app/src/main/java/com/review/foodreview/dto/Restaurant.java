@@ -9,21 +9,23 @@ import java.util.HashMap;
 import java.util.List;
 
 public class Restaurant {
-    private final String id;
-    private final String name;
-    private final String priceRange;
-    private final String openHours;
-    private final String telephone;
-    private final String categoryName;
-    private final boolean delivery;
-    private final GeoPoint location;
-    private final List<String> imageUri;
-    private final List<DocumentReference> reviews;
-    private final HashMap<String, Long> rating;
-    private final DocumentReference category;
+    private String id;
+    private String name;
+    private String priceRange;
+    private String openHours;
+    private String telephone;
+    private String categoryName;
+    private boolean delivery;
+    private GeoPoint location;
+    private List<String> imageUri;
+    private List<DocumentReference> reviews;
+    private HashMap<String, Long> rating;
+    private DocumentReference category;
 
-    private final int reviewCount;
+    private int reviewCount;
+    public Restaurant(){
 
+    }
     public Restaurant(String id,
                       String name,
                       String priceRange,
@@ -73,7 +75,9 @@ public class Restaurant {
         this.review = review;
         this.telephone = telephone;
     } */
-
+    public void  setId(String id){
+        this.id = id;
+    }
     public String getId() {
         return id;
     }
