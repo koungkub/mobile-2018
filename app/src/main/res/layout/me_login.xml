@@ -12,7 +12,7 @@
             <android.support.constraint.ConstraintLayout
                 android:id="@+id/topPanel"
                 android:layout_width="match_parent"
-                android:layout_height="250dp"
+                android:layout_height="500dp"
                 android:background="@drawable/head_me"
                 android:elevation="20dp"
                 >
@@ -28,7 +28,6 @@
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
-
                     android:gravity="center"
                     />
                 <TextView
@@ -41,21 +40,25 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/me_not_login_text_header1"
                     />
-            </android.support.constraint.ConstraintLayout>
-            <android.support.constraint.ConstraintLayout
-                android:layout_width="match_parent"
-                android:layout_marginTop="30dp"
-                android:layout_height="180dp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/topPanel"
-                >
-                <ListView
-                    android:layout_width="match_parent"
+                <android.support.constraint.ConstraintLayout
+                    android:id="@+id/me_login_bookmark"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:id="@+id/me_login_menulist"
-                    >
-                </ListView>
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginRight="16dp"
+                    android:layout_marginTop="50dp"
+                    android:background="@drawable/border"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/me_not_login_text_body1">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_margin="20dp"
+                    android:layout_height="wrap_content"
+                    android:padding="16dp"
+                    android:textColor="#fff"
+                    android:drawableTop="@drawable/ic_action_bookmark_white"
+                    android:text="Bookmark"/>
+                </android.support.constraint.ConstraintLayout>
             </android.support.constraint.ConstraintLayout>
         </android.support.constraint.ConstraintLayout>
     </ScrollView>
