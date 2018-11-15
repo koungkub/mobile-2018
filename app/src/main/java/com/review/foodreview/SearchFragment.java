@@ -17,7 +17,7 @@ import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
 public class SearchFragment extends Fragment  {
-    private static final String TAG = "SEARCHFRAGMENT";
+    private static final String TAG = "SEARCH";
     private final FirebaseFirestore firestore = FirebaseFirestore.getInstance();
     private GridLayout _categoryGrid;
 
