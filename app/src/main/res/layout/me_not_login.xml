@@ -35,7 +35,7 @@
             android:id="@+id/me_not_login_text_body1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="You are guess Please Login or Register for User full feature"
+            android:text="You are guess Please Login or Register for User full feature."
             android:gravity="center"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"

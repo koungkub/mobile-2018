@@ -64,6 +64,7 @@ public class BookmarkFragment extends Fragment{
                 .findViewById(R.id.bookmark_action_bar);
         _toolbar.setTitle("Bookmark");
         _toolbar.setNavigationIcon(R.drawable.ic_arrow_back);
+        Objects.requireNonNull(getActivity()).setActionBar(_toolbar);
     }
 
     private void findBookmark(){
