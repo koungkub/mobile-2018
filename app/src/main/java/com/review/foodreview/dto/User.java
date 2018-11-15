@@ -13,12 +13,18 @@ public class User {
         this.name = name;
         this.uuid = uuid;
     }
-
+    public User(List<DocumentReference> bookmark) {
+        this.bookmark = bookmark;
+    }
     public String getName() {
         return name;
     }
 
     public String getUuid() {
         return uuid;
+    }
+
+    public List<DocumentReference> getBookmark() {
+        return bookmark;
     }
 }

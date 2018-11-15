@@ -59,6 +59,12 @@ public class MeLoginFragment extends Fragment{
             @Override
             public void onClick(View v) {
                 Log.d(TAG, "Do bookmark menu");
+                getActivity()
+                        .getSupportFragmentManager()
+                        .beginTransaction()
+                        .replace(R.id.main_view, new BookmarkFragment())
+                        .addToBackStack(null)
+                        .commit();
             }
         });
     }

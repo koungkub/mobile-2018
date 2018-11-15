@@ -90,7 +90,7 @@ public class SlidingImageAdapter extends PagerAdapter {
                         public void onClick(View v) {
                             args.putString("restaurantId", restaurants.get(0).getId());
                             restaurantFragment.setArguments(args);
-                            fragmentManager.beginTransaction().replace(R.id.main_view, restaurantFragment).commit();
+                            fragmentManager.beginTransaction().replace(R.id.main_view, restaurantFragment).addToBackStack(null).commit();
                         }
                     });
                 }
@@ -106,7 +106,7 @@ public class SlidingImageAdapter extends PagerAdapter {
                             public void onClick(View v) {
                                 args.putString("restaurantId", restaurants.get(1).getId());
                                 restaurantFragment.setArguments(args);
-                                fragmentManager.beginTransaction().replace(R.id.main_view, restaurantFragment).commit();
+                                fragmentManager.beginTransaction().replace(R.id.main_view, restaurantFragment).addToBackStack(null).commit();
                             }
                         });
                     } else {
@@ -120,7 +120,7 @@ public class SlidingImageAdapter extends PagerAdapter {
                             public void onClick(View v) {
                                 args.putString("restaurantId", restaurants.get(2).getId());
                                 restaurantFragment.setArguments(args);
-                                fragmentManager.beginTransaction().replace(R.id.main_view, restaurantFragment).commit();
+                                fragmentManager.beginTransaction().replace(R.id.main_view, restaurantFragment).addToBackStack(null).commit();
                             }
                         });
                     }
