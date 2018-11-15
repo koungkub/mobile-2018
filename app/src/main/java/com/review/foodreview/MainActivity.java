@@ -33,7 +33,7 @@ public class MainActivity extends AppCompatActivity{
         setupNavbar();
         fragmentDiscover = new DiscoverFragment();
         fragmentSearch = new SearchFragment();
-        fragmentMe = new LoginFragment();
+        fragmentMe = new MeNotLoginFragment();
 
 //        FirebaseStorage storage = FirebaseStorage.getInstance();
 //        StorageReference storageReference = storage.getReference();
@@ -95,7 +95,10 @@ public class MainActivity extends AppCompatActivity{
                 }
                 if (fragment != null) {
                     Log.d(TAG, "Change page");
-                    getSupportFragmentManager().beginTransaction().replace(R.id.main_view, fragment).commit();
+                    getSupportFragmentManager()
+                            .beginTransaction()
+                            .replace(R.id.main_view, fragment)
+                            .commit();
                 }
                 return true;
             }
@@ -104,12 +107,12 @@ public class MainActivity extends AppCompatActivity{
 
     public static void onFragmentChanged(String fragmentName) {
         Log.d(TAG, "onFragmentChanged: " + fragmentName);
-        if (fragmentName.equalsIgnoreCase("RESTAURANT")) {
-            Log.d(TAG, "Invisible nav");
-            navigationView.setVisibility(View.GONE);
-        } else {
+        if (fragmentName.equalsIgnoreCase("DISCOVER") || fragmentName.equalsIgnoreCase("SEARCH") || fragmentName.equalsIgnoreCase("ME")) {
             Log.d(TAG, "Visible nav");
             navigationView.setVisibility(View.VISIBLE);
+        } else {
+            Log.d(TAG, "Invisible nav");
+            navigationView.setVisibility(View.GONE);
         }
     }
 }
