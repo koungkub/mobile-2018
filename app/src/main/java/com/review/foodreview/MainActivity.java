@@ -78,7 +78,6 @@ public class MainActivity extends AppCompatActivity{
         navigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
-                Log.d(TAG, String.valueOf(menuItem.getItemId()));
                 switch (menuItem.getItemId()) {
                     case R.id.navigation_discover: {
                         fragment = fragmentDiscover;
@@ -100,7 +99,7 @@ public class MainActivity extends AppCompatActivity{
                             .replace(R.id.main_view, fragment)
                             .commit();
                 }
-                return false;
+                return true;
             }
         });
     }

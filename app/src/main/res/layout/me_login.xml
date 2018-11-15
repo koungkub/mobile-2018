@@ -41,7 +41,7 @@
                     app:layout_constraintTop_toBottomOf="@+id/me_not_login_text_header1"
                     />
                 <android.support.constraint.ConstraintLayout
-                    android:id="@+id/me_login_bookmark"
+                    android:id="@+id/me_login_contain_bookmark"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="16dp"
@@ -51,6 +51,7 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/me_not_login_text_body1">
                 <TextView
+                    android:id="@+id/me_login_bookmark"
                     android:layout_width="wrap_content"
                     android:layout_margin="20dp"
                     android:layout_height="wrap_content"

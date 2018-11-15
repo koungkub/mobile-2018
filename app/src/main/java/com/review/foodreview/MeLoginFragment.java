@@ -42,26 +42,25 @@ public class MeLoginFragment extends Fragment{
         MainActivity.onFragmentChanged(TAG);
         mAuth = FirebaseAuth.getInstance();
         mUser = mAuth.getCurrentUser();
-        try {
-            if(mUser != null){
-                showMenu();
-            }
-        }catch (Exception e){
-            getActivity()
-                    .getSupportFragmentManager()
-                    .beginTransaction()
-                    .replace(R.id.main_view, new MeNotLoginFragment())
-                    .commit();
+        if (mUser != null) {
+            Log.d(TAG, "Authen");
+            showMenu();
         }
-
+        else{
+            Log.d(TAG, "Not authen");
+        }
     }
     private void showMenu(){
-        TextView bookmark = getActivity()
+        TextView bookmark = getView()
                 .findViewById(R.id.me_login_bookmark);
         bookmark.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 mAuth.signOut();
+                getActivity()
+                        .getSupportFragmentManager()
+                        .beginTransaction()
+                        .replace(R.id.main_view, new MeNotLoginFragment()).commit();
             }
         });
     }
