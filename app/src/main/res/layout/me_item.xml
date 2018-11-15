@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <android.support.constraint.ConstraintLayout
+        android:id="@+id/me_item1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        >
+    <TextView
+        android:id="@+id/me_item_bookmark"
+        android:drawableLeft="@drawable/ic_action_bookmark"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:text="Bookmark"
+        />
+    </android.support.constraint.ConstraintLayout>
+    <android.support.constraint.ConstraintLayout
+        android:id="@+id/me_item2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@+id/me_item1"
+        >
+    <TextView
+        android:id="@+id/me_item_myreview"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:text="My review"
+        />
+    </android.support.constraint.ConstraintLayout>
+    <android.support.constraint.ConstraintLayout
+        android:id="@+id/me_item3"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@+id/me_item2"
+        >
+    <TextView
+        android:id="@+id/me_item_signout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:text="Sign out"/>
+    </android.support.constraint.ConstraintLayout>
+</android.support.constraint.ConstraintLayout>
