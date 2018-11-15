@@ -1,5 +1,7 @@
 package com.review.foodreview;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -12,6 +14,7 @@ import android.widget.*;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.*;
 import com.google.firebase.firestore.EventListener;
 import com.review.foodreview.component.ReviewListItem;
@@ -25,7 +28,9 @@ public class RestaurantFragment extends Fragment {
 
     private String restaurantId, restaurantName;
     private Restaurant restaurant;
+
     private final FirebaseFirestore firestore = FirebaseFirestore.getInstance();
+    private final FirebaseAuth auth = FirebaseAuth.getInstance();
 
     private TextView _restaurantName, _restaurantType, _priceRange, _rating, _reviewCount;
     private TextView _openHours, _delivery;
@@ -195,11 +200,19 @@ public class RestaurantFragment extends Fragment {
         _writeBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                getFragmentManager()
-                        .beginTransaction()
-                        .addToBackStack(null)
-                        .replace(R.id.main_view, new ReviewEditFragment())
-                        .commit();
+                if (auth.getCurrentUser() != null) {
+                    final Fragment fragment = new ReviewEditFragment();
+                    final Bundle bundle = new Bundle();
+                    bundle.putString("restaurantName", restaurant.getName());
+                    bundle.putString("restaurantId", restaurant.getId());
+                    getFragmentManager()
+                            .beginTransaction()
+                            .addToBackStack(null)
+                            .replace(R.id.main_view, new ReviewEditFragment())
+                            .commit();
+                } else {
+                    displayDialog("Please log in", "You need to log in first to write reviews.");
+                }
             }
         });
     }
@@ -220,5 +233,16 @@ public class RestaurantFragment extends Fragment {
                         .commit();
             }
         });
+    }
+
+    private void displayDialog(String title, String message) {
+        final AlertDialog.Builder builder = new AlertDialog.Builder(getContext(), android.R.style.Theme_Material_Light_Dialog_Alert);
+        builder.setTitle(title)
+                .setMessage(message)
+                .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {}
+                })
+                .show();
     }
 }

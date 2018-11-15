@@ -148,7 +148,9 @@ public class DiscoverFragment extends Fragment{
         getActivity()
                 .getSupportFragmentManager()
                 .beginTransaction()
-                .replace(R.id.main_view, fragmentrestaurant).commit();
+                .addToBackStack(null)
+                .replace(R.id.main_view, fragmentrestaurant)
+                .commit();
         Log.d(TAG, restaurantId);
     }
 }
