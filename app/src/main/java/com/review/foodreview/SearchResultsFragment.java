@@ -10,6 +10,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.Toolbar;
@@ -89,7 +90,7 @@ public class SearchResultsFragment extends Fragment {
 
     private void populateListView(
             QuerySnapshot results,
-            List<Restaurant> listForAdapter,
+            final List<Restaurant> listForAdapter,
             ListView listView) {
 
         for (QueryDocumentSnapshot result : results) {
@@ -116,6 +117,13 @@ public class SearchResultsFragment extends Fragment {
                         listForAdapter
                 );
                 listView.setAdapter(restaurantListAdapter);
+                listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                        Log.d(TAG, "onItemClick: " + position);
+                        handleListItemClick(listForAdapter, position);
+                    }
+                });
             }
         }
     }
@@ -129,5 +137,20 @@ public class SearchResultsFragment extends Fragment {
                     public void onClick(DialogInterface dialog, int which) {}
                 })
                 .show();
+    }
+
+    private void handleListItemClick(List<Restaurant> restaurantList, int position) {
+        final Restaurant restaurant = restaurantList.get(position);
+        Log.d(TAG, "clicked on: " + position + ", " + restaurant.getName());
+        final Fragment fragment = new RestaurantFragment();
+        final Bundle bundle = new Bundle();
+        bundle.putString("restaurantName", restaurant.getName());
+        bundle.putString("restaurantId", restaurant.getId());
+        fragment.setArguments(bundle);
+        getFragmentManager()
+                .beginTransaction()
+                .addToBackStack(null)
+                .replace(R.id.main_view, fragment)
+                .commit();
     }
 }
