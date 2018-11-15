@@ -143,7 +143,7 @@ public class DiscoverFragment extends Fragment{
     //set bundle and pass to restaurantFragment
     private void passbundle(String restaurantId){
         Log.d(TAG, "Send data to RestaurantFragment");
-        this.args.putString("id", restaurantId);
+        this.args.putString("restaurantId", restaurantId);
         this.fragmentrestaurant.setArguments(args);
         getActivity()
                 .getSupportFragmentManager()
