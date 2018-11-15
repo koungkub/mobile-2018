@@ -1,13 +1,20 @@
 package com.review.foodreview;
 
 import android.content.ClipData;
+import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
+import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.*;
+import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.Toast;
 import android.widget.Toolbar;
@@ -26,18 +33,22 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
+import static android.app.Activity.RESULT_OK;
+
 public class ReviewEditFragment extends Fragment {
 
+    private static final int RESULT_LOAD_IAMGE = 1;
     private static final String TAG = "REVIEWEDIT";
 
     private Toolbar _toolbar;
     private EditText _reviewText;
-    private RatingBar _ratingBarFood;
-    private RatingBar _ratingBarService;
-    private RatingBar _ratingBarAtmosphere;
+    private RatingBar _ratingBarFood, _ratingBarService, _ratingBarAtmosphere;
+    private Button _btnUploadPhoto;
+    private ImageView _imageFood;
 
-    private Map<String, Object> data;
-    private Map<String, Object> rating;
+    private Map<String, Object> data, rating;
+
+    private Intent galleryImage;
 
     @Nullable
     @Override
@@ -52,10 +63,13 @@ public class ReviewEditFragment extends Fragment {
         setHasOptionsMenu(true);
 
         createMenu();
+        onClickUploadPhoto();
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
+        Log.d(TAG, "Click submit");
+
         // Init FirebaseStorage and FirebaseStore
         FirebaseStorage firebaseStorage = FirebaseStorage.getInstance();
         StorageReference storageReference = firebaseStorage.getReference();
@@ -64,15 +78,14 @@ public class ReviewEditFragment extends Fragment {
         // Init FirebaseAuth
         FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
 
-        // get parameter from previous fragment using bundle
-        Bundle bundle = getArguments();
-        String restaurantId = bundle.getString("restaurantId");
-
         // get value from .xml
         _reviewText = getView().findViewById(R.id.review_edit_description);
         _ratingBarFood = getView().findViewById(R.id.review_edit_star_food);
         _ratingBarService = getView().findViewById(R.id.review_edit_star_service);
         _ratingBarAtmosphere = getView().findViewById(R.id.review_edit_star_atmosphere);
+
+        // FirebaseAuth uid
+        String uid = firebaseAuth.getUid();
 
         // convert value
         String stringReview = _reviewText.getText().toString();
@@ -80,47 +93,57 @@ public class ReviewEditFragment extends Fragment {
         float floatService = _ratingBarService.getRating();
         float floatAtmosphere = _ratingBarAtmosphere.getRating();
 
-        // get user and restaurant reference
-        DocumentReference userRef = db.collection("user").document(firebaseAuth.getUid());
-        DocumentReference restaurantRef = db.collection("restaurant").document(restaurantId);
+        // get parameter from previous fragment using bundle
+        Bundle bundle = getArguments();
 
-        rating = new HashMap<>();
-        rating.put("atmosphere", floatAtmosphere);
-        rating.put("food", floatFood);
-        rating.put("service", floatService);
+        if (validateForm(uid, bundle)) {
+            Log.d(TAG, "Some field was empty");
+            Toast
+                    .makeText(getActivity(), "Some field was empty", Toast.LENGTH_SHORT)
+                    .show();
+        } else {
+            String restaurantId = bundle.getString("restaurantId");
 
-        data = new HashMap<>();
-        data.put("author", userRef);
-        data.put("restaurant", restaurantRef);
-        data.put("date", new Date());
-        data.put("description", stringReview);
-        data.put("rating", rating);
-        data.put("imageUri", Arrays.asList("cupcake", "muffin"));
+            DocumentReference userRef = db.collection("user").document(uid);
+            DocumentReference restaurantRef = db.collection("restaurant").document(restaurantId);
 
+            rating = new HashMap<>();
+            rating.put("atmosphere", floatAtmosphere);
+            rating.put("food", floatFood);
+            rating.put("service", floatService);
 
-        db.collection("review").add(data).addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
-            @Override
-            public void onSuccess(DocumentReference documentReference) {
-                Log.d(TAG, "add data to firestore success");
-                Toast
-                        .makeText(getActivity(), "add review successful", Toast.LENGTH_SHORT)
-                        .show();
-                getActivity()
-                        .getSupportFragmentManager()
-                        .beginTransaction()
-                        .addToBackStack(null)
-                        .replace(R.id.main_view, new RestaurantFragment())
-                        .commit();
-            }
-        }).addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception e) {
-                Log.d(TAG, "add data to firestore failure");
-                Toast
-                        .makeText(getActivity(), "Can't add review. Something wrong!", Toast.LENGTH_SHORT)
-                        .show();
-            }
-        });
+            data = new HashMap<>();
+            data.put("author", userRef);
+            data.put("restaurant", restaurantRef);
+            data.put("date", new Date());
+            data.put("description", stringReview);
+            data.put("rating", rating);
+            data.put("imageUri", Arrays.asList("cupcake", "muffin"));
+
+            db.collection("review").add(data).addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
+                @Override
+                public void onSuccess(DocumentReference documentReference) {
+                    Log.d(TAG, "Add data to firestore success");
+                    Toast
+                            .makeText(getActivity(), "Add review successful", Toast.LENGTH_SHORT)
+                            .show();
+                    getActivity()
+                            .getSupportFragmentManager()
+                            .beginTransaction()
+                            .addToBackStack(null)
+                            .replace(R.id.main_view, new RestaurantFragment())
+                            .commit();
+                }
+            }).addOnFailureListener(new OnFailureListener() {
+                @Override
+                public void onFailure(@NonNull Exception e) {
+                    Log.d(TAG, "Add data to firestore failure");
+                    Toast
+                            .makeText(getActivity(), "Can't add review. Something wrong!", Toast.LENGTH_SHORT)
+                            .show();
+                }
+            });
+        }
 
         return super.onOptionsItemSelected(item);
     }
@@ -131,5 +154,46 @@ public class ReviewEditFragment extends Fragment {
         _toolbar.setNavigationIcon(R.drawable.ic_arrow_back_white_24dp);
         _toolbar.inflateMenu(R.menu.review_edit);
         getActivity().setActionBar(_toolbar);
+    }
+
+    private void onClickUploadPhoto() {
+        Log.d(TAG, "Click btn upload image");
+        _imageFood = getView().findViewById(R.id.review_edit_show_photo_upload);
+        _btnUploadPhoto = getView().findViewById(R.id.register_edit_insert_photo);
+
+        _btnUploadPhoto.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                galleryImage = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                startActivityForResult(galleryImage, RESULT_LOAD_IAMGE);
+            }
+        });
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (requestCode == RESULT_LOAD_IAMGE && resultCode == RESULT_OK && data != null) {
+            Uri selectImage = data.getData();
+
+            _imageFood.setImageURI(selectImage);
+        }
+    }
+
+    private boolean validateForm(String uid, Bundle bundle) {
+        String text1 = _reviewText.getText().toString();
+        float float1 = _ratingBarFood.getRating();
+        float float2 = _ratingBarAtmosphere.getRating();
+        float float3 = _ratingBarService.getRating();
+
+        if (_imageFood.getDrawable() == null) {
+            return true;
+        } else if (text1.isEmpty() || float1 < 1.0 || float2 < 1.0 || float3 < 1.0) {
+            return true;
+        } else if (uid == null || bundle == null) {
+            return true;
+        }
+        return false;
     }
 }
