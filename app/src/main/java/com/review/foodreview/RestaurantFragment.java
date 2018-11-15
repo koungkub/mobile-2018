@@ -52,6 +52,11 @@ public class RestaurantFragment extends Fragment {
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         Log.d(TAG, "onActivityCreated");
         super.onActivityCreated(savedInstanceState);
+        //get bundle
+        Bundle bundle = getArguments();
+        if(bundle != null){
+            Log.d(TAG, String.valueOf(bundle.getString("id")));
+        }
 
         restaurantId = "PxZsYjM909P3IfsvJdPb"; // TODO: Replace with bundle
         registerFragmentElements();
