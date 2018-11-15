@@ -30,18 +30,15 @@ public class MeNotLoginFragment extends Fragment{
         MainActivity.onFragmentChanged(TAG);
         mAuth = FirebaseAuth.getInstance();
         mUser = mAuth.getCurrentUser();
-        if(mUser != null){
+            loginBtn();
+            registerBtn();
+            Log.d(TAG, "Authen");
+            if(mUser != null)
             getActivity()
                     .getSupportFragmentManager()
                     .beginTransaction()
                     .replace(R.id.main_view, new MeLoginFragment())
                     .commit();
-        }
-        else{
-            loginBtn();
-            registerBtn();
-
-        }
     }
 
     private void loginBtn(){

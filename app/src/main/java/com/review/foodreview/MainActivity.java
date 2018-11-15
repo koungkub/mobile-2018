@@ -78,7 +78,6 @@ public class MainActivity extends AppCompatActivity{
         navigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
-                Log.d(TAG, String.valueOf(menuItem.getItemId()));
                 switch (menuItem.getItemId()) {
                     case R.id.navigation_discover: {
                         fragment = fragmentDiscover;
@@ -109,19 +108,16 @@ public class MainActivity extends AppCompatActivity{
         Log.d(TAG, "onFragmentChanged: (Change to page)" + fragmentName);
         if (fragmentName.equalsIgnoreCase("DISCOVER") || fragmentName.equalsIgnoreCase("SEARCH") || fragmentName.equalsIgnoreCase("ME")) {
             if (fragmentName.equals("DISCOVER")) {
-                if(navigationView.getSelectedItemId() != R.id.navigation_discover){
+                    Log.d(TAG, "check nav 0");
                     navigationView.getMenu().getItem(0).setChecked(true);
                 }
-            }
             else if (fragmentName.equals("SEARCH")) {
-                if(navigationView.getSelectedItemId() != R.id.navigation_search){
+                    Log.d(TAG, "check nav 1");
                     navigationView.getMenu().getItem(1).setChecked(true);
-                }
             }
             else if (fragmentName.equals("ME")) {
-                if(navigationView.getSelectedItemId() != R.id.navigation_me){
+                    Log.d(TAG, "check nav 2");
                     navigationView.getMenu().getItem(2).setChecked(true);
-                }
             }
             Log.d(TAG, "Visible nav");
             navigationView.setVisibility(View.VISIBLE);
