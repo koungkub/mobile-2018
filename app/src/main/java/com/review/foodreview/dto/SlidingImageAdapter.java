@@ -88,7 +88,7 @@ public class SlidingImageAdapter extends PagerAdapter {
                     imageLayout.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
-                            args.putString("id", restaurants.get(0).getId());
+                            args.putString("restaurantId", restaurants.get(0).getId());
                             restaurantFragment.setArguments(args);
                             fragmentManager.beginTransaction().replace(R.id.main_view, restaurantFragment).commit();
                         }
@@ -104,7 +104,7 @@ public class SlidingImageAdapter extends PagerAdapter {
                         imageLayout.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
-                                args.putString("id", restaurants.get(1).getId());
+                                args.putString("restaurantId", restaurants.get(1).getId());
                                 restaurantFragment.setArguments(args);
                                 fragmentManager.beginTransaction().replace(R.id.main_view, restaurantFragment).commit();
                             }
@@ -118,7 +118,7 @@ public class SlidingImageAdapter extends PagerAdapter {
                         imageLayout.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
-                                args.putString("id", restaurants.get(2).getId());
+                                args.putString("restaurantId", restaurants.get(2).getId());
                                 restaurantFragment.setArguments(args);
                                 fragmentManager.beginTransaction().replace(R.id.main_view, restaurantFragment).commit();
                             }
