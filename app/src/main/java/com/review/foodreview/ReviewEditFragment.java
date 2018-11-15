@@ -27,7 +27,9 @@ import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
 
+import java.io.ByteArrayOutputStream;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.HashMap;
@@ -49,6 +51,8 @@ public class ReviewEditFragment extends Fragment {
     private Map<String, Object> data, rating;
 
     private Intent galleryImage;
+
+    private Uri selectImage;
 
     @Nullable
     @Override
@@ -73,6 +77,8 @@ public class ReviewEditFragment extends Fragment {
         // Init FirebaseStorage and FirebaseStore
         FirebaseStorage firebaseStorage = FirebaseStorage.getInstance();
         StorageReference storageReference = firebaseStorage.getReference();
+        final StorageReference storage = storageReference.child("review");
+
         FirebaseFirestore db = FirebaseFirestore.getInstance();
 
         // Init FirebaseAuth
@@ -124,15 +130,38 @@ public class ReviewEditFragment extends Fragment {
                 @Override
                 public void onSuccess(DocumentReference documentReference) {
                     Log.d(TAG, "Add data to firestore success");
-                    Toast
-                            .makeText(getActivity(), "Add review successful", Toast.LENGTH_SHORT)
-                            .show();
-                    getActivity()
-                            .getSupportFragmentManager()
-                            .beginTransaction()
-                            .addToBackStack(null)
-                            .replace(R.id.main_view, new RestaurantFragment())
-                            .commit();
+
+                    String imageName = String.valueOf(_imageFood.getTag());
+                    StorageReference review = storage.child(imageName);
+
+                    Bitmap bitmap = ((BitmapDrawable) _imageFood.getDrawable()).getBitmap();
+                    ByteArrayOutputStream stream = new ByteArrayOutputStream();
+                    bitmap.compress(Bitmap.CompressFormat.PNG, 100, stream);
+                    byte[] byteArray = stream.toByteArray();
+
+                    review.putBytes(byteArray).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                        @Override
+                        public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                            Log.d(TAG, "firebase storage success");
+                            Toast
+                                    .makeText(getActivity(), "Add review successful", Toast.LENGTH_SHORT)
+                                    .show();
+                            getActivity()
+                                    .getSupportFragmentManager()
+                                    .beginTransaction()
+                                    .addToBackStack(null)
+                                    .replace(R.id.main_view, new RestaurantFragment())
+                                    .commit();
+                        }
+                    }).addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
+                            Log.d(TAG, "firebase storage failure");
+                            Toast
+                                    .makeText(getActivity(), "Can't add review. Something wrong!", Toast.LENGTH_SHORT)
+                                    .show();
+                        }
+                    });
                 }
             }).addOnFailureListener(new OnFailureListener() {
                 @Override
@@ -175,7 +204,7 @@ public class ReviewEditFragment extends Fragment {
         super.onActivityResult(requestCode, resultCode, data);
 
         if (requestCode == RESULT_LOAD_IAMGE && resultCode == RESULT_OK && data != null) {
-            Uri selectImage = data.getData();
+            selectImage = data.getData();
 
             _imageFood.setImageURI(selectImage);
         }
@@ -188,10 +217,13 @@ public class ReviewEditFragment extends Fragment {
         float float3 = _ratingBarService.getRating();
 
         if (_imageFood.getDrawable() == null) {
+            Log.d(TAG, "1 if");
             return true;
         } else if (text1.isEmpty() || float1 < 1.0 || float2 < 1.0 || float3 < 1.0) {
+            Log.d(TAG, "2 if");
             return true;
         } else if (uid == null || bundle == null) {
+            Log.d(TAG, "3 if");
             return true;
         }
         return false;
