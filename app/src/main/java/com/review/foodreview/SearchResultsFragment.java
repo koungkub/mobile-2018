@@ -1,5 +1,7 @@
 package com.review.foodreview;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -62,12 +64,12 @@ public class SearchResultsFragment extends Fragment {
                         if (task.isSuccessful()) {
                             Log.d(TAG, "successfully retrieved search results");
                             if (task.getResult().size() < 1) {
-                                // todo: show dialog
+                                displayDialog("No result", "There is no restaurant in this category.");
                             } else {
                                 populateListView(task.getResult(), restaurantList, _resultsListView);
                             }
                         } else {
-                            // todo: show dialog
+                            displayDialog("Error", task.getException().getLocalizedMessage());
                         }
                         _loading.setVisibility(View.GONE);
                     }
@@ -116,5 +118,16 @@ public class SearchResultsFragment extends Fragment {
                 listView.setAdapter(restaurantListAdapter);
             }
         }
+    }
+
+    private void displayDialog(String title, String message) {
+        final AlertDialog.Builder builder = new AlertDialog.Builder(getContext(), android.R.style.Theme_Material_Light_Dialog_Alert);
+        builder.setTitle(title)
+                .setMessage(message)
+                .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {}
+                })
+                .show();
     }
 }
