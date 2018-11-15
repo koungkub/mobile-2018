@@ -39,6 +39,7 @@ public class MeNotLoginFragment extends Fragment{
         }
         else{
             loginBtn();
+            registerBtn();
 
         }
     }
