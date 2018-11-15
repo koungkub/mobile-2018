@@ -51,7 +51,7 @@ public class SearchFragment extends Fragment  {
                 });
     }
 
-    private Button createCategoryButton(String categoryName, final String categoryId) {
+    private Button createCategoryButton(final String categoryName, final String categoryId) {
         Button button = new Button(getContext());
         button.setText(categoryName);
         button.setOnClickListener(new View.OnClickListener() {
@@ -60,6 +60,7 @@ public class SearchFragment extends Fragment  {
                  final Fragment fragment = new SearchResultsFragment();
                  final Bundle bundle = new Bundle();
                  bundle.putString("categoryId", categoryId);
+                 bundle.putString("categoryName", categoryName);
                  fragment.setArguments(bundle);
                  getFragmentManager()
                          .beginTransaction()
