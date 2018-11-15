@@ -31,7 +31,7 @@ import java.util.List;
 
 public class DiscoverFragment extends Fragment{
     private final List<Restaurant> restaurants = new ArrayList<>();
-    private static final String TAG = "DISCOVERFRAGMENT";
+    private static final String TAG = "DISCOVER";
     private static ViewPager mPager;
     private Fragment fragmentrestaurant;
     private Bundle args;

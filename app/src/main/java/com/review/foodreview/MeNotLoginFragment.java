@@ -9,12 +9,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.TextView;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
 public class MeNotLoginFragment extends Fragment{
-    private static final String TAG = "MENOTLOGIN";
+    private static final String TAG = "ME";
     private FirebaseAuth mAuth;
     private FirebaseUser mUser;
     @Nullable
@@ -26,6 +27,7 @@ public class MeNotLoginFragment extends Fragment{
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+        MainActivity.onFragmentChanged(TAG);
         mAuth = FirebaseAuth.getInstance();
         mUser = mAuth.getCurrentUser();
         if(mUser != null){
@@ -37,8 +39,10 @@ public class MeNotLoginFragment extends Fragment{
         }
         else{
             loginBtn();
+
         }
     }
+
     private void loginBtn(){
         Log.d(TAG, "press login button");
         Button loginBtn = getActivity()
@@ -51,6 +55,22 @@ public class MeNotLoginFragment extends Fragment{
                         .getSupportFragmentManager()
                         .beginTransaction()
                         .replace(R.id.main_view, new LoginFragment())
+                        .commit();
+            }
+        });
+    }
+
+    private void registerBtn(){
+        Log.d(TAG, "press create account");
+        TextView register = getActivity()
+                .findViewById(R.id.me_not_login_text_register);
+        register.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                getActivity()
+                        .getSupportFragmentManager()
+                        .beginTransaction()
+                        .replace(R.id.main_view, new RegisterFragment())
                         .commit();
             }
         });

@@ -107,12 +107,12 @@ public class MainActivity extends AppCompatActivity{
 
     public static void onFragmentChanged(String fragmentName) {
         Log.d(TAG, "onFragmentChanged: " + fragmentName);
-        if (fragmentName.equalsIgnoreCase("RESTAURANT")) {
-            Log.d(TAG, "Invisible nav");
-            navigationView.setVisibility(View.GONE);
-        } else {
+        if (fragmentName.equalsIgnoreCase("DISCOVER") || fragmentName.equalsIgnoreCase("SEARCH") || fragmentName.equalsIgnoreCase("ME")) {
             Log.d(TAG, "Visible nav");
             navigationView.setVisibility(View.VISIBLE);
+        } else {
+            Log.d(TAG, "Invisible nav");
+            navigationView.setVisibility(View.GONE);
         }
     }
 }
