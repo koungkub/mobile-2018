@@ -78,7 +78,7 @@ public class SlidingImageAdapter extends PagerAdapter {
 
                 final ImageView imageView = imageLayout
                         .findViewById(R.id.image);
-                if(position == 0){
+                if(position == 0) {
                     Log.d("DISCOVER", String.valueOf(fragmentManager));
                     name.setText(restaurants.get(0).getName());
                     Picasso.get()
@@ -94,37 +94,36 @@ public class SlidingImageAdapter extends PagerAdapter {
                         }
                     });
                 }
-
-                else if(position == 1){
-                    name.setText(restaurants.get(1).getName());
-                    Picasso.get()
-                            .load(restaurants.get(1).getImageUri().get(0))
-                            .placeholder(R.drawable.slide2)
-                            .into(imageView);
-                    imageLayout.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            args.putString("id", restaurants.get(1).getId());
-                            restaurantFragment.setArguments(args);
-                            fragmentManager.beginTransaction().replace(R.id.main_view, restaurantFragment).commit();
-                        }
-                    });
-                }
-
-                else {
-                    name.setText(restaurants.get(2).getName());
-                    Picasso.get()
-                            .load(restaurants.get(2).getImageUri().get(0))
-                            .placeholder(R.drawable.slide3)
-                            .into(imageView);
-                    imageLayout.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            args.putString("id", restaurants.get(2).getId());
-                            restaurantFragment.setArguments(args);
-                            fragmentManager.beginTransaction().replace(R.id.main_view, restaurantFragment).commit();
-                        }
-                    });
+                if (restaurants.size() > 1) {
+                    if (position == 1) {
+                        name.setText(restaurants.get(1).getName());
+                        Picasso.get()
+                                .load(restaurants.get(1).getImageUri().get(0))
+                                .placeholder(R.drawable.slide2)
+                                .into(imageView);
+                        imageLayout.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                args.putString("id", restaurants.get(1).getId());
+                                restaurantFragment.setArguments(args);
+                                fragmentManager.beginTransaction().replace(R.id.main_view, restaurantFragment).commit();
+                            }
+                        });
+                    } else {
+                        name.setText(restaurants.get(2).getName());
+                        Picasso.get()
+                                .load(restaurants.get(2).getImageUri().get(0))
+                                .placeholder(R.drawable.slide3)
+                                .into(imageView);
+                        imageLayout.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                args.putString("id", restaurants.get(2).getId());
+                                restaurantFragment.setArguments(args);
+                                fragmentManager.beginTransaction().replace(R.id.main_view, restaurantFragment).commit();
+                            }
+                        });
+                    }
                 }
             }
         });

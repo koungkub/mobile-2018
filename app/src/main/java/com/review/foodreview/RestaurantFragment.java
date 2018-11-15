@@ -12,7 +12,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.*;
 
+import com.google.android.gms.maps.*;
+import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.*;
@@ -23,14 +26,15 @@ import com.review.foodreview.dto.Review;
 
 import java.util.*;
 
-public class RestaurantFragment extends Fragment {
+public class RestaurantFragment extends Fragment implements OnMapReadyCallback {
     private static final String TAG = "RESTAURANT";
 
     private String restaurantId, restaurantName;
-    private Restaurant restaurant;
+    private static Restaurant restaurant;
 
     private final FirebaseFirestore firestore = FirebaseFirestore.getInstance();
     private final FirebaseAuth auth = FirebaseAuth.getInstance();
+    private GoogleMap mMap;
 
     private TextView _restaurantName, _restaurantType, _priceRange, _rating, _reviewCount;
     private TextView _openHours, _delivery;
@@ -38,6 +42,7 @@ public class RestaurantFragment extends Fragment {
     private Button _writeBtn, _viewAllBtn;
     private LinearLayout _reviewList;
     private ProgressBar _reviewLoading;
+    private MapView _mapView;
 
     @Nullable
     @Override
@@ -54,7 +59,7 @@ public class RestaurantFragment extends Fragment {
     }
 
     @Override
-    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+    public void onActivityCreated(@Nullable final Bundle savedInstanceState) {
         Log.d(TAG, "onActivityCreated");
         super.onActivityCreated(savedInstanceState);
 
@@ -64,7 +69,6 @@ public class RestaurantFragment extends Fragment {
         if (bundle.getString("restaurantId") == null)
             Log.d(TAG, "onActivityCreated: restaurantId not found in the bundle");
         restaurantId = bundle.getString("restaurantId");
-
         restaurantName = bundle.getString("restaurantName");
 
         registerFragmentElements();
@@ -116,6 +120,7 @@ public class RestaurantFragment extends Fragment {
                         createMenu();
                         setTexts(restaurant);
                         initViewAllBtn();
+                        createMap(savedInstanceState);
                     }
                 });
 
@@ -171,6 +176,7 @@ public class RestaurantFragment extends Fragment {
         _viewAllBtn = getView().findViewById(R.id.restaurant_review_btn_all);
         _reviewList = getView().findViewById(R.id.restaurant_recent_reviews);
         _reviewLoading = getView().findViewById(R.id.restaurant_loading_reviews);
+        _mapView = getView().findViewById(R.id.restaurant_map);
     }
 
     private void createMenu() {
@@ -244,5 +250,21 @@ public class RestaurantFragment extends Fragment {
                     public void onClick(DialogInterface dialog, int which) {}
                 })
                 .show();
+    }
+
+    private void createMap(Bundle savedInstanceState) {
+        Log.d(TAG, "createMap");
+        _mapView.onCreate(savedInstanceState);
+        _mapView.getMapAsync(this);
+    }
+
+    @Override
+    public void onMapReady(GoogleMap googleMap) {
+        Log.d(TAG, "onMapReady");
+        mMap = googleMap;
+        LatLng restaurantPin = new LatLng(restaurant.getLocation().getLatitude(), restaurant.getLocation().getLongitude());
+        mMap.addMarker(new MarkerOptions().position(restaurantPin).title(restaurantName));
+        mMap.moveCamera(CameraUpdateFactory.newLatLng(restaurantPin));
+        mMap.moveCamera(CameraUpdateFactory.zoomTo(16F));
     }
 }
