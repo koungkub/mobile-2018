@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 public class BookmarkFragment extends Fragment{
+    private static final String TAG = "BOOKMARK";
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -18,5 +19,7 @@ public class BookmarkFragment extends Fragment{
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+        MainActivity.onFragmentChanged(TAG);
+
     }
 }
