@@ -106,8 +106,23 @@ public class MainActivity extends AppCompatActivity{
     }
 
     public static void onFragmentChanged(String fragmentName) {
-        Log.d(TAG, "onFragmentChanged: " + fragmentName);
+        Log.d(TAG, "onFragmentChanged: (Change to page)" + fragmentName);
         if (fragmentName.equalsIgnoreCase("DISCOVER") || fragmentName.equalsIgnoreCase("SEARCH") || fragmentName.equalsIgnoreCase("ME")) {
+            if (fragmentName.equals("DISCOVER")) {
+                if(navigationView.getSelectedItemId() != R.id.navigation_discover){
+                    navigationView.getMenu().getItem(0).setChecked(true);
+                }
+            }
+            else if (fragmentName.equals("SEARCH")) {
+                if(navigationView.getSelectedItemId() != R.id.navigation_search){
+                    navigationView.getMenu().getItem(1).setChecked(true);
+                }
+            }
+            else if (fragmentName.equals("ME")) {
+                if(navigationView.getSelectedItemId() != R.id.navigation_me){
+                    navigationView.getMenu().getItem(2).setChecked(true);
+                }
+            }
             Log.d(TAG, "Visible nav");
             navigationView.setVisibility(View.VISIBLE);
         } else {
