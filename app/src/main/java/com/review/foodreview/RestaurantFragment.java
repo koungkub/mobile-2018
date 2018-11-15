@@ -208,7 +208,7 @@ public class RestaurantFragment extends Fragment {
                     getFragmentManager()
                             .beginTransaction()
                             .addToBackStack(null)
-                            .replace(R.id.main_view, new ReviewEditFragment())
+                            .replace(R.id.main_view, fragment)
                             .commit();
                 } else {
                     displayDialog("Please log in", "You need to log in first to write reviews.");
