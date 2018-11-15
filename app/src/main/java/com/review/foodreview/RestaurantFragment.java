@@ -23,7 +23,7 @@ import java.util.*;
 public class RestaurantFragment extends Fragment {
     private static final String TAG = "RESTAURANT";
 
-    private String restaurantId; // to be assigned with bundle
+    private String restaurantId, restaurantName;
     private Restaurant restaurant;
     private final FirebaseFirestore firestore = FirebaseFirestore.getInstance();
 
@@ -52,14 +52,19 @@ public class RestaurantFragment extends Fragment {
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         Log.d(TAG, "onActivityCreated");
         super.onActivityCreated(savedInstanceState);
-        //get bundle
-        Bundle bundle = getArguments();
-        if(bundle != null){
-            Log.d(TAG, String.valueOf(bundle.getString("id")));
-        }
 
-        restaurantId = "PxZsYjM909P3IfsvJdPb"; // TODO: Replace with bundle
+        // get bundle
+        Bundle bundle = getArguments();
+
+        if (bundle.getString("restaurantId") == null)
+            Log.d(TAG, "onActivityCreated: restaurantId not found in the bundle");
+        restaurantId = bundle.getString("restaurantId");
+
+        restaurantName = bundle.getString("restaurantName");
+
         registerFragmentElements();
+
+        if (restaurantName != null) _toolbar.setTitle(restaurantName);
 
         Log.d(TAG, "fetching restaurant");
         final DocumentReference restaurantRef = firestore.collection("restaurant").document(restaurantId);
