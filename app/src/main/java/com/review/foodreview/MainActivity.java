@@ -1,5 +1,6 @@
 package com.review.foodreview;
 
+import android.annotation.SuppressLint;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.Fragment;
@@ -100,7 +101,7 @@ public class MainActivity extends AppCompatActivity{
                             .replace(R.id.main_view, fragment)
                             .commit();
                 }
-                return true;
+                return false;
             }
         });
     }
@@ -108,6 +109,21 @@ public class MainActivity extends AppCompatActivity{
     public static void onFragmentChanged(String fragmentName) {
         Log.d(TAG, "onFragmentChanged: " + fragmentName);
         if (fragmentName.equalsIgnoreCase("DISCOVER") || fragmentName.equalsIgnoreCase("SEARCH") || fragmentName.equalsIgnoreCase("ME")) {
+            if (fragmentName.equals("DISCOVER")) {
+                if(navigationView.getSelectedItemId() != R.id.navigation_discover){
+                    navigationView.getMenu().getItem(0).setChecked(true);
+                }
+            }
+            else if (fragmentName.equals("SEARCH")) {
+                if(navigationView.getSelectedItemId() != R.id.navigation_search){
+                    navigationView.getMenu().getItem(1).setChecked(true);
+                }
+            }
+            else if (fragmentName.equals("ME")) {
+                if(navigationView.getSelectedItemId() != R.id.navigation_me){
+                    navigationView.getMenu().getItem(2).setChecked(true);
+                }
+            }
             Log.d(TAG, "Visible nav");
             navigationView.setVisibility(View.VISIBLE);
         } else {
