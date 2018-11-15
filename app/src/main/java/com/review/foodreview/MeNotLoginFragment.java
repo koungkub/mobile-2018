@@ -34,11 +34,12 @@ public class MeNotLoginFragment extends Fragment{
             getActivity()
                     .getSupportFragmentManager()
                     .beginTransaction()
-                    .replace(R.id.main_view, new DiscoverFragment())
+                    .replace(R.id.main_view, new MeLoginFragment())
                     .commit();
         }
         else{
             loginBtn();
+            registerBtn();
 
         }
     }
