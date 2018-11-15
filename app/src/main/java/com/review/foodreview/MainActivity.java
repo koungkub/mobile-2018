@@ -1,6 +1,5 @@
 package com.review.foodreview;
 
-import android.annotation.SuppressLint;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.Fragment;
@@ -101,13 +100,13 @@ public class MainActivity extends AppCompatActivity{
                             .replace(R.id.main_view, fragment)
                             .commit();
                 }
-                return false;
+                return true;
             }
         });
     }
 
     public static void onFragmentChanged(String fragmentName) {
-        Log.d(TAG, "onFragmentChanged: " + fragmentName);
+        Log.d(TAG, "onFragmentChanged: (Change to page)" + fragmentName);
         if (fragmentName.equalsIgnoreCase("DISCOVER") || fragmentName.equalsIgnoreCase("SEARCH") || fragmentName.equalsIgnoreCase("ME")) {
             if (fragmentName.equals("DISCOVER")) {
                 if(navigationView.getSelectedItemId() != R.id.navigation_discover){
