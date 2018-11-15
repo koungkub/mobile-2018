@@ -150,7 +150,7 @@ public class ReviewEditFragment extends Fragment {
                                     .getSupportFragmentManager()
                                     .beginTransaction()
                                     .addToBackStack(null)
-                                    .replace(R.id.main_view, new RestaurantFragment())
+                                    .replace(R.id.main_view, new DiscoverFragment())
                                     .commit();
                         }
                     }).addOnFailureListener(new OnFailureListener() {
