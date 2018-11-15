@@ -52,6 +52,7 @@ public class SearchResultsFragment extends Fragment {
         categoryId = getArguments().getString("categoryId");
         categoryName = getArguments().getString("categoryName");
 
+        restaurantList.clear();
         registerFragmentElements();
         createMenu();
 
