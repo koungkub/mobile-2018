@@ -3,16 +3,10 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto">
-    <ScrollView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
-        <android.support.constraint.ConstraintLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
             <android.support.constraint.ConstraintLayout
                 android:id="@+id/topPanel"
                 android:layout_width="match_parent"
-                android:layout_height="500dp"
+                android:layout_height="1000dp"
                 android:background="@drawable/head_me"
                 android:elevation="20dp"
                 >
@@ -44,23 +38,44 @@
                     android:id="@+id/me_login_contain_bookmark"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="16dp"
-                    android:layout_marginRight="16dp"
+                    android:layout_marginLeft="30dp"
                     android:layout_marginTop="50dp"
                     android:background="@drawable/border"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/me_not_login_text_body1">
                 <TextView
                     android:id="@+id/me_login_bookmark"
-                    android:layout_width="wrap_content"
+                    android:layout_width="100dp"
                     android:layout_margin="20dp"
-                    android:layout_height="wrap_content"
+                    android:layout_height="90dp"
                     android:padding="16dp"
                     android:textColor="#fff"
+                    android:gravity="center_horizontal"
                     android:drawableTop="@drawable/ic_action_bookmark_white"
                     android:text="Bookmark"/>
                 </android.support.constraint.ConstraintLayout>
+
+                <android.support.constraint.ConstraintLayout
+                    android:id="@+id/me_login_contain_signout"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="40dp"
+                    android:layout_marginTop="50dp"
+                    android:background="@drawable/border"
+                    app:layout_constraintStart_toEndOf="@id/me_login_contain_bookmark"
+                    app:layout_constraintTop_toBottomOf="@+id/me_not_login_text_body1"
+                    >
+                    <TextView
+                        android:id="@+id/me_login_signout"
+                        android:layout_width="100dp"
+                        android:layout_margin="20dp"
+                        android:layout_height="90dp"
+                        android:padding="16dp"
+                        android:gravity="center_horizontal"
+                        android:textColor="#fff"
+                        android:drawableTop="@drawable/ic_action_bookmark_signout"
+                        android:text="Sign out"/>
+
+                </android.support.constraint.ConstraintLayout>
             </android.support.constraint.ConstraintLayout>
-        </android.support.constraint.ConstraintLayout>
-    </ScrollView>
 </android.support.constraint.ConstraintLayout>

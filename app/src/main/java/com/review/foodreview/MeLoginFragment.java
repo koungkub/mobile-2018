@@ -44,16 +44,35 @@ public class MeLoginFragment extends Fragment{
         mUser = mAuth.getCurrentUser();
         if (mUser != null) {
             Log.d(TAG, "Authen");
-            showMenu();
+            initbookmark();
+            initsignout();
         }
         else{
             Log.d(TAG, "Not authen");
         }
     }
-    private void showMenu(){
+
+    private void initbookmark(){
         TextView bookmark = getView()
                 .findViewById(R.id.me_login_bookmark);
         bookmark.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.d(TAG, "Do bookmark menu");
+                getActivity()
+                        .getSupportFragmentManager()
+                        .beginTransaction()
+                        .replace(R.id.main_view, new BookmarkFragment())
+                        .addToBackStack(null)
+                        .commit();
+            }
+        });
+    }
+
+    private void initsignout(){
+        TextView signoutBtn = getView()
+                .findViewById(R.id.me_login_signout);
+        signoutBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 mAuth.signOut();
@@ -64,4 +83,5 @@ public class MeLoginFragment extends Fragment{
             }
         });
     }
+
 }
