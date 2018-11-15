@@ -68,6 +68,7 @@ public class SlidingImageAdapter extends PagerAdapter {
                 final Bundle args = new Bundle();
                 Restaurant restaurant;
                 final Fragment restaurantFragment = new RestaurantFragment();
+                restaurants.clear();
                 for(QueryDocumentSnapshot doc : queryDocumentSnapshots){
                     restaurant = doc.toObject(Restaurant.class);
                     restaurant.setId(doc.getId());
@@ -79,6 +80,7 @@ public class SlidingImageAdapter extends PagerAdapter {
                 final ImageView imageView = imageLayout
                         .findViewById(R.id.image);
                 if(position == 0) {
+                    Log.d("SLIDE", "set slide 1");
                     Log.d("DISCOVER", String.valueOf(fragmentManager));
                     name.setText(restaurants.get(0).getName());
                     Picasso.get()
@@ -96,6 +98,7 @@ public class SlidingImageAdapter extends PagerAdapter {
                 }
                 if (restaurants.size() > 1) {
                     if (position == 1) {
+                        Log.d("SLIDE", "set slide 2");
                         name.setText(restaurants.get(1).getName());
                         Picasso.get()
                                 .load(restaurants.get(1).getImageUri().get(0))
@@ -109,7 +112,8 @@ public class SlidingImageAdapter extends PagerAdapter {
                                 fragmentManager.beginTransaction().replace(R.id.main_view, restaurantFragment).addToBackStack(null).commit();
                             }
                         });
-                    } else {
+                    } if(position == 2) {
+                        Log.d("SLIDE", "set slide 3");
                         name.setText(restaurants.get(2).getName());
                         Picasso.get()
                                 .load(restaurants.get(2).getImageUri().get(0))
