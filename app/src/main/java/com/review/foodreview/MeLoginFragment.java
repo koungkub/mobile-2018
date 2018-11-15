@@ -52,7 +52,7 @@ public class MeLoginFragment extends Fragment{
     }
     private void showMenu(){
         TextView bookmark = getView()
-                .findViewById(R.id.me_login_bookmark);
+                .findViewById(R.id.me_login_signout);
         bookmark.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
