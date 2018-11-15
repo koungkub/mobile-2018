@@ -33,7 +33,7 @@ public class MainActivity extends AppCompatActivity{
         setupNavbar();
         fragmentDiscover = new DiscoverFragment();
         fragmentSearch = new SearchFragment();
-        fragmentMe = new LoginFragment();
+        fragmentMe = new MeNotLoginFragment();
 
 //        FirebaseStorage storage = FirebaseStorage.getInstance();
 //        StorageReference storageReference = storage.getReference();
@@ -95,7 +95,10 @@ public class MainActivity extends AppCompatActivity{
                 }
                 if (fragment != null) {
                     Log.d(TAG, "Change page");
-                    getSupportFragmentManager().beginTransaction().replace(R.id.main_view, fragment).commit();
+                    getSupportFragmentManager()
+                            .beginTransaction()
+                            .replace(R.id.main_view, fragment)
+                            .commit();
                 }
                 return true;
             }
