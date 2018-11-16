@@ -7,10 +7,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.util.Log;
-import android.view.LayoutInflater;
-import android.view.MenuItem;
-import android.view.View;
-import android.view.ViewGroup;
+import android.view.*;
 import android.widget.*;
 
 import com.google.android.gms.maps.*;
@@ -49,6 +46,7 @@ public class RestaurantFragment extends Fragment implements OnMapReadyCallback {
     private ProgressBar _reviewLoading;
     private MapView _mapView;
     private ImageView _headerImage;
+    private Menu menu;
 
     @Nullable
     @Override
@@ -183,6 +181,7 @@ public class RestaurantFragment extends Fragment implements OnMapReadyCallback {
                             if (task.isSuccessful()) {
                                 if (task.getResult().size() > 0) {
                                     for (QueryDocumentSnapshot bm : task.getResult()) bookmarkId = bm.getId();
+                                    if (menu != null) menu.findItem(R.id.restaurant_menu_bookmark).setVisible(false);
                                     displayDialog("Bookmark found", "Restaurant is saved by user at " + bookmarkId);
                                 } else {
                                     bookmarkId = null; // reset to null
@@ -256,6 +255,7 @@ public class RestaurantFragment extends Fragment implements OnMapReadyCallback {
                     final Bundle bundle = new Bundle();
                     bundle.putString("restaurantName", restaurant.getName());
                     bundle.putString("restaurantId", restaurant.getId());
+                    fragment.setArguments(bundle);
                     getFragmentManager()
                             .beginTransaction()
                             .addToBackStack(null)
@@ -311,6 +311,12 @@ public class RestaurantFragment extends Fragment implements OnMapReadyCallback {
         mMap.addMarker(new MarkerOptions().position(restaurantPin).title(restaurantName));
         mMap.moveCamera(CameraUpdateFactory.newLatLng(restaurantPin));
         mMap.moveCamera(CameraUpdateFactory.zoomTo(16F));
+    }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        super.onCreateOptionsMenu(menu, inflater);
+        this.menu = menu;
     }
 
     @Override
