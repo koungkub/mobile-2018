@@ -84,5 +84,10 @@
             android:text="author"
             android:textAppearance="@style/TextAppearance.MaterialComponents.Body2"
             android:visibility="invisible" />
+        <ImageView
+            android:id="@+id/review_item_image_food"
+            android:src="@drawable/hello"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
     </LinearLayout>
 </LinearLayout>
