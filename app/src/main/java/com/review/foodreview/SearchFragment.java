@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.support.v7.widget.GridLayout;
 import android.widget.Button;
+import android.widget.SearchView;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -21,6 +22,7 @@ public class SearchFragment extends Fragment  {
     private final FirebaseFirestore firestore = FirebaseFirestore.getInstance();
     private GridLayout _categoryGrid;
     private QuerySnapshot categorySnapshot;
+    private SearchView searchView;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -60,6 +62,8 @@ public class SearchFragment extends Fragment  {
         Log.d(TAG, "onActivityCreated");
         _categoryGrid = getView().findViewById(R.id.search_grid);
         if (categorySnapshot != null) populateList(categorySnapshot);
+        //from start >>> searchbar
+        searchbar();3.
     }
 
     private Button createCategoryButton(final String categoryName, final String categoryId) {
@@ -89,6 +93,31 @@ public class SearchFragment extends Fragment  {
             final Button categoryButton = createCategoryButton(category.getString("name"), category.getId());
             _categoryGrid.addView(categoryButton);
         }
+    }
+    private void searchbar(){
+        searchView = getView().findViewById(R.id.search_btn_search);
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                Bundle args = new Bundle();
+                Fragment searchResultFragment = new SearchBarFragment();
+                args.putString("search", query);
+                searchResultFragment.setArguments(args);
+                getActivity()
+                        .getSupportFragmentManager()
+                        .beginTransaction()
+                        .replace(R.id.main_view, searchResultFragment)
+                        .addToBackStack(null)
+                        .commit();
+                searchView.clearFocus();
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                return false;
+            }
+        });
     }
 
 }

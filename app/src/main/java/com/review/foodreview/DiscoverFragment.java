@@ -168,14 +168,15 @@ public class DiscoverFragment extends Fragment{
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
-                mdb.collection("restaurant").whereEqualTo("name", query).addSnapshotListener(new EventListener<QuerySnapshot>() {
-                    @Override
-                    public void onEvent(@javax.annotation.Nullable QuerySnapshot queryDocumentSnapshots, @javax.annotation.Nullable FirebaseFirestoreException e) {
-                        for(QueryDocumentSnapshot doc: queryDocumentSnapshots){
-                            Log.d(TAG, "SEARCH");
-                        }
-                    }
-                });
+                Fragment searchResultFragment = new SearchBarFragment();
+                args.putString("search", query);
+                searchResultFragment.setArguments(args);
+                getActivity()
+                        .getSupportFragmentManager()
+                        .beginTransaction()
+                        .replace(R.id.main_view, searchResultFragment)
+                        .addToBackStack(null)
+                        .commit();
                 searchView.clearFocus();
                 return false;
             }
