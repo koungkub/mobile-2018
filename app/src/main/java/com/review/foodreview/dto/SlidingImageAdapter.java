@@ -109,6 +109,7 @@ public class SlidingImageAdapter extends PagerAdapter {
                                         @Override
                                         public void onClick(View v) {
                                             args.putString("restaurantId", restaurants.get(0).getId());
+                                            args.putString("restaurantName", restaurants.get(0).getName());
                                             restaurantFragment.setArguments(args);
                                             fragmentManager
                                                     .beginTransaction()
@@ -132,6 +133,7 @@ public class SlidingImageAdapter extends PagerAdapter {
                                             @Override
                                             public void onClick(View v) {
                                                 args.putString("restaurantId", restaurants.get(1).getId());
+                                                args.putString("restaurantName", restaurants.get(1).getName());
                                                 restaurantFragment.setArguments(args);
                                                 fragmentManager
                                                         .beginTransaction()
@@ -154,6 +156,7 @@ public class SlidingImageAdapter extends PagerAdapter {
                                             @Override
                                             public void onClick(View v) {
                                                 args.putString("restaurantId", restaurants.get(2).getId());
+                                                args.putString("restaurantName", restaurants.get(2).getName());
                                                 restaurantFragment.setArguments(args);
                                                 fragmentManager
                                                         .beginTransaction()
