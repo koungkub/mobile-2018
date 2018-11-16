@@ -171,9 +171,12 @@ public class DiscoverFragment extends Fragment{
                 mdb.collection("restaurant").whereEqualTo("name", query).addSnapshotListener(new EventListener<QuerySnapshot>() {
                     @Override
                     public void onEvent(@javax.annotation.Nullable QuerySnapshot queryDocumentSnapshots, @javax.annotation.Nullable FirebaseFirestoreException e) {
-                        Log.d(TAG, "SEARCH");
+                        for(QueryDocumentSnapshot doc: queryDocumentSnapshots){
+                            Log.d(TAG, "SEARCH");
+                        }
                     }
                 });
+                searchView.clearFocus();
                 return false;
             }
 
