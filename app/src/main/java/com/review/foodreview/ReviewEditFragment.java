@@ -30,10 +30,7 @@ import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
 import java.io.ByteArrayOutputStream;
-import java.util.Arrays;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 import static android.app.Activity.RESULT_OK;
 
@@ -95,14 +92,12 @@ public class ReviewEditFragment extends Fragment {
 
         // convert value
         String stringReview = _reviewText.getText().toString();
-        float floatFood = _ratingBarFood.getRating();
-        float floatService = _ratingBarService.getRating();
-        float floatAtmosphere = _ratingBarAtmosphere.getRating();
+        long floatFood = (long) _ratingBarFood.getRating();
+        long floatService = (long) _ratingBarService.getRating();
+        long floatAtmosphere = (long) _ratingBarAtmosphere.getRating();
 
         // get parameter from previous fragment using bundle
         Bundle bundle = getArguments();
-
-        Log.d(TAG, bundle.getString("restaurantId"));
 
         if (validateForm(uid, bundle)) {
             Log.d(TAG, "Some field was empty");
@@ -111,6 +106,7 @@ public class ReviewEditFragment extends Fragment {
                     .show();
         } else {
             String restaurantId = bundle.getString("restaurantId");
+            final String imageName = "review/" + UUID.randomUUID().toString();
 
             DocumentReference userRef = db.collection("user").document(uid);
             DocumentReference restaurantRef = db.collection("restaurant").document(restaurantId);
@@ -126,14 +122,13 @@ public class ReviewEditFragment extends Fragment {
             data.put("date", new Date());
             data.put("description", stringReview);
             data.put("rating", rating);
-            data.put("imageUri", Arrays.asList("cupcake", "muffin"));
+            data.put("imageUri", Arrays.asList(imageName));
 
             db.collection("review").add(data).addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
                 @Override
                 public void onSuccess(DocumentReference documentReference) {
                     Log.d(TAG, "Add data to firestore success");
 
-                    String imageName = String.valueOf(_imageFood.getTag());
                     StorageReference review = storage.child(imageName);
 
                     Bitmap bitmap = ((BitmapDrawable) _imageFood.getDrawable()).getBitmap();
@@ -219,13 +214,10 @@ public class ReviewEditFragment extends Fragment {
         float float3 = _ratingBarService.getRating();
 
         if (_imageFood.getDrawable() == null) {
-            Log.d(TAG, "1 if");
             return true;
         } else if (text1.isEmpty() || float1 < 1.0 || float2 < 1.0 || float3 < 1.0) {
-            Log.d(TAG, "2 if");
             return true;
         } else if (uid == null || bundle == null) {
-            Log.d(TAG, "3 if");
             return true;
         }
         return false;
