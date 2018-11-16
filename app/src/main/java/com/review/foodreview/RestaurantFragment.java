@@ -23,6 +23,7 @@ import com.google.firebase.firestore.EventListener;
 import com.review.foodreview.component.ReviewListItem;
 import com.review.foodreview.dto.Restaurant;
 import com.review.foodreview.dto.Review;
+import com.squareup.picasso.Picasso;
 
 import java.util.*;
 
@@ -43,6 +44,7 @@ public class RestaurantFragment extends Fragment implements OnMapReadyCallback {
     private LinearLayout _reviewList;
     private ProgressBar _reviewLoading;
     private MapView _mapView;
+    private ImageView _headerImage;
 
     @Nullable
     @Override
@@ -119,6 +121,8 @@ public class RestaurantFragment extends Fragment implements OnMapReadyCallback {
                         // methods that require restaurant data from Firestore
                         createMenu();
                         setTexts(restaurant);
+                        if (restaurant.getImageUri() != null)
+                            Picasso.get().load(restaurant.getImageUri().get(0)).into(_headerImage);
                         initViewAllBtn();
                         createMap(savedInstanceState);
                     }
@@ -177,6 +181,7 @@ public class RestaurantFragment extends Fragment implements OnMapReadyCallback {
         _reviewList = getView().findViewById(R.id.restaurant_recent_reviews);
         _reviewLoading = getView().findViewById(R.id.restaurant_loading_reviews);
         _mapView = getView().findViewById(R.id.restaurant_map);
+        _headerImage = getView().findViewById(R.id.restaurant_image_restaurant);
     }
 
     private void createMenu() {
