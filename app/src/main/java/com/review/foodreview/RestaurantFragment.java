@@ -8,6 +8,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.*;
@@ -21,6 +22,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.*;
 import com.google.firebase.firestore.EventListener;
 import com.review.foodreview.component.ReviewListItem;
+import com.review.foodreview.dto.Bookmark;
 import com.review.foodreview.dto.Restaurant;
 import com.review.foodreview.dto.Review;
 import com.squareup.picasso.Picasso;
@@ -40,7 +42,7 @@ public class RestaurantFragment extends Fragment implements OnMapReadyCallback {
     private TextView _restaurantName, _restaurantType, _priceRange, _rating, _reviewCount;
     private TextView _openHours, _delivery;
     private Toolbar _toolbar;
-    private Button _writeBtn, _viewAllBtn;
+    private Button _writeBtn, _viewAllBtn, _bookmarkBtn;
     private LinearLayout _reviewList;
     private ProgressBar _reviewLoading;
     private MapView _mapView;
@@ -75,6 +77,7 @@ public class RestaurantFragment extends Fragment implements OnMapReadyCallback {
 
         registerFragmentElements();
         createMenu();
+        setHasOptionsMenu(true);
 
         Log.d(TAG, "fetching restaurant");
         final DocumentReference restaurantRef = firestore.collection("restaurant").document(restaurantId);
@@ -181,6 +184,7 @@ public class RestaurantFragment extends Fragment implements OnMapReadyCallback {
         _reviewLoading = getView().findViewById(R.id.restaurant_loading_reviews);
         _mapView = getView().findViewById(R.id.restaurant_map);
         _headerImage = getView().findViewById(R.id.restaurant_image_restaurant);
+        _bookmarkBtn = getView().findViewById(R.id.restaurant_menu_bookmark);
     }
 
     private void createMenu() {
@@ -252,6 +256,19 @@ public class RestaurantFragment extends Fragment implements OnMapReadyCallback {
         });
     }
 
+    /*private void initBookmarkBtn() {
+        if (auth.getCurrentUser() != null) {
+            _bookmarkBtn.setVisibility(View.VISIBLE);
+            _bookmarkBtn.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Log.d(TAG, "onClick: _bookmarkBtn");
+                    addToBookmark();
+                }
+            });
+        }
+    }*/
+
     private void displayDialog(String title, String message) {
         final AlertDialog.Builder builder = new AlertDialog.Builder(getContext(), android.R.style.Theme_Material_Light_Dialog_Alert);
         builder.setTitle(title)
@@ -277,5 +294,38 @@ public class RestaurantFragment extends Fragment implements OnMapReadyCallback {
         mMap.addMarker(new MarkerOptions().position(restaurantPin).title(restaurantName));
         mMap.moveCamera(CameraUpdateFactory.newLatLng(restaurantPin));
         mMap.moveCamera(CameraUpdateFactory.zoomTo(16F));
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        final String menuName = item.getTitle().toString();
+        Log.d(TAG, "onOptionsItemSelected: " + menuName);
+        if (menuName.equalsIgnoreCase("bookmark")) {
+            if (auth.getCurrentUser() != null)
+                addToBookmark();
+            else
+                displayDialog("Not logged in", "You need to log in to save bookmarks.");
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    private void addToBookmark() {
+        Log.d(TAG, "addToBookmark");
+        if (auth.getCurrentUser() != null) {
+            DocumentReference restaurantRef = firestore.collection("restaurant").document(restaurantId);
+            DocumentReference userRef = firestore.collection("user").document(auth.getCurrentUser().getUid());
+            Log.d(TAG, "addToBookmark: saving");
+            firestore.collection("bookmark")
+                    .add(new Bookmark(userRef, restaurantRef))
+                    .addOnCompleteListener(new OnCompleteListener<DocumentReference>() {
+                        @Override
+                        public void onComplete(@NonNull Task<DocumentReference> task) {
+                            if (task.isSuccessful())
+                                displayDialog("Added!", "Added to bookmarked restaurants.");
+                            else
+                                displayDialog("Error", task.getException().getLocalizedMessage());
+                        }
+                    });
+        }
     }
 }
