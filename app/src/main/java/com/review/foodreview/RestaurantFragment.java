@@ -75,6 +75,7 @@ public class RestaurantFragment extends Fragment implements OnMapReadyCallback {
 
         registerFragmentElements();
         createMenu();
+
         Log.d(TAG, "fetching restaurant");
         final DocumentReference restaurantRef = firestore.collection("restaurant").document(restaurantId);
         restaurantRef.addSnapshotListener(new EventListener<DocumentSnapshot>() {
