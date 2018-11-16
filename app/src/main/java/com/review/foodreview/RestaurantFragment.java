@@ -74,8 +74,7 @@ public class RestaurantFragment extends Fragment implements OnMapReadyCallback {
         restaurantName = bundle.getString("restaurantName");
 
         registerFragmentElements();
-
-        if (restaurantName != null) _toolbar.setTitle(restaurantName);
+        createMenu();
 
         Log.d(TAG, "fetching restaurant");
         final DocumentReference restaurantRef = firestore.collection("restaurant").document(restaurantId);
@@ -119,7 +118,7 @@ public class RestaurantFragment extends Fragment implements OnMapReadyCallback {
                             );
                         }
                         // methods that require restaurant data from Firestore
-                        createMenu();
+                        _toolbar.setTitle(restaurant.getName());
                         setTexts(restaurant);
                         if (restaurant.getImageUri() != null)
                             Picasso.get().load(restaurant.getImageUri().get(0)).into(_headerImage);
@@ -185,10 +184,17 @@ public class RestaurantFragment extends Fragment implements OnMapReadyCallback {
     }
 
     private void createMenu() {
-        _toolbar.setTitle(restaurant.getName());
+        Objects.requireNonNull(getActivity()).setActionBar(_toolbar);
+        if (restaurantName != null) _toolbar.setTitle(restaurantName);
         _toolbar.setNavigationIcon(R.drawable.ic_arrow_back);
         _toolbar.inflateMenu(R.menu.restaurant);
-        Objects.requireNonNull(getActivity()).setActionBar(_toolbar);
+        _toolbar.setNavigationContentDescription("Back");
+        _toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                getActivity().onBackPressed();
+            }
+        });
     }
 
     private void setTexts(Restaurant restaurant) {

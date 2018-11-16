@@ -42,9 +42,11 @@ public class SearchFragment extends Fragment  {
                     @Override
                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
                         if (task.isSuccessful()) {
-                            for (QueryDocumentSnapshot category : task.getResult()) {
-                                final Button categoryButton = createCategoryButton(category.getString("name"), category.getId());
-                                _categoryGrid.addView(categoryButton);
+                            if (getContext() != null) {
+                                for (QueryDocumentSnapshot category : task.getResult()) {
+                                    final Button categoryButton = createCategoryButton(category.getString("name"), category.getId());
+                                    _categoryGrid.addView(categoryButton);
+                                }
                             }
                         }
                     }
