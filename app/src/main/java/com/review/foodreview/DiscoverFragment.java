@@ -13,6 +13,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 
+import android.widget.SearchView;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
@@ -37,6 +38,7 @@ public class DiscoverFragment extends Fragment{
     private WormDotsIndicator wormDotsIndicator;
     private static final int NUM_PAGES = 3;
     private ArrayList<ImageModel> imageModelArrayList;
+    private SearchView searchView;
     private final int[] myImageList = new int[] {
             R.drawable.slide1,
             R.drawable.slide2,
@@ -74,8 +76,9 @@ public class DiscoverFragment extends Fragment{
         setupSlideshow();
         // get Discover List
         getdiscoverList();
+        //search
+        searchbar();
     }
-
 
     //get image
     private ArrayList<ImageModel> populateList() {
@@ -159,5 +162,25 @@ public class DiscoverFragment extends Fragment{
                     public void onClick(DialogInterface dialog, int which) {}
                 })
                 .show();
+    }
+    private void searchbar(){
+        searchView = getView().findViewById(R.id.discover_btn_search);
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                mdb.collection("restaurant").whereEqualTo("name", query).addSnapshotListener(new EventListener<QuerySnapshot>() {
+                    @Override
+                    public void onEvent(@javax.annotation.Nullable QuerySnapshot queryDocumentSnapshots, @javax.annotation.Nullable FirebaseFirestoreException e) {
+                        Log.d(TAG, "SEARCH");
+                    }
+                });
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                return false;
+            }
+        });
     }
 }
