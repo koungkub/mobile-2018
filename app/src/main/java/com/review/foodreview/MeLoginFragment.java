@@ -44,12 +44,18 @@ public class MeLoginFragment extends Fragment{
         mUser = mAuth.getCurrentUser();
         if (mUser != null) {
             Log.d(TAG, "Authen");
+            initHeader();
             initbookmark();
             initsignout();
         }
         else{
             Log.d(TAG, "Not authen");
         }
+
+    }
+    private void initHeader(){
+        TextView name = getView().findViewById(R.id.me_login_text_name);
+        name.setText(mUser.getDisplayName());
     }
 
     private void initbookmark(){

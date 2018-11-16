@@ -11,11 +11,11 @@
                 android:elevation="20dp"
                 >
                 <TextView
-                    android:id="@+id/me_not_login_text_header1"
+                    android:id="@+id/me_login_text_header1"
                     android:layout_marginTop="100dp"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Review Food"
+                    android:text="Hello"
                     android:textAppearance="@style/food.headline"
                     android:fontFamily="@font/overpass"
                     android:textSize="40dp"
@@ -25,14 +25,14 @@
                     android:gravity="center"
                     />
                 <TextView
-                    android:id="@+id/me_not_login_text_body1"
+                    android:id="@+id/me_login_text_name"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="Chansin Thongkum"
                     android:gravity="center"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/me_not_login_text_header1"
+                    app:layout_constraintTop_toBottomOf="@+id/me_login_text_header1"
                     />
                 <android.support.constraint.ConstraintLayout
                     android:id="@+id/me_login_contain_bookmark"
@@ -42,7 +42,7 @@
                     android:layout_marginTop="50dp"
                     android:background="@drawable/border"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/me_not_login_text_body1">
+                    app:layout_constraintTop_toBottomOf="@+id/me_login_text_name">
                 <TextView
                     android:id="@+id/me_login_bookmark"
                     android:layout_width="100dp"
@@ -63,7 +63,7 @@
                     android:layout_marginTop="50dp"
                     android:background="@drawable/border"
                     app:layout_constraintStart_toEndOf="@id/me_login_contain_bookmark"
-                    app:layout_constraintTop_toBottomOf="@+id/me_not_login_text_body1"
+                    app:layout_constraintTop_toBottomOf="@+id/me_login_text_name"
                     >
                     <TextView
                         android:id="@+id/me_login_signout"

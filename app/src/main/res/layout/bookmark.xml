@@ -26,7 +26,6 @@
 
     </android.support.constraint.ConstraintLayout>
 
-
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="0dp"
@@ -41,6 +40,14 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
+    <TextView
+        android:id="@+id/bookmark_text_nothave"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:text="You not have your bookmark"
+    android:textAppearance="@style/food.headline"
+    android:gravity="center_horizontal"
+    />
 
             <LinearLayout
                 android:id="@+id/bookmark_list"
