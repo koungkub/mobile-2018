@@ -34,6 +34,8 @@ public class RestaurantFragment extends Fragment implements OnMapReadyCallback {
 
     private String restaurantId, restaurantName;
     private static Restaurant restaurant;
+    private boolean isLoggedIn;
+    private DocumentReference userRef, restaurantRef;
 
     private final FirebaseFirestore firestore = FirebaseFirestore.getInstance();
     private final FirebaseAuth auth = FirebaseAuth.getInstance();
@@ -74,13 +76,16 @@ public class RestaurantFragment extends Fragment implements OnMapReadyCallback {
             Log.d(TAG, "onActivityCreated: restaurantId not found in the bundle");
         restaurantId = bundle.getString("restaurantId");
         restaurantName = bundle.getString("restaurantName");
+        restaurantRef = firestore.collection("restaurant").document(restaurantId);
+
+        isLoggedIn = auth.getCurrentUser() != null;
+        if (isLoggedIn) userRef = firestore.collection("user").document(auth.getCurrentUser().getUid());
 
         registerFragmentElements();
         createMenu();
         setHasOptionsMenu(true);
 
         Log.d(TAG, "fetching restaurant");
-        final DocumentReference restaurantRef = firestore.collection("restaurant").document(restaurantId);
         restaurantRef.addSnapshotListener(new EventListener<DocumentSnapshot>() {
                     @Override
                     public void onEvent(@javax.annotation.Nullable DocumentSnapshot documentSnapshot,
@@ -165,6 +170,27 @@ public class RestaurantFragment extends Fragment implements OnMapReadyCallback {
                         _reviewList.setVisibility(View.VISIBLE);
                     }
                 });
+
+        if (isLoggedIn) {
+            firestore.collection("bookmark")
+                    .whereEqualTo("owner", userRef)
+                    .whereEqualTo("restaurant", restaurantRef)
+                    .get()
+                    .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                        @Override
+                        public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                            if (task.isSuccessful()) {
+                                if (task.getResult().size() > 0)
+                                    displayDialog("Bookmark found", "Restaurant is saved by user.");
+                                else
+                                    displayDialog("No bookmark found", "This restaurant is not saved.");
+                            } else {
+                                displayDialog("Error", task.getException().getLocalizedMessage());
+                            }
+                        }
+                    });
+        }
+
         initWriteBtn();
     }
 
@@ -221,7 +247,7 @@ public class RestaurantFragment extends Fragment implements OnMapReadyCallback {
         _writeBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (auth.getCurrentUser() != null) {
+                if (isLoggedIn) {
                     final Fragment fragment = new ReviewEditFragment();
                     final Bundle bundle = new Bundle();
                     bundle.putString("restaurantName", restaurant.getName());
@@ -256,19 +282,6 @@ public class RestaurantFragment extends Fragment implements OnMapReadyCallback {
         });
     }
 
-    /*private void initBookmarkBtn() {
-        if (auth.getCurrentUser() != null) {
-            _bookmarkBtn.setVisibility(View.VISIBLE);
-            _bookmarkBtn.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    Log.d(TAG, "onClick: _bookmarkBtn");
-                    addToBookmark();
-                }
-            });
-        }
-    }*/
-
     private void displayDialog(String title, String message) {
         final AlertDialog.Builder builder = new AlertDialog.Builder(getContext(), android.R.style.Theme_Material_Light_Dialog_Alert);
         builder.setTitle(title)
@@ -301,19 +314,17 @@ public class RestaurantFragment extends Fragment implements OnMapReadyCallback {
         final String menuName = item.getTitle().toString();
         Log.d(TAG, "onOptionsItemSelected: " + menuName);
         if (menuName.equalsIgnoreCase("bookmark")) {
-            if (auth.getCurrentUser() != null)
-                addToBookmark(restaurantId);
+            if (isLoggedIn)
+                addToBookmark(restaurantRef, userRef);
             else
                 displayDialog("Not logged in", "You need to log in to save bookmarks.");
         }
         return super.onOptionsItemSelected(item);
     }
 
-    private void addToBookmark(String restaurantId) {
+    private void addToBookmark(DocumentReference restaurantRef, DocumentReference userRef) {
         Log.d(TAG, "addToBookmark");
-        if (auth.getCurrentUser() != null) {
-            DocumentReference restaurantRef = firestore.collection("restaurant").document(restaurantId);
-            DocumentReference userRef = firestore.collection("user").document(auth.getCurrentUser().getUid());
+        if (isLoggedIn) {
             Log.d(TAG, "addToBookmark: saving");
             firestore.collection("bookmark")
                     .add(new Bookmark(userRef, restaurantRef))
