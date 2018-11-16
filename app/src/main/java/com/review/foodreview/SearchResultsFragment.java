@@ -26,6 +26,7 @@ import com.review.foodreview.dto.Restaurant;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Objects;
 
 public class SearchResultsFragment extends Fragment {
     private static final String TAG = "SEARCHRESULTS";
@@ -85,8 +86,16 @@ public class SearchResultsFragment extends Fragment {
     }
 
     private void createMenu() {
+        Objects.requireNonNull(getActivity()).setActionBar(_toolbar);
         _toolbar.setTitle(categoryName);
         _toolbar.setNavigationIcon(R.drawable.ic_arrow_back);
+        _toolbar.setNavigationContentDescription("Back");
+        _toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                getActivity().onBackPressed();
+            }
+        });
     }
 
     private void populateListView(
