@@ -35,7 +35,7 @@
                 android:layout_height="216dp"
                 android:layout_gravity="center"
                 android:scaleType="centerCrop"
-                android:src="@drawable/hello"
+                android:src="@drawable/loading_thumbnail"
                 app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
