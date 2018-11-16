@@ -127,7 +127,7 @@ public class DiscoverFragment extends Fragment{
                     restaurantListItemView.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
-                            passbundle(r.getId());
+                            passbundle(r.getId(), r.getName());
                         }
                     });
                 }
@@ -136,9 +136,10 @@ public class DiscoverFragment extends Fragment{
     }
 
     // set bundle and pass to restaurantFragment
-    private void passbundle(String restaurantId){
+    private void passbundle(String restaurantId, String restaurantName){
         Log.d(TAG, "Send data to RestaurantFragment");
         this.args.putString("restaurantId", restaurantId);
+        this.args.putString("restaurantName", restaurantName);
         this.fragmentrestaurant.setArguments(args);
         getActivity()
                 .getSupportFragmentManager()
