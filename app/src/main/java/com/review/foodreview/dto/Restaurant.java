@@ -23,7 +23,7 @@ public class Restaurant {
     private HashMap<String, Long> rating;
     private DocumentReference category;
 
-    private int reviewCount;
+    private Long reviewCount;
 
     public Restaurant(){
     }
@@ -40,7 +40,7 @@ public class Restaurant {
                       @Nullable HashMap<String, Long> rating,
                       @Nullable List<String> imageUri,
                       @Nullable List<DocumentReference> reviews,
-                      int reviewCount) {
+                      Long reviewCount) {
         this.id = id;
         this.name = name;
         this.priceRange = priceRange;
@@ -70,10 +70,6 @@ public class Restaurant {
 
     public String getOpenHours() {
         return openHours;
-    }
-
-    public String getTelephone() {
-        return telephone;
     }
 
     public boolean isDelivery() {
@@ -107,7 +103,7 @@ public class Restaurant {
         return category;
     }
 
-    public int getReviewCount() {
+    public long getReviewCount() {
         return reviewCount;
     }
 
@@ -115,7 +111,4 @@ public class Restaurant {
         return categoryName;
     }
 
-    public void setReviews(List<DocumentReference> reviews) {
-        this.reviews = reviews;
-    }
 }

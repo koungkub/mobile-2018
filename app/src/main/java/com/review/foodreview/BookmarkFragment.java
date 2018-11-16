@@ -116,7 +116,7 @@ public class BookmarkFragment extends Fragment{
                                     (HashMap<String, Long>) documentSnapshot.get("rating"),
                                     (List<String>) documentSnapshot.get("imageUri"),
                                     (List<DocumentReference>) documentSnapshot.get("review"),
-                                    0
+                                    (long) 0
                             );
                         }
                         restaurants.add(restaurant);

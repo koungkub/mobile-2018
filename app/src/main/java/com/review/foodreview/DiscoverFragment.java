@@ -116,18 +116,11 @@ public class DiscoverFragment extends Fragment{
                 for (QueryDocumentSnapshot doc : queryDocumentSnapshots) {
                     restaurant = doc.toObject(Restaurant.class);
                     restaurant.setId(doc.getId());
-                    restaurant.setReviews((List<DocumentReference>) doc.get("review"));
                     restaurants.add(restaurant);
                 }
                 final LinearLayout _restaurantList = getView().findViewById(R.id.discover_list);
                 // add restaurant items to the LinearLayout _restaurantList
                 for (final Restaurant r : restaurants) {
-                    if(r.getReviews() != null){
-                        Log.d(TAG, String.valueOf(r.getReviews().size()));
-                    }
-                    else {
-                        Log.d(TAG, "review = 0");
-                    }
                     final RestaurantListItem restaurantListItem = new RestaurantListItem(getContext(), r, _restaurantList);
                     final View restaurantListItemView = restaurantListItem.getComponent();
                     _restaurantList.addView(restaurantListItemView);

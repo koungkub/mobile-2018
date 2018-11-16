@@ -105,7 +105,7 @@ public class RestaurantFragment extends Fragment implements OnMapReadyCallback {
                                     (HashMap<String, Long>) documentSnapshot.get("rating"),
                                     (List<String>) documentSnapshot.get("imageUri"),
                                     (List<DocumentReference>) documentSnapshot.get("review"),
-                                    0
+                                    (Long) documentSnapshot.get("reviewCount")
                             );
                         } else {
                             Log.d(TAG, "Restaurant doesn't exist");
@@ -122,7 +122,7 @@ public class RestaurantFragment extends Fragment implements OnMapReadyCallback {
                                     null,
                                     null,
                                     null,
-                                    0
+                                    (long) 0
                             );
                         }
                         // methods that require restaurant data from Firestore
