@@ -40,9 +40,9 @@ public class ReviewListItem {
         final TextView _ratingFood = reviewListItem.findViewById(R.id.review_item_rating_food);
         final TextView _ratingService = reviewListItem.findViewById(R.id.review_item_rating_service);
         final TextView _ratingAtmosphere = reviewListItem.findViewById(R.id.review_item_rating_atmosphere);
-        final long ratingFood = (long) review.getRating().get("food");
-        final long ratingService = (long) review.getRating().get("service");
-        final long ratingAtmosphere = (long) review.getRating().get("atmosphere");
+        final float ratingFood = review.getRating().get("food");
+        final float ratingService = review.getRating().get("service");
+        final float ratingAtmosphere = review.getRating().get("atmosphere");
         _description.setText(review.getDescription());
         _ratingFood.setText(String.format(Locale.ENGLISH, "%d", ratingFood));
         _ratingService.setText(String.format(Locale.ENGLISH, "%d", ratingService));

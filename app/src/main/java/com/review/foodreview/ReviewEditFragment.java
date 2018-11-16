@@ -92,9 +92,9 @@ public class ReviewEditFragment extends Fragment {
 
         // convert value
         String stringReview = _reviewText.getText().toString();
-        long floatFood = (long) _ratingBarFood.getRating();
-        long floatService = (long) _ratingBarService.getRating();
-        long floatAtmosphere = (long) _ratingBarAtmosphere.getRating();
+        float floatFood = _ratingBarFood.getRating();
+        float floatService = _ratingBarService.getRating();
+        float floatAtmosphere = _ratingBarAtmosphere.getRating();
 
         // get parameter from previous fragment using bundle
         Bundle bundle = getArguments();
