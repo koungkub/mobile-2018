@@ -180,6 +180,12 @@ public class ReviewEditFragment extends Fragment {
         _toolbar.setNavigationIcon(R.drawable.ic_arrow_back_white_24dp);
         _toolbar.inflateMenu(R.menu.review_edit);
         getActivity().setActionBar(_toolbar);
+        _toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                getActivity().onBackPressed();
+            }
+        });
     }
 
     private void onClickUploadPhoto() {
