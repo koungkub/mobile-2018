@@ -40,13 +40,10 @@ public class ReviewListItem {
         final TextView _ratingFood = reviewListItem.findViewById(R.id.review_item_rating_food);
         final TextView _ratingService = reviewListItem.findViewById(R.id.review_item_rating_service);
         final TextView _ratingAtmosphere = reviewListItem.findViewById(R.id.review_item_rating_atmosphere);
-        final float ratingFood = review.getRating().get("food");
-        final float ratingService = review.getRating().get("service");
-        final float ratingAtmosphere = review.getRating().get("atmosphere");
         _description.setText(review.getDescription());
-        _ratingFood.setText(String.format(Locale.ENGLISH, "%d", ratingFood));
-        _ratingService.setText(String.format(Locale.ENGLISH, "%d", ratingService));
-        _ratingAtmosphere.setText(String.format(Locale.ENGLISH, "%d", ratingAtmosphere));
+        _ratingFood.setText(String.valueOf(review.getRating().get("food")));
+        _ratingService.setText(String.valueOf(review.getRating().get("service")));
+        _ratingAtmosphere.setText(String.valueOf(review.getRating().get("atmosphere")));
         // TODO: Get author name
         return reviewListItem;
     }
