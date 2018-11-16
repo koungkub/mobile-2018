@@ -102,6 +102,8 @@ public class ReviewEditFragment extends Fragment {
         // get parameter from previous fragment using bundle
         Bundle bundle = getArguments();
 
+        Log.d(TAG, bundle.getString("restaurantId"));
+
         if (validateForm(uid, bundle)) {
             Log.d(TAG, "Some field was empty");
             Toast
