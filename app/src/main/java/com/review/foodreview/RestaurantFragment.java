@@ -304,6 +304,7 @@ public class RestaurantFragment extends Fragment implements OnMapReadyCallback {
     private void createMap(Bundle savedInstanceState) {
         Log.d(TAG, "createMap");
         _mapView.onCreate(savedInstanceState);
+        _mapView.onResume();
         _mapView.getMapAsync(this);
     }
 
