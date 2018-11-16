@@ -14,18 +14,16 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 
 import android.widget.SearchView;
-import com.google.firebase.firestore.EventListener;
-import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.FirebaseFirestoreException;
-import com.google.firebase.firestore.QueryDocumentSnapshot;
-import com.google.firebase.firestore.QuerySnapshot;
+import com.google.firebase.firestore.*;
 import com.review.foodreview.component.RestaurantListItem;
 import com.review.foodreview.dto.Restaurant;
 import com.review.foodreview.dto.ImageModel;
+import com.review.foodreview.dto.Review;
 import com.review.foodreview.dto.SlidingImageAdapter;
 import com.tbuonomo.viewpagerdotsindicator.WormDotsIndicator;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 public class DiscoverFragment extends Fragment{
@@ -118,12 +116,18 @@ public class DiscoverFragment extends Fragment{
                 for (QueryDocumentSnapshot doc : queryDocumentSnapshots) {
                     restaurant = doc.toObject(Restaurant.class);
                     restaurant.setId(doc.getId());
+                    restaurant.setReviews((List<DocumentReference>) doc.get("review"));
                     restaurants.add(restaurant);
                 }
-
                 final LinearLayout _restaurantList = getView().findViewById(R.id.discover_list);
                 // add restaurant items to the LinearLayout _restaurantList
                 for (final Restaurant r : restaurants) {
+                    if(r.getReviews() != null){
+                        Log.d(TAG, String.valueOf(r.getReviews().size()));
+                    }
+                    else {
+                        Log.d(TAG, "review = 0");
+                    }
                     final RestaurantListItem restaurantListItem = new RestaurantListItem(getContext(), r, _restaurantList);
                     final View restaurantListItemView = restaurantListItem.getComponent();
                     _restaurantList.addView(restaurantListItemView);

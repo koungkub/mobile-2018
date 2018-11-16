@@ -2,6 +2,7 @@ package com.review.foodreview.dto;
 
 
 import android.support.annotation.Nullable;
+import android.util.Log;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.GeoPoint;
 
@@ -55,27 +56,6 @@ public class Restaurant {
         this.reviewCount = reviewCount;
     }
 
-    // use this in delivery
-    /* public Restaurant(
-            DocumentReference category,
-            Boolean delivery,
-            String id,
-            List<String> imageUri,
-            GeoPoint location,
-            String name,
-            String openHours,
-            List<DocumentReference> review,
-            String telephone) {
-        this.category = category;
-        this.delivery = delivery;
-        this.id = id;
-        this.imageUri = imageUri;
-        this.location = location;
-        this.name = name;
-        this.openHours = openHours;
-        this.review = review;
-        this.telephone = telephone;
-    } */
     public String getId() {
         return id;
     }
@@ -133,5 +113,9 @@ public class Restaurant {
 
     public String getCategoryName() {
         return categoryName;
+    }
+
+    public void setReviews(List<DocumentReference> reviews) {
+        this.reviews = reviews;
     }
 }
