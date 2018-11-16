@@ -32,7 +32,7 @@ import java.util.*;
 public class RestaurantFragment extends Fragment implements OnMapReadyCallback {
     private static final String TAG = "RESTAURANT";
 
-    private String restaurantId, restaurantName;
+    private String restaurantId, restaurantName, bookmarkId;
     private static Restaurant restaurant;
     private boolean isLoggedIn;
     private DocumentReference userRef, restaurantRef;
@@ -172,6 +172,7 @@ public class RestaurantFragment extends Fragment implements OnMapReadyCallback {
                 });
 
         if (isLoggedIn) {
+            Log.d(TAG, "fetching bookmark status");
             firestore.collection("bookmark")
                     .whereEqualTo("owner", userRef)
                     .whereEqualTo("restaurant", restaurantRef)
@@ -180,10 +181,12 @@ public class RestaurantFragment extends Fragment implements OnMapReadyCallback {
                         @Override
                         public void onComplete(@NonNull Task<QuerySnapshot> task) {
                             if (task.isSuccessful()) {
-                                if (task.getResult().size() > 0)
-                                    displayDialog("Bookmark found", "Restaurant is saved by user.");
-                                else
-                                    displayDialog("No bookmark found", "This restaurant is not saved.");
+                                if (task.getResult().size() > 0) {
+                                    for (QueryDocumentSnapshot bm : task.getResult()) bookmarkId = bm.getId();
+                                    displayDialog("Bookmark found", "Restaurant is saved by user at " + bookmarkId);
+                                } else {
+                                    displayDialog("Bookmark not found", "Restaurant is not saved in bookmarks");
+                                }
                             } else {
                                 displayDialog("Error", task.getException().getLocalizedMessage());
                             }
