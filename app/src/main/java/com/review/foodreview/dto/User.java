@@ -1,20 +1,12 @@
 package com.review.foodreview.dto;
 
-import com.google.firebase.firestore.DocumentReference;
-import com.google.firebase.firestore.model.value.ReferenceValue;
-
-import java.util.List;
 
 public class User {
     String name, uuid;
-    List<DocumentReference> bookmark;
     public User(){}
-    public User(String name, String uuid, List<DocumentReference> bookmark) {
+    public User(String name, String uuid) {
         this.name = name;
         this.uuid = uuid;
-    }
-    public User(List<DocumentReference> bookmark) {
-        this.bookmark = bookmark;
     }
     public String getName() {
         return name;
@@ -22,9 +14,5 @@ public class User {
 
     public String getUuid() {
         return uuid;
-    }
-
-    public List<DocumentReference> getBookmark() {
-        return bookmark;
     }
 }
