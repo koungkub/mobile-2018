@@ -37,9 +37,9 @@ public class ReviewListAdapter extends ArrayAdapter<Review> {
         final TextView _ratingAtmosphere = reviewItem.findViewById(R.id.review_item_rating_atmosphere);
         final Review review = reviewList.get(position);
         _description.setText(review.getDescription());
-        _ratingFood.setText(review.getRating().get("food").toString());
-        _ratingService.setText(review.getRating().get("service").toString());
-        _ratingAtmosphere.setText(review.getRating().get("atmosphere").toString());
+        _ratingFood.setText(String.valueOf(review.getRating().get("food")));
+        _ratingService.setText(String.valueOf(review.getRating().get("service")));
+        _ratingAtmosphere.setText(String.valueOf(review.getRating().get("atmosphere")));
         // TODO: Get author name
         return reviewItem;
     }
