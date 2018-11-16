@@ -16,7 +16,7 @@
             android:layout_gravity="center"
             android:adjustViewBounds="true"
             android:scaleType="centerCrop"
-            android:src="@mipmap/ic_launcher" />
+            android:src="@drawable/loading_thumbnail" />
 
         <RelativeLayout
             android:layout_width="match_parent"
