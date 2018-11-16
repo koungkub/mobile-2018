@@ -125,6 +125,7 @@ public class SlidingImageAdapter extends PagerAdapter {
                                         Log.d("SLIDE", "set slide 2");
                                         name.setText(restaurants.get(1).getName());
                                         category.setText(restaurants.get(1).getCategoryName());
+
                                         Picasso.get()
                                                 .load(restaurants.get(1).getImageUri().get(0))
                                                 .placeholder(R.drawable.slide2)
