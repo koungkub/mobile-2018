@@ -1,5 +1,7 @@
 package com.review.foodreview;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -10,22 +12,30 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.*;
 
+import com.google.android.gms.maps.*;
+import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.*;
 import com.google.firebase.firestore.EventListener;
 import com.review.foodreview.component.ReviewListItem;
 import com.review.foodreview.dto.Restaurant;
 import com.review.foodreview.dto.Review;
+import com.squareup.picasso.Picasso;
 
 import java.util.*;
 
-public class RestaurantFragment extends Fragment {
+public class RestaurantFragment extends Fragment implements OnMapReadyCallback {
     private static final String TAG = "RESTAURANT";
 
-    private String restaurantId; // to be assigned with bundle
-    private Restaurant restaurant;
+    private String restaurantId, restaurantName;
+    private static Restaurant restaurant;
+
     private final FirebaseFirestore firestore = FirebaseFirestore.getInstance();
+    private final FirebaseAuth auth = FirebaseAuth.getInstance();
+    private GoogleMap mMap;
 
     private TextView _restaurantName, _restaurantType, _priceRange, _rating, _reviewCount;
     private TextView _openHours, _delivery;
@@ -33,6 +43,8 @@ public class RestaurantFragment extends Fragment {
     private Button _writeBtn, _viewAllBtn;
     private LinearLayout _reviewList;
     private ProgressBar _reviewLoading;
+    private MapView _mapView;
+    private ImageView _headerImage;
 
     @Nullable
     @Override
@@ -49,12 +61,20 @@ public class RestaurantFragment extends Fragment {
     }
 
     @Override
-    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+    public void onActivityCreated(@Nullable final Bundle savedInstanceState) {
         Log.d(TAG, "onActivityCreated");
         super.onActivityCreated(savedInstanceState);
 
-        restaurantId = "PxZsYjM909P3IfsvJdPb"; // TODO: Replace with bundle
+        // get bundle
+        Bundle bundle = getArguments();
+
+        if (bundle.getString("restaurantId") == null)
+            Log.d(TAG, "onActivityCreated: restaurantId not found in the bundle");
+        restaurantId = bundle.getString("restaurantId");
+        restaurantName = bundle.getString("restaurantName");
+
         registerFragmentElements();
+        createMenu();
 
         Log.d(TAG, "fetching restaurant");
         final DocumentReference restaurantRef = firestore.collection("restaurant").document(restaurantId);
@@ -77,7 +97,7 @@ public class RestaurantFragment extends Fragment {
                                     (HashMap<String, Long>) documentSnapshot.get("rating"),
                                     (List<String>) documentSnapshot.get("imageUri"),
                                     (List<DocumentReference>) documentSnapshot.get("review"),
-                                    20
+                                    0
                             );
                         } else {
                             Log.d(TAG, "Restaurant doesn't exist");
@@ -98,9 +118,12 @@ public class RestaurantFragment extends Fragment {
                             );
                         }
                         // methods that require restaurant data from Firestore
-                        createMenu();
+                        _toolbar.setTitle(restaurant.getName());
                         setTexts(restaurant);
+                        if (restaurant.getImageUri() != null)
+                            Picasso.get().load(restaurant.getImageUri().get(0)).into(_headerImage);
                         initViewAllBtn();
+                        createMap(savedInstanceState);
                     }
                 });
 
@@ -156,13 +179,22 @@ public class RestaurantFragment extends Fragment {
         _viewAllBtn = getView().findViewById(R.id.restaurant_review_btn_all);
         _reviewList = getView().findViewById(R.id.restaurant_recent_reviews);
         _reviewLoading = getView().findViewById(R.id.restaurant_loading_reviews);
+        _mapView = getView().findViewById(R.id.restaurant_map);
+        _headerImage = getView().findViewById(R.id.restaurant_image_restaurant);
     }
 
     private void createMenu() {
-        _toolbar.setTitle(restaurant.getName());
+        Objects.requireNonNull(getActivity()).setActionBar(_toolbar);
+        if (restaurantName != null) _toolbar.setTitle(restaurantName);
         _toolbar.setNavigationIcon(R.drawable.ic_arrow_back);
         _toolbar.inflateMenu(R.menu.restaurant);
-        Objects.requireNonNull(getActivity()).setActionBar(_toolbar);
+        _toolbar.setNavigationContentDescription("Back");
+        _toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                getActivity().onBackPressed();
+            }
+        });
     }
 
     private void setTexts(Restaurant restaurant) {
@@ -185,11 +217,19 @@ public class RestaurantFragment extends Fragment {
         _writeBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                getFragmentManager()
-                        .beginTransaction()
-                        .addToBackStack(null)
-                        .replace(R.id.main_view, new ReviewEditFragment())
-                        .commit();
+                if (auth.getCurrentUser() != null) {
+                    final Fragment fragment = new ReviewEditFragment();
+                    final Bundle bundle = new Bundle();
+                    bundle.putString("restaurantName", restaurant.getName());
+                    bundle.putString("restaurantId", restaurant.getId());
+                    getFragmentManager()
+                            .beginTransaction()
+                            .addToBackStack(null)
+                            .replace(R.id.main_view, fragment)
+                            .commit();
+                } else {
+                    displayDialog("Please log in", "You need to log in first to write reviews.");
+                }
             }
         });
     }
@@ -210,5 +250,32 @@ public class RestaurantFragment extends Fragment {
                         .commit();
             }
         });
+    }
+
+    private void displayDialog(String title, String message) {
+        final AlertDialog.Builder builder = new AlertDialog.Builder(getContext(), android.R.style.Theme_Material_Light_Dialog_Alert);
+        builder.setTitle(title)
+                .setMessage(message)
+                .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {}
+                })
+                .show();
+    }
+
+    private void createMap(Bundle savedInstanceState) {
+        Log.d(TAG, "createMap");
+        _mapView.onCreate(savedInstanceState);
+        _mapView.getMapAsync(this);
+    }
+
+    @Override
+    public void onMapReady(GoogleMap googleMap) {
+        Log.d(TAG, "onMapReady");
+        mMap = googleMap;
+        LatLng restaurantPin = new LatLng(restaurant.getLocation().getLatitude(), restaurant.getLocation().getLongitude());
+        mMap.addMarker(new MarkerOptions().position(restaurantPin).title(restaurantName));
+        mMap.moveCamera(CameraUpdateFactory.newLatLng(restaurantPin));
+        mMap.moveCamera(CameraUpdateFactory.zoomTo(16F));
     }
 }

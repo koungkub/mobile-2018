@@ -1,5 +1,7 @@
 package com.review.foodreview;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -11,24 +13,23 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 
-import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.GeoPoint;
-import com.review.foodreview.component.DiscoverGetListData;
+import com.google.firebase.firestore.FirebaseFirestoreException;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 import com.review.foodreview.component.RestaurantListItem;
-import com.review.foodreview.dto.GetallFirestore;
 import com.review.foodreview.dto.Restaurant;
 import com.review.foodreview.dto.ImageModel;
 import com.review.foodreview.dto.SlidingImageAdapter;
 import com.tbuonomo.viewpagerdotsindicator.WormDotsIndicator;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 public class DiscoverFragment extends Fragment{
     private final List<Restaurant> restaurants = new ArrayList<>();
-    private static final String TAG = "DISCOVERFRAGMENT";
+    private static final String TAG = "DISCOVER";
     private static ViewPager mPager;
     private Fragment fragmentrestaurant;
     private Bundle args;
@@ -68,69 +69,6 @@ public class DiscoverFragment extends Fragment{
         super.onActivityCreated(savedInstanceState);
         MainActivity.onFragmentChanged(TAG);
         Log.d(TAG, "Start discover fragment (ActivityCreated)");
-        // clear the list to prevent duplicate data
-        restaurants.clear();
-
-        // dummy data
-        final DocumentReference dummyCategory = mdb.collection("category").document("path");
-        final HashMap<String, Long> dummyRating = new HashMap<>();
-        dummyRating.put("food", 4L); dummyRating.put("service", 3L); dummyRating.put("atmosphere", 3L);
-        final ArrayList<String> dummyImageUri = new ArrayList<>();
-        dummyImageUri.add("/path/to/image.jpg");
-        final ArrayList<DocumentReference> dummyReviews = new ArrayList<>();
-        dummyReviews.add(dummyCategory);
-
-        Restaurant mcdonalds = new Restaurant(
-                "testId2",
-                "Otoya",
-                "$$ (120 - 300)",
-                "10.00 - 21.00",
-                "0123456789",
-                "Japanese",
-                true,
-                dummyCategory,
-                new GeoPoint(10, 10),
-                dummyRating,
-                dummyImageUri,
-                dummyReviews,
-                20
-        );
-        Restaurant otoya = new Restaurant(
-                "testId2",
-                "Otoya",
-                "$$ (120 - 300)",
-                "10.00 - 21.00",
-                "0123456789",
-                "Japanese",
-                true,
-                dummyCategory,
-                new GeoPoint(10, 10),
-                dummyRating,
-                dummyImageUri,
-                dummyReviews,
-                20
-        );
-        restaurants.add(mcdonalds);
-        restaurants.add(otoya);
-        final LinearLayout _restaurantList = getView().findViewById(R.id.discover_list);
-
-        // add restaurant items to the LinearLayout _restaurantList
-        for (Restaurant r : restaurants) {
-            final RestaurantListItem restaurantListItem = new RestaurantListItem(getContext(), r, _restaurantList);
-            final View restaurantListItemView = restaurantListItem.getComponent();
-            _restaurantList.addView(restaurantListItemView);
-            restaurantListItemView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    getActivity()
-                            .getSupportFragmentManager()
-                            .beginTransaction()
-                            .replace(R.id.main_view, new RestaurantFragment())
-                            .addToBackStack(null)
-                            .commit();
-                }
-            });
-        }
         // set up Featured slideshow
         Log.d(TAG, "Do setupSlideshow");
         setupSlideshow();
@@ -155,48 +93,71 @@ public class DiscoverFragment extends Fragment{
 
     //setup slideshow here
     private void setupSlideshow() {
-
         mPager = getView().findViewById(R.id.pager);
+        Log.d(TAG, String.valueOf(mPager.getCurrentItem()));
         mPager.setPageMargin(-4);
-        mPager.setAdapter(new SlidingImageAdapter(
-                getContext(),
-                imageModelArrayList));
+        SlidingImageAdapter slidingImageAdapter = new SlidingImageAdapter(getContext(),
+                imageModelArrayList);
+        slidingImageAdapter.setFragmentmanager(getActivity().getSupportFragmentManager());
+        mPager.setAdapter(slidingImageAdapter);
         this.wormDotsIndicator = getView().findViewById(R.id.worm_dots_indicator);
         this.wormDotsIndicator.setViewPager(mPager);
-
+        Log.d(TAG, "setupSlideshow: finished setup");
     }
     private void getdiscoverList(){
-        DiscoverGetListData discoverGetListData = new DiscoverGetListData(false,false, false, true);
+        // do with firestore
+        mdb.collection("restaurant").addSnapshotListener(new EventListener<QuerySnapshot>() {
+            @Override
+            public void onEvent(@javax.annotation.Nullable QuerySnapshot queryDocumentSnapshots, @javax.annotation.Nullable FirebaseFirestoreException e) {
+                restaurants.clear();
+                Restaurant restaurant;
+                Log.d(TAG, "Do query in Restaurant");
+                for (QueryDocumentSnapshot doc : queryDocumentSnapshots) {
+                    restaurant = doc.toObject(Restaurant.class);
+                    restaurant.setId(doc.getId());
+                    restaurants.add(restaurant);
+                }
+
+                final LinearLayout _restaurantList = getView().findViewById(R.id.discover_list);
+                // add restaurant items to the LinearLayout _restaurantList
+                for (final Restaurant r : restaurants) {
+                    final RestaurantListItem restaurantListItem = new RestaurantListItem(getContext(), r, _restaurantList);
+                    final View restaurantListItemView = restaurantListItem.getComponent();
+                    _restaurantList.addView(restaurantListItemView);
+                    restaurantListItemView.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            passbundle(r.getId(), r.getName());
+                        }
+                    });
+                }
+            }
+        });
     }
 
-    //set bundle and pass to restaurantFragment
-    private void passbundle(String restaurantId){
-        this.args.putString("id", restaurantId);
+    // set bundle and pass to restaurantFragment
+    private void passbundle(String restaurantId, String restaurantName){
+        Log.d(TAG, "Send data to RestaurantFragment");
+        this.args.putString("restaurantId", restaurantId);
+        this.args.putString("restaurantName", restaurantName);
         this.fragmentrestaurant.setArguments(args);
         getActivity()
                 .getSupportFragmentManager()
                 .beginTransaction()
-                .replace(R.id.main_view, fragmentrestaurant).commit();
+                .addToBackStack(null)
+                .replace(R.id.main_view, fragmentrestaurant)
+                .commit();
         Log.d(TAG, restaurantId);
     }
 
+    private void displayDialog(String title, String message) {
+        final AlertDialog.Builder builder = new AlertDialog.Builder(getContext(), android.R.style.Theme_Material_Light_Dialog_Alert);
+        builder.setTitle(title)
+                .setMessage(message)
+                .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {}
+                })
+                .show();
+    }
 }
-
-// Auto start of viewpager open it if you want
-//        final Handler handler = new Handler();
-//        final Runnable Update = new Runnable() {
-//            public void run() {
-//                if (currentPage == NUM_PAGES) {
-//                    currentPage = 0;
-//                }
-//                mPager
-//                        .setCurrentItem(currentPage++, true);
-//            }
-//        };
-//        Timer swipeTimer = new Timer();
-//        swipeTimer.schedule(new TimerTask() {
-//            @Override
-//            public void run() {
-//                handler.post(Update);
-//            }
-//        }, 3000, 3000);

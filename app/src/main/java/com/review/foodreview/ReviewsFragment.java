@@ -23,6 +23,7 @@ import com.review.foodreview.dto.Review;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Objects;
 
 public class ReviewsFragment extends Fragment {
     private static final String TAG = "REVIEWS";
@@ -94,10 +95,16 @@ public class ReviewsFragment extends Fragment {
 
     private void createMenu() {
         Log.d(TAG, "createMenu");
-        _toolbar = getActivity().findViewById(R.id.reviews_action_bar);
+        Objects.requireNonNull(getActivity()).setActionBar(_toolbar);
         _toolbar.setTitle(restaurantName);
         _toolbar.setNavigationIcon(R.drawable.ic_arrow_back);
-        getActivity().setActionBar(_toolbar);
+        _toolbar.setNavigationContentDescription("Back");
+        _toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                getActivity().onBackPressed();
+            }
+        });
     }
 
     private void registerFragmentElements() {

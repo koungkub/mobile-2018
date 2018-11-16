@@ -33,7 +33,7 @@ public class MainActivity extends AppCompatActivity{
         setupNavbar();
         fragmentDiscover = new DiscoverFragment();
         fragmentSearch = new SearchFragment();
-        fragmentMe = new LoginFragment();
+        fragmentMe = new MeNotLoginFragment();
 
 //        FirebaseStorage storage = FirebaseStorage.getInstance();
 //        StorageReference storageReference = storage.getReference();
@@ -78,7 +78,6 @@ public class MainActivity extends AppCompatActivity{
         navigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
-                Log.d(TAG, String.valueOf(menuItem.getItemId()));
                 switch (menuItem.getItemId()) {
                     case R.id.navigation_discover: {
                         fragment = fragmentDiscover;
@@ -95,7 +94,10 @@ public class MainActivity extends AppCompatActivity{
                 }
                 if (fragment != null) {
                     Log.d(TAG, "Change page");
-                    getSupportFragmentManager().beginTransaction().replace(R.id.main_view, fragment).commit();
+                    getSupportFragmentManager()
+                            .beginTransaction()
+                            .replace(R.id.main_view, fragment)
+                            .commit();
                 }
                 return true;
             }
@@ -103,13 +105,25 @@ public class MainActivity extends AppCompatActivity{
     }
 
     public static void onFragmentChanged(String fragmentName) {
-        Log.d(TAG, "onFragmentChanged: " + fragmentName);
-        if (fragmentName.equalsIgnoreCase("RESTAURANT")) {
-            Log.d(TAG, "Invisible nav");
-            navigationView.setVisibility(View.GONE);
-        } else {
+        Log.d(TAG, "onFragmentChanged: (Change to page)" + fragmentName);
+        if (fragmentName.equalsIgnoreCase("DISCOVER") || fragmentName.equalsIgnoreCase("SEARCH") || fragmentName.equalsIgnoreCase("ME")) {
+            if (fragmentName.equals("DISCOVER")) {
+                    Log.d(TAG, "check nav 0");
+                    navigationView.getMenu().getItem(0).setChecked(true);
+                }
+            else if (fragmentName.equals("SEARCH")) {
+                    Log.d(TAG, "check nav 1");
+                    navigationView.getMenu().getItem(1).setChecked(true);
+            }
+            else if (fragmentName.equals("ME")) {
+                    Log.d(TAG, "check nav 2");
+                    navigationView.getMenu().getItem(2).setChecked(true);
+            }
             Log.d(TAG, "Visible nav");
             navigationView.setVisibility(View.VISIBLE);
+        } else {
+            Log.d(TAG, "Invisible nav");
+            navigationView.setVisibility(View.GONE);
         }
     }
 }

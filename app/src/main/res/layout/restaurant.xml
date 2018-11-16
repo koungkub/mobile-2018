@@ -35,7 +35,7 @@
                 android:layout_height="216dp"
                 android:layout_gravity="center"
                 android:scaleType="centerCrop"
-                android:src="@drawable/hello"
+                android:src="@drawable/loading_thumbnail"
                 app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
@@ -284,7 +284,7 @@
             </LinearLayout>
 
             <com.google.android.gms.maps.MapView
-                android:id="@+id/mapView"
+                android:id="@+id/restaurant_map"
                 android:layout_width="match_parent"
                 android:layout_height="250dp"
                 android:layout_marginTop="16dp"
