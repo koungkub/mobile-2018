@@ -302,14 +302,14 @@ public class RestaurantFragment extends Fragment implements OnMapReadyCallback {
         Log.d(TAG, "onOptionsItemSelected: " + menuName);
         if (menuName.equalsIgnoreCase("bookmark")) {
             if (auth.getCurrentUser() != null)
-                addToBookmark();
+                addToBookmark(restaurantId);
             else
                 displayDialog("Not logged in", "You need to log in to save bookmarks.");
         }
         return super.onOptionsItemSelected(item);
     }
 
-    private void addToBookmark() {
+    private void addToBookmark(String restaurantId) {
         Log.d(TAG, "addToBookmark");
         if (auth.getCurrentUser() != null) {
             DocumentReference restaurantRef = firestore.collection("restaurant").document(restaurantId);
@@ -327,5 +327,21 @@ public class RestaurantFragment extends Fragment implements OnMapReadyCallback {
                         }
                     });
         }
+    }
+
+    private void removeBookmark(String bookmarkId) {
+        Log.d(TAG, "removeBookmark");
+        firestore.collection("bookmark")
+                .document(bookmarkId)
+                .delete()
+                .addOnCompleteListener(new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
+                        if (task.isSuccessful())
+                            displayDialog("Deleted", "Restaurant deleted from bookmarks.");
+                        else
+                            displayDialog("Error", task.getException().getLocalizedMessage());
+                    }
+                });
     }
 }
