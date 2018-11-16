@@ -9,6 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toolbar;
 
 import com.google.firebase.auth.FirebaseAuth;
@@ -89,6 +90,8 @@ public class BookmarkFragment extends Fragment{
         if (bookmarkList.size() < 1) {
             Log.d(TAG, "Not have bookmark");
         } else {
+            TextView haveBookmark = getView().findViewById(R.id.bookmark_text_nothave);
+            haveBookmark.setVisibility(View.GONE);
             Log.d(TAG, "get bookmark to List");
             for (DocumentReference bookmark : bookmarkList) {
                 bookmark.addSnapshotListener(new EventListener<DocumentSnapshot>() {
