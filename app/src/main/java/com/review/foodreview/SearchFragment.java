@@ -20,6 +20,29 @@ public class SearchFragment extends Fragment  {
     private static final String TAG = "SEARCH";
     private final FirebaseFirestore firestore = FirebaseFirestore.getInstance();
     private GridLayout _categoryGrid;
+    private QuerySnapshot categorySnapshot;
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        Log.d(TAG, "onCreate");
+        if (categorySnapshot == null) {
+            Log.d(TAG, "onCreate: category not loaded, retrieving categories.");
+            firestore.collection("category").get()
+                    .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                        @Override
+                        public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                            if (task.isSuccessful()) {
+                                Log.d(TAG, "onComplete: categories retrieved.");
+                                if (getContext() != null) {
+                                    categorySnapshot = task.getResult();
+                                    populateList(categorySnapshot);
+                                }
+                            }
+                        }
+                    });
+        }
+    }
 
     @Nullable
     @Override
@@ -34,23 +57,9 @@ public class SearchFragment extends Fragment  {
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         MainActivity.onFragmentChanged(TAG);
-
+        Log.d(TAG, "onActivityCreated");
         _categoryGrid = getView().findViewById(R.id.search_grid);
-
-        firestore.collection("category").get()
-                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                    @Override
-                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                        if (task.isSuccessful()) {
-                            if (getContext() != null) {
-                                for (QueryDocumentSnapshot category : task.getResult()) {
-                                    final Button categoryButton = createCategoryButton(category.getString("name"), category.getId());
-                                    _categoryGrid.addView(categoryButton);
-                                }
-                            }
-                        }
-                    }
-                });
+        if (categorySnapshot != null) populateList(categorySnapshot);
     }
 
     private Button createCategoryButton(final String categoryName, final String categoryId) {
@@ -72,6 +81,14 @@ public class SearchFragment extends Fragment  {
             }
         });
         return button;
+    }
+
+    private void populateList(QuerySnapshot categorySnapshot) {
+        Log.d(TAG, "populateList");
+        for (QueryDocumentSnapshot category : categorySnapshot) {
+            final Button categoryButton = createCategoryButton(category.getString("name"), category.getId());
+            _categoryGrid.addView(categoryButton);
+        }
     }
 
 }
