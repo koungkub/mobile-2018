@@ -18,9 +18,12 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.UserProfileChangeRequest;
+import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class RegisterFragment extends Fragment {
@@ -95,6 +98,7 @@ public class RegisterFragment extends Fragment {
                                                 .addOnCompleteListener(new OnCompleteListener<Void>() {
                                                     @Override
                                                     public void onComplete(@NonNull Task<Void> task) {
+                                                        List< DocumentReference> bookmarkList = new ArrayList<>();
                                                         if (task.isSuccessful()) {
                                                             Log.d(TAG, "submitted profile change request");
                                                             Map<String, Object> u = new HashMap<>();
