@@ -1,10 +1,11 @@
 package com.review.foodreview;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentActivity;
 import android.support.v4.view.ViewPager;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -12,11 +13,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 
-import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
-import com.google.firebase.firestore.GeoPoint;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.review.foodreview.component.RestaurantListItem;
@@ -26,7 +25,6 @@ import com.review.foodreview.dto.SlidingImageAdapter;
 import com.tbuonomo.viewpagerdotsindicator.WormDotsIndicator;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 public class DiscoverFragment extends Fragment{
@@ -104,7 +102,7 @@ public class DiscoverFragment extends Fragment{
         mPager.setAdapter(slidingImageAdapter);
         this.wormDotsIndicator = getView().findViewById(R.id.worm_dots_indicator);
         this.wormDotsIndicator.setViewPager(mPager);
-
+        Log.d(TAG, "setupSlideshow: finished setup");
     }
     private void getdiscoverList(){
         // do with firestore
@@ -114,12 +112,10 @@ public class DiscoverFragment extends Fragment{
                 restaurants.clear();
                 Restaurant restaurant;
                 Log.d(TAG, "Do query in Restaurant");
-                for(QueryDocumentSnapshot doc : queryDocumentSnapshots) {
-
+                for (QueryDocumentSnapshot doc : queryDocumentSnapshots) {
                     restaurant = doc.toObject(Restaurant.class);
                     restaurant.setId(doc.getId());
                     restaurants.add(restaurant);
-
                 }
 
                 final LinearLayout _restaurantList = getView().findViewById(R.id.discover_list);
@@ -131,7 +127,6 @@ public class DiscoverFragment extends Fragment{
                     restaurantListItemView.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
-
                             passbundle(r.getId());
                         }
                     });
@@ -140,7 +135,7 @@ public class DiscoverFragment extends Fragment{
         });
     }
 
-    //set bundle and pass to restaurantFragment
+    // set bundle and pass to restaurantFragment
     private void passbundle(String restaurantId){
         Log.d(TAG, "Send data to RestaurantFragment");
         this.args.putString("restaurantId", restaurantId);
@@ -152,5 +147,16 @@ public class DiscoverFragment extends Fragment{
                 .replace(R.id.main_view, fragmentrestaurant)
                 .commit();
         Log.d(TAG, restaurantId);
+    }
+
+    private void displayDialog(String title, String message) {
+        final AlertDialog.Builder builder = new AlertDialog.Builder(getContext(), android.R.style.Theme_Material_Light_Dialog_Alert);
+        builder.setTitle(title)
+                .setMessage(message)
+                .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {}
+                })
+                .show();
     }
 }
