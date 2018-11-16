@@ -76,13 +76,15 @@ public class SlidingImageAdapter extends PagerAdapter {
                 }
                 final TextView name = imageLayout
                         .findViewById(R.id.discover_text_name_restaurant_on_slideshow);
-
+                final TextView category = imageLayout
+                        .findViewById(R.id.discover_text_category_restaurant_on_slideshow);
                 final ImageView imageView = imageLayout
                         .findViewById(R.id.image);
                 if(position == 0) {
                     Log.d("SLIDE", "set slide 1");
                     Log.d("DISCOVER", String.valueOf(fragmentManager));
                     name.setText(restaurants.get(0).getName());
+                    category.setText(restaurants.get(0).getCategoryName());
                     Picasso.get()
                             .load(restaurants.get(0).getImageUri().get(0))
                             .placeholder(R.drawable.slide1)
@@ -100,6 +102,7 @@ public class SlidingImageAdapter extends PagerAdapter {
                     if (position == 1) {
                         Log.d("SLIDE", "set slide 2");
                         name.setText(restaurants.get(1).getName());
+                        category.setText(restaurants.get(1).getCategoryName());
                         Picasso.get()
                                 .load(restaurants.get(1).getImageUri().get(0))
                                 .placeholder(R.drawable.slide2)
@@ -115,6 +118,7 @@ public class SlidingImageAdapter extends PagerAdapter {
                     } if(position == 2) {
                         Log.d("SLIDE", "set slide 3");
                         name.setText(restaurants.get(2).getName());
+                        category.setText(restaurants.get(2).getCategoryName());
                         Picasso.get()
                                 .load(restaurants.get(2).getImageUri().get(0))
                                 .placeholder(R.drawable.slide3)

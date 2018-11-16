@@ -71,7 +71,7 @@
                     android:layout_height="wrap_content"
                     android:layout_alignParentBottom="true"
                     android:layout_centerHorizontal="true"
-                    android:layout_marginBottom="8dp"
+                    android:layout_marginBottom="4dp"
                     design:dotsColor="@color/colordarkgrey"
                     design:dotsCornerRadius="8dp"
                     design:dotsSize="12dp"
