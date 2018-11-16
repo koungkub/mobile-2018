@@ -5,7 +5,9 @@ import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v7.widget.Toolbar;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.*;
 import android.widget.*;
@@ -48,18 +50,19 @@ public class RestaurantFragment extends Fragment implements OnMapReadyCallback {
     private ImageView _headerImage;
     private Menu menu;
 
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        Log.d(TAG, "onCreate: Trying to setHasOptionsMenu");
+        setHasOptionsMenu(true);
+    }
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         Log.d(TAG, "onCreateView");
         MainActivity.onFragmentChanged(TAG);
         return inflater.inflate(R.layout.restaurant, container, false);
-    }
-
-    @Override
-    public void onDestroyView() {
-        Log.d(TAG, "onDestroyView");
-        super.onDestroyView();
     }
 
     @Override
@@ -81,7 +84,6 @@ public class RestaurantFragment extends Fragment implements OnMapReadyCallback {
 
         registerFragmentElements();
         createMenu();
-        setHasOptionsMenu(true);
 
         Log.d(TAG, "fetching restaurant");
         restaurantRef.addSnapshotListener(new EventListener<DocumentSnapshot>() {
@@ -161,7 +163,7 @@ public class RestaurantFragment extends Fragment implements OnMapReadyCallback {
                                 }
                             }
                         } else {
-                            // TODO: Handle unsuccessful task
+                            displayDialog("Error", task.getException().getLocalizedMessage());
                         }
                         // hide progress bar and make content visible
                         _reviewLoading.setVisibility(View.GONE);
@@ -181,11 +183,16 @@ public class RestaurantFragment extends Fragment implements OnMapReadyCallback {
                             if (task.isSuccessful()) {
                                 if (task.getResult().size() > 0) {
                                     for (QueryDocumentSnapshot bm : task.getResult()) bookmarkId = bm.getId();
-                                    if (menu != null) menu.findItem(R.id.restaurant_menu_bookmark).setVisible(false);
-                                    displayDialog("Bookmark found", "Restaurant is saved by user at " + bookmarkId);
+                                    if (menu != null) {
+                                        menu.findItem(R.id.restaurant_menu_bookmark).setVisible(false);
+                                        menu.findItem(R.id.restaurant_menu_bookmark_saved).setVisible(true);
+                                    }
                                 } else {
                                     bookmarkId = null; // reset to null
-                                    displayDialog("Bookmark not found", "Restaurant is not saved in bookmarks");
+                                    if (menu != null) {
+                                        menu.findItem(R.id.restaurant_menu_bookmark_saved).setVisible(false);
+                                        menu.findItem(R.id.restaurant_menu_bookmark).setVisible(true);
+                                    }
                                 }
                             } else {
                                 displayDialog("Error", task.getException().getLocalizedMessage());
@@ -217,10 +224,9 @@ public class RestaurantFragment extends Fragment implements OnMapReadyCallback {
     }
 
     private void createMenu() {
-        Objects.requireNonNull(getActivity()).setActionBar(_toolbar);
+        ((AppCompatActivity)getActivity()).setSupportActionBar(_toolbar);
         if (restaurantName != null) _toolbar.setTitle(restaurantName);
         _toolbar.setNavigationIcon(R.drawable.ic_arrow_back);
-        _toolbar.inflateMenu(R.menu.restaurant);
         _toolbar.setNavigationContentDescription("Back");
         _toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
@@ -316,7 +322,9 @@ public class RestaurantFragment extends Fragment implements OnMapReadyCallback {
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         super.onCreateOptionsMenu(menu, inflater);
+        Log.d(TAG, "onCreateOptionsMenu: ");
         this.menu = menu;
+        inflater.inflate(R.menu.restaurant, menu);
     }
 
     @Override
@@ -344,26 +352,31 @@ public class RestaurantFragment extends Fragment implements OnMapReadyCallback {
                     .addOnCompleteListener(new OnCompleteListener<DocumentReference>() {
                         @Override
                         public void onComplete(@NonNull Task<DocumentReference> task) {
-                            if (task.isSuccessful())
-                                displayDialog("Added!", "Added to bookmarked restaurants.");
-                            else
+                            if (task.isSuccessful()) {
+                                Log.d(TAG, "addToBookmark: done");
+                                bookmarkId = task.getResult().getId(); 
+                                menu.findItem(R.id.restaurant_menu_bookmark).setVisible(false);
+                                menu.findItem(R.id.restaurant_menu_bookmark_saved).setVisible(true);
+                            } else
                                 displayDialog("Error", task.getException().getLocalizedMessage());
                         }
                     });
         }
     }
 
-    private void removeBookmark(String bookmarkId) {
+    private void removeBookmark(final String theBookmarkId) {
         Log.d(TAG, "removeBookmark");
         firestore.collection("bookmark")
-                .document(bookmarkId)
+                .document(theBookmarkId)
                 .delete()
                 .addOnCompleteListener(new OnCompleteListener<Void>() {
                     @Override
                     public void onComplete(@NonNull Task<Void> task) {
-                        if (task.isSuccessful())
-                            displayDialog("Deleted", "Restaurant deleted from bookmarks.");
-                        else
+                        if (task.isSuccessful()) {
+                            bookmarkId = null;
+                            menu.findItem(R.id.restaurant_menu_bookmark_saved).setVisible(false);
+                            menu.findItem(R.id.restaurant_menu_bookmark).setVisible(true);
+                        } else
                             displayDialog("Error", task.getException().getLocalizedMessage());
                     }
                 });
