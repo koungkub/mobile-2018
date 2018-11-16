@@ -117,7 +117,7 @@ public class SearchResultsFragment extends Fragment {
                     (HashMap<String, Long>) result.get("rating"),
                     (List<String>) result.get("imageUri"),
                     (List<DocumentReference>) result.get("review"),
-                    0
+                    (long) 0
             );
             listForAdapter.add(restaurant);
             if (getContext() != null) {

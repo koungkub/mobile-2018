@@ -65,6 +65,7 @@
                     android:layout_width="14dp"
                     android:layout_height="18dp"
                     android:src="@drawable/ic_star"
+                    android:visibility="gone"
                     app:layout_constraintStart_toStartOf="parent" />
 
                 <TextView
@@ -75,7 +76,8 @@
                     android:text="0"
                     android:textAppearance="@style/TextAppearance.MaterialComponents.Body2"
                     android:textColor="@color/colorPrimary"
-                    app:layout_constraintStart_toEndOf="@+id/restaurant_image_star" />
+                    app:layout_constraintStart_toEndOf="@+id/restaurant_image_star"
+                    android:visibility="gone"/>
 
                 <TextView
                     android:id="@+id/restaurant_text_reviewer"

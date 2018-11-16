@@ -2,6 +2,7 @@ package com.review.foodreview.dto;
 
 
 import android.support.annotation.Nullable;
+import android.util.Log;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.GeoPoint;
 
@@ -22,7 +23,7 @@ public class Restaurant {
     private HashMap<String, Long> rating;
     private DocumentReference category;
 
-    private int reviewCount;
+    private Long reviewCount;
 
     public Restaurant(){
     }
@@ -39,7 +40,7 @@ public class Restaurant {
                       @Nullable HashMap<String, Long> rating,
                       @Nullable List<String> imageUri,
                       @Nullable List<DocumentReference> reviews,
-                      int reviewCount) {
+                      Long reviewCount) {
         this.id = id;
         this.name = name;
         this.priceRange = priceRange;
@@ -55,27 +56,6 @@ public class Restaurant {
         this.reviewCount = reviewCount;
     }
 
-    // use this in delivery
-    /* public Restaurant(
-            DocumentReference category,
-            Boolean delivery,
-            String id,
-            List<String> imageUri,
-            GeoPoint location,
-            String name,
-            String openHours,
-            List<DocumentReference> review,
-            String telephone) {
-        this.category = category;
-        this.delivery = delivery;
-        this.id = id;
-        this.imageUri = imageUri;
-        this.location = location;
-        this.name = name;
-        this.openHours = openHours;
-        this.review = review;
-        this.telephone = telephone;
-    } */
     public String getId() {
         return id;
     }
@@ -90,10 +70,6 @@ public class Restaurant {
 
     public String getOpenHours() {
         return openHours;
-    }
-
-    public String getTelephone() {
-        return telephone;
     }
 
     public boolean isDelivery() {
@@ -127,11 +103,12 @@ public class Restaurant {
         return category;
     }
 
-    public int getReviewCount() {
+    public long getReviewCount() {
         return reviewCount;
     }
 
     public String getCategoryName() {
         return categoryName;
     }
+
 }
