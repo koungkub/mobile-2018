@@ -63,7 +63,7 @@ public class SearchFragment extends Fragment  {
         _categoryGrid = getView().findViewById(R.id.search_grid);
         if (categorySnapshot != null) populateList(categorySnapshot);
         //from start >>> searchbar
-        searchbar();3.
+        searchbar();
     }
 
     private Button createCategoryButton(final String categoryName, final String categoryId) {
