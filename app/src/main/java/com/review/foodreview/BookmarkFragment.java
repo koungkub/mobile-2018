@@ -37,6 +37,7 @@ public class BookmarkFragment extends Fragment{
     private Toolbar _toolbar;
     private FirebaseUser mUser;
     private List<Restaurant> restaurants = new ArrayList<>();
+    TextView haveBookmark;
 
     @Nullable
     @Override
@@ -51,6 +52,7 @@ public class BookmarkFragment extends Fragment{
         mAuth = FirebaseAuth.getInstance();
         mUser = mAuth.getCurrentUser();
         mdb = FirebaseFirestore.getInstance();
+        haveBookmark = getView().findViewById(R.id.bookmark_text_nothave);
         createMenu();
         findBookmark();
 
@@ -89,8 +91,9 @@ public class BookmarkFragment extends Fragment{
     private void showBookmark(List<DocumentReference> bookmarkList) {
         if (bookmarkList.size() < 1) {
             Log.d(TAG, "Not have bookmark");
+            haveBookmark.setVisibility(View.VISIBLE);
         } else {
-            TextView haveBookmark = getView().findViewById(R.id.bookmark_text_nothave);
+
             haveBookmark.setVisibility(View.GONE);
             Log.d(TAG, "get bookmark to List");
             for (DocumentReference bookmark : bookmarkList) {
@@ -117,27 +120,31 @@ public class BookmarkFragment extends Fragment{
                             );
                         }
                         restaurants.add(restaurant);
-                        final LinearLayout _restaurantList = getView().findViewById(R.id.bookmark_list);
-                        // add restaurant items to the LinearLayout _restaurantList
-                        for (final Restaurant r : restaurants) {
-                            final RestaurantListItem restaurantListItem = new RestaurantListItem(getContext(), r, _restaurantList);
-                            final View restaurantListItemView = restaurantListItem.getComponent();
-                            _restaurantList.addView(restaurantListItemView);
-                            restaurantListItemView.setOnClickListener(new View.OnClickListener() {
-                                @Override
-                                public void onClick(View v) {
-                                    Bundle bundle = new Bundle();
-                                    bundle.putString("restaurantId", r.getId());
-                                    Fragment restaurantFragment = new RestaurantFragment();
-                                    restaurantFragment.setArguments(bundle);
-                                    getActivity()
-                                            .getSupportFragmentManager()
-                                            .beginTransaction()
-                                            .replace(R.id.main_view, restaurantFragment)
-                                            .addToBackStack(null)
-                                            .commit();
-                                }
-                            });
+                        try {
+                            final LinearLayout _restaurantList = getView().findViewById(R.id.bookmark_list);
+                            // add restaurant items to the LinearLayout _restaurantList
+                            for (final Restaurant r : restaurants) {
+                                final RestaurantListItem restaurantListItem = new RestaurantListItem(getContext(), r, _restaurantList);
+                                final View restaurantListItemView = restaurantListItem.getComponent();
+                                _restaurantList.addView(restaurantListItemView);
+                                restaurantListItemView.setOnClickListener(new View.OnClickListener() {
+                                    @Override
+                                    public void onClick(View v) {
+                                        Bundle bundle = new Bundle();
+                                        bundle.putString("restaurantId", r.getId());
+                                        Fragment restaurantFragment = new RestaurantFragment();
+                                        restaurantFragment.setArguments(bundle);
+                                        getActivity()
+                                                .getSupportFragmentManager()
+                                                .beginTransaction()
+                                                .replace(R.id.main_view, restaurantFragment)
+                                                .addToBackStack(null)
+                                                .commit();
+                                    }
+                                });
+                            }
+                        }catch (Exception ex){
+
                         }
                     }
                 });
