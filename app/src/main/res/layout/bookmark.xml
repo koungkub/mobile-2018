@@ -1,67 +1,55 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:design="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:focusable="true"
-    android:focusableInTouchMode="true"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:focusable="true"
+    android:focusableInTouchMode="true">
 
-    <android.support.constraint.ConstraintLayout
+    <android.widget.Toolbar
+        android:id="@+id/bookmark_action_bar"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:background="@android:color/white"
+        android:elevation="4dp"
+        android:minHeight="56dp"
+        android:theme="@style/ToolbarTheme.White"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/bookmark_text_nothave"
         android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:elevation="10dp">
-        <android.widget.Toolbar
-            android:id="@+id/bookmark_action_bar"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:elevation="4dp"
-            android:minHeight="56dp"
-            android:theme="@style/ToolbarTheme.White"
-            android:background="@android:color/white"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-    </android.support.constraint.ConstraintLayout>
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        android:padding="20dp"
+        android:text="You have no bookmarks"
+        android:textAppearance="@style/food.headline"
+        android:textColor="@color/colordarkgrey"
+        android:textSize="20dp"
+        design:layout_constraintTop_toBottomOf="@+id/bookmark_action_bar" />
 
     <ScrollView
+        android:id="@+id/scrollView2"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_marginBottom="56dp"
-        design:layout_constraintTop_toBottomOf="@+id/bookmark_action_bar"
         design:layout_constraintBottom_toBottomOf="parent"
         design:layout_constraintEnd_toEndOf="parent"
         design:layout_constraintStart_toStartOf="parent"
+        design:layout_constraintTop_toBottomOf="@+id/bookmark_action_bar"
         tools:ignore="NotSibling">
 
         <LinearLayout
+            android:id="@+id/bookmark_list"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
-    <TextView
-        android:id="@+id/bookmark_text_nothave"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-        android:padding="20dp"
-        android:textSize="20dp"
-        android:textColor="@color/colordarkgrey"
-    android:text="You not have your bookmark"
-    android:textAppearance="@style/food.headline"
-    android:gravity="center_horizontal"
-    />
-
-            <LinearLayout
-                android:id="@+id/bookmark_list"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:orientation="vertical"
-                design:layout_constraintTop_toBottomOf="@+id/bookmark_action_bar">
-            </LinearLayout>
-
-        </LinearLayout>
+            android:layout_marginTop="8dp"
+            android:orientation="vertical"
+            design:layout_constraintTop_toBottomOf="@+id/bookmark_action_bar"></LinearLayout>
 
     </ScrollView>
 
