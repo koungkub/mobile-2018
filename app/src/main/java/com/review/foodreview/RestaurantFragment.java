@@ -184,14 +184,12 @@ public class RestaurantFragment extends Fragment implements OnMapReadyCallback {
                                 if (task.getResult().size() > 0) {
                                     for (QueryDocumentSnapshot bm : task.getResult()) bookmarkId = bm.getId();
                                     if (menu != null) {
-                                        menu.findItem(R.id.restaurant_menu_bookmark).setVisible(false);
-                                        menu.findItem(R.id.restaurant_menu_bookmark_saved).setVisible(true);
+                                        toggleBookmarkIconSaved(true);
                                     }
                                 } else {
                                     bookmarkId = null; // reset to null
                                     if (menu != null) {
-                                        menu.findItem(R.id.restaurant_menu_bookmark_saved).setVisible(false);
-                                        menu.findItem(R.id.restaurant_menu_bookmark).setVisible(true);
+                                        toggleBookmarkIconSaved(false);
                                     }
                                 }
                             } else {
@@ -355,8 +353,7 @@ public class RestaurantFragment extends Fragment implements OnMapReadyCallback {
                             if (task.isSuccessful()) {
                                 Log.d(TAG, "addToBookmark: done");
                                 bookmarkId = task.getResult().getId(); 
-                                menu.findItem(R.id.restaurant_menu_bookmark).setVisible(false);
-                                menu.findItem(R.id.restaurant_menu_bookmark_saved).setVisible(true);
+                                toggleBookmarkIconSaved(true);
                             } else
                                 displayDialog("Error", task.getException().getLocalizedMessage());
                         }
@@ -374,11 +371,20 @@ public class RestaurantFragment extends Fragment implements OnMapReadyCallback {
                     public void onComplete(@NonNull Task<Void> task) {
                         if (task.isSuccessful()) {
                             bookmarkId = null;
-                            menu.findItem(R.id.restaurant_menu_bookmark_saved).setVisible(false);
-                            menu.findItem(R.id.restaurant_menu_bookmark).setVisible(true);
+                            toggleBookmarkIconSaved(false);
                         } else
                             displayDialog("Error", task.getException().getLocalizedMessage());
                     }
                 });
+    }
+
+    private void toggleBookmarkIconSaved(boolean isSaved) {
+        if (isSaved) {
+            menu.findItem(R.id.restaurant_menu_bookmark).setVisible(false);
+            menu.findItem(R.id.restaurant_menu_bookmark_saved).setVisible(true);
+        } else {
+            menu.findItem(R.id.restaurant_menu_bookmark_saved).setVisible(false);
+            menu.findItem(R.id.restaurant_menu_bookmark).setVisible(true);
+        }
     }
 }
