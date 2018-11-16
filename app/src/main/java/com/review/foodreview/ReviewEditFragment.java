@@ -19,15 +19,19 @@ import android.widget.RatingBar;
 import android.widget.Toast;
 import android.widget.Toolbar;
 
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
+import com.review.foodreview.dto.Restaurant;
 
 import java.io.ByteArrayOutputStream;
 import java.util.*;
@@ -76,7 +80,7 @@ public class ReviewEditFragment extends Fragment {
         StorageReference storageReference = firebaseStorage.getReference();
         final StorageReference storage = storageReference.child("review");
 
-        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        final FirebaseFirestore db = FirebaseFirestore.getInstance();
 
         // Init FirebaseAuth
         FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
@@ -105,8 +109,8 @@ public class ReviewEditFragment extends Fragment {
                     .makeText(getActivity(), "Some field was empty", Toast.LENGTH_SHORT)
                     .show();
         } else {
-            String restaurantId = bundle.getString("restaurantId");
-            final String imageName = "review/" + UUID.randomUUID().toString();
+            final String restaurantId = bundle.getString("restaurantId");
+            final String imageName = UUID.randomUUID().toString();
 
             DocumentReference userRef = db.collection("user").document(uid);
             DocumentReference restaurantRef = db.collection("restaurant").document(restaurantId);
@@ -140,6 +144,7 @@ public class ReviewEditFragment extends Fragment {
                         @Override
                         public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
                             Log.d(TAG, "firebase storage success");
+
                             Toast
                                     .makeText(getActivity(), "Add review successful", Toast.LENGTH_SHORT)
                                     .show();
