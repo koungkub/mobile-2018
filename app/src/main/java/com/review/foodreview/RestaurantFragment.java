@@ -185,6 +185,7 @@ public class RestaurantFragment extends Fragment implements OnMapReadyCallback {
                                     for (QueryDocumentSnapshot bm : task.getResult()) bookmarkId = bm.getId();
                                     displayDialog("Bookmark found", "Restaurant is saved by user at " + bookmarkId);
                                 } else {
+                                    bookmarkId = null; // reset to null
                                     displayDialog("Bookmark not found", "Restaurant is not saved in bookmarks");
                                 }
                             } else {
@@ -317,10 +318,13 @@ public class RestaurantFragment extends Fragment implements OnMapReadyCallback {
         final String menuName = item.getTitle().toString();
         Log.d(TAG, "onOptionsItemSelected: " + menuName);
         if (menuName.equalsIgnoreCase("bookmark")) {
-            if (isLoggedIn)
-                addToBookmark(restaurantRef, userRef);
-            else
+            if (isLoggedIn) {
+                Log.d(TAG, "onOptionsItemSelected: bookmark is " + bookmarkId);
+                if (bookmarkId == null) addToBookmark(restaurantRef, userRef);
+                else removeBookmark(bookmarkId);
+            } else {
                 displayDialog("Not logged in", "You need to log in to save bookmarks.");
+            }
         }
         return super.onOptionsItemSelected(item);
     }
