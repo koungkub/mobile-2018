@@ -16,10 +16,12 @@ import android.widget.LinearLayout;
 import android.widget.SearchView;
 import com.google.firebase.firestore.*;
 import com.review.foodreview.component.RestaurantListItem;
+import com.review.foodreview.dto.LogDTO;
 import com.review.foodreview.dto.Restaurant;
 import com.review.foodreview.dto.ImageModel;
 import com.review.foodreview.dto.Review;
 import com.review.foodreview.dto.SlidingImageAdapter;
+import com.review.foodreview.sqlite.DBHelper;
 import com.tbuonomo.viewpagerdotsindicator.WormDotsIndicator;
 
 import java.util.ArrayList;
@@ -31,6 +33,7 @@ public class DiscoverFragment extends Fragment{
     private static final String TAG = "DISCOVER";
     private static ViewPager mPager;
     private Fragment fragmentrestaurant;
+    private DBHelper dbHelper;
     private Bundle args;
     private FirebaseFirestore mdb;
     private WormDotsIndicator wormDotsIndicator;
@@ -52,6 +55,7 @@ public class DiscoverFragment extends Fragment{
         imageModelArrayList = new ArrayList<>();
         imageModelArrayList = populateList();
         fragmentrestaurant = new RestaurantFragment();
+        dbHelper = new DBHelper(getContext());
     }
 
     @Nullable
@@ -60,6 +64,7 @@ public class DiscoverFragment extends Fragment{
             @NonNull LayoutInflater inflater,
             @Nullable ViewGroup container,
             @Nullable Bundle savedInstanceState) {
+        dbHelper.createLog(new LogDTO(TAG, "Start discover fragment (CreateView)"));
         Log.d(TAG, "Start discover fragment (CreateView)");
         return inflater.inflate(R.layout.discover, container, false);
     }
@@ -68,6 +73,7 @@ public class DiscoverFragment extends Fragment{
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         MainActivity.onFragmentChanged(TAG);
+        dbHelper.createLog(new LogDTO(TAG, "Start discover fragment (ActivityCreated)"));
         Log.d(TAG, "Start discover fragment (ActivityCreated)");
         // set up Featured slideshow
         Log.d(TAG, "Do setupSlideshow");
@@ -82,7 +88,6 @@ public class DiscoverFragment extends Fragment{
     private ArrayList<ImageModel> populateList() {
 
         ArrayList<ImageModel> list = new ArrayList<>();
-
         for (int i = 0; i < NUM_PAGES; i++) {
             ImageModel imageModel = new ImageModel();
             imageModel.setImage_drawable(myImageList[i]);
@@ -103,6 +108,7 @@ public class DiscoverFragment extends Fragment{
         mPager.setAdapter(slidingImageAdapter);
         this.wormDotsIndicator = getView().findViewById(R.id.worm_dots_indicator);
         this.wormDotsIndicator.setViewPager(mPager);
+        dbHelper.createLog(new LogDTO(TAG, "setupSlideshow: finished setup"));
         Log.d(TAG, "setupSlideshow: finished setup");
     }
     private void getdiscoverList(){
@@ -139,6 +145,7 @@ public class DiscoverFragment extends Fragment{
 
     // set bundle and pass to restaurantFragment
     private void passbundle(String restaurantId, String restaurantName){
+        dbHelper.createLog(new LogDTO(TAG, "Send data to RestaurantFragment"));
         Log.d(TAG, "Send data to RestaurantFragment");
         this.args.putString("restaurantId", restaurantId);
         this.args.putString("restaurantName", restaurantName);
