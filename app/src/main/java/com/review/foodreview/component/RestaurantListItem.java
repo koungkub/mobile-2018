@@ -47,9 +47,7 @@ public class RestaurantListItem {
         _restaurantName.setText(restaurant.getName());
         _restaurantType.setText(restaurant.getCategoryName());
         _priceRange.setText(restaurant.getPriceRange());
-        _rating.setText(String.valueOf(restaurant.getReviewCount()));
-        // TODO: Display restaurant rating
-        // _rating.setText(Float.toString(restaurant.getRating()));
+        // _rating.setText(String.valueOf(restaurant.getReviewCount()));
         return restaurantListItem;
     }
 }

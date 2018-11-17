@@ -43,8 +43,6 @@ public class RestaurantListAdapter extends ArrayAdapter<Restaurant> {
         _restaurantName.setText(restaurant.getName());
         _restaurantType.setText(restaurant.getCategoryName());
         _priceRange.setText(restaurant.getPriceRange());
-        // TODO: Display rating
-        // _rating.setText(Float.toString(restaurant.getRating()));
         return restaurantListItem;
     }
 }
