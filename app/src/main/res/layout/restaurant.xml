@@ -72,7 +72,7 @@
                     android:id="@+id/restaurant_text_review"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="4dp"
+                    android:layout_marginStart="0dp"
                     android:text="0"
                     android:textAppearance="@style/TextAppearance.MaterialComponents.Body2"
                     android:textColor="@color/colorPrimary"
@@ -83,7 +83,7 @@
                     android:id="@+id/restaurant_text_reviewer"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="10dp"
+                    android:layout_marginLeft="0dp"
                     android:text="@string/page_restaurant_from_d_reviews"
                     android:textAppearance="@style/TextAppearance.MaterialComponents.Body2"
                     app:layout_constraintStart_toEndOf="@id/restaurant_text_review" />
@@ -197,6 +197,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
                 android:orientation="horizontal"
+                android:visibility="gone"
                 app:layout_constraintTop_toBottomOf="@+id/restaurant_opening_wrap">
 
                 <GridView
@@ -221,7 +222,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
-                android:layout_marginTop="16dp"
+                android:layout_marginTop="24dp"
                 android:text="Reviews"
                 android:textAppearance="@style/TextAppearance.MaterialComponents.Headline6"
                 app:layout_constraintStart_toStartOf="parent"
@@ -244,8 +245,8 @@
                 android:id="@+id/restaurant_recent_reviews"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
                 android:orientation="vertical"
-                android:layout_marginTop="16dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/restaurant_text_reviews"></LinearLayout>
