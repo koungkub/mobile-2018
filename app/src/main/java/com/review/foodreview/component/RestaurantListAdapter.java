@@ -8,9 +8,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
 import com.review.foodreview.R;
 import com.review.foodreview.dto.Restaurant;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -38,13 +40,16 @@ public class RestaurantListAdapter extends ArrayAdapter<Restaurant> {
         final TextView _restaurantName = restaurantListItem.findViewById(R.id.restaurant_list_item_text_name);
         final TextView _restaurantType = restaurantListItem.findViewById(R.id.restaurant_list_item_text_type);
         final TextView _priceRange = restaurantListItem.findViewById(R.id.restaurant_list_item_text_price);
-        final TextView _rating = restaurantListItem.findViewById(R.id.restaurant_list_item_text_score);
+        // final TextView _rating = restaurantListItem.findViewById(R.id.restaurant_list_item_text_score);
+        final ImageView _thumbnail = restaurantListItem.findViewById(R.id.restaurant_list_item_image);
+
         final Restaurant restaurant = restaurantList.get(position);
         _restaurantName.setText(restaurant.getName());
         _restaurantType.setText(restaurant.getCategoryName());
         _priceRange.setText(restaurant.getPriceRange());
-        // TODO: Display rating
-        // _rating.setText(Float.toString(restaurant.getRating()));
+        Picasso.get()
+                .load(restaurant.getImageUri().get(0))
+                .into(_thumbnail);
         return restaurantListItem;
     }
 }

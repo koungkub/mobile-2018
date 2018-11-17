@@ -49,6 +49,7 @@
         android:drawableEnd="@drawable/ic_action_account"
         android:text="0"
         android:textAppearance="@android:style/TextAppearance.Material.Large"
+        android:visibility="invisible"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
