@@ -36,7 +36,7 @@ public class ReviewListItem {
         Log.d(TAG, "ReviewListItem: getComponent");
         final View reviewListItem = LayoutInflater.from(context).inflate(R.layout.review_item, _reviewList, false);
         final TextView _description = reviewListItem.findViewById(R.id.review_item_text_description);
-        final TextView _author = reviewListItem.findViewById(R.id.review_item_text_author);
+        // final TextView _author = reviewListItem.findViewById(R.id.review_item_text_author);
         final TextView _ratingFood = reviewListItem.findViewById(R.id.review_item_rating_food);
         final TextView _ratingService = reviewListItem.findViewById(R.id.review_item_rating_service);
         final TextView _ratingAtmosphere = reviewListItem.findViewById(R.id.review_item_rating_atmosphere);
