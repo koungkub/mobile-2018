@@ -1,90 +1,94 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    android:layout_height="match_parent">
+
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent">
+
         <android.support.constraint.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
-    <android.support.constraint.ConstraintLayout
-        android:id="@+id/topPanel"
-        android:layout_width="match_parent"
-        android:layout_height="250dp"
-        android:background="@drawable/head_me"
-        android:elevation="20dp"
-        >
-        <TextView
-            android:id="@+id/me_not_login_text_header1"
-            android:layout_marginTop="100dp"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Review Food"
-            android:textAppearance="@style/food.headline"
-            android:fontFamily="@font/overpass"
-            android:textSize="40dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
 
-            android:gravity="center"
-            />
-        <TextView
-            android:id="@+id/me_not_login_text_body1"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="You are guess Please Login or Register for User full feature."
-            android:gravity="center"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/me_not_login_text_header1"
-            />
-    </android.support.constraint.ConstraintLayout>
-    <android.support.constraint.ConstraintLayout
-        android:id="@+id/bodyPanel_1"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginVertical="30dp"
-        android:layout_marginHorizontal="40dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/topPanel"
-        >
-        <Button
-            android:layout_width="match_parent"
-            android:id="@+id/me_not_login_btn_login"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:background="@color/colorAccent"
-            android:text="Login"
-            />
-    </android.support.constraint.ConstraintLayout>
+            <android.support.constraint.ConstraintLayout
+                android:id="@+id/topPanel"
+                android:layout_width="match_parent"
+                android:layout_height="250dp"
+                android:background="@drawable/head_me"
+                android:elevation="20dp">
+
+                <TextView
+                    android:id="@+id/me_not_login_text_header1"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="16dp"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="75dp"
+                    android:gravity="center"
+                    android:text="@string/page_me_guest_title"
+                    android:textAppearance="@style/food.headline"
+
+                    android:textColor="@android:color/background_light"
+                    android:textSize="30sp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/me_not_login_text_body1"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="24dp"
+                    android:layout_marginStart="24dp"
+                    android:layout_marginTop="8dp"
+                    android:gravity="center"
+                    android:text="@string/page_me_guest_subtitle"
+                    android:textAppearance="@style/food.body1"
+                    android:textColor="@android:color/background_light"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/me_not_login_text_header1" />
+            </android.support.constraint.ConstraintLayout>
+
+            <Button
+                android:id="@+id/me_not_login_btn_login"
+                style="@style/Widget.MaterialComponents.Button"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="32dp"
+                android:layout_marginStart="32dp"
+                android:layout_marginTop="32dp"
+                android:background="@color/colorAccent"
+                android:text="@string/login"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/topPanel" />
+
             <android.support.constraint.ConstraintLayout
                 android:id="@+id/bodyPanel_2"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginVertical="30dp"
-                android:layout_marginHorizontal="40dp"
+                android:layout_marginHorizontal="32dp"
+                android:layout_marginVertical="32dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/bodyPanel_1"
-                >
+                app:layout_constraintTop_toBottomOf="@+id/me_not_login_btn_login">
 
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical|center_horizontal"
-                    android:layout_marginTop="10dp" >
+                    android:layout_marginTop="10dp">
 
                     <View
                         style="@style/Divider"
                         android:layout_centerVertical="true"
-                        android:layout_toRightOf="@+id/orText"
                         android:layout_marginLeft="16dp"
-                        android:background="#efefef"
-                         />
+                        android:layout_toRightOf="@+id/orText"
+                        android:background="#efefef" />
 
                     <TextView
                         android:id="@+id/orText"
@@ -98,32 +102,24 @@
                     <View
                         style="@style/Divider"
                         android:layout_centerVertical="true"
-                        android:layout_toLeftOf="@+id/orText"
                         android:layout_marginRight="16dp"
-                        android:background="#efefef"
-                         />
+                        android:layout_toLeftOf="@+id/orText"
+                        android:background="#efefef" />
                 </RelativeLayout>
             </android.support.constraint.ConstraintLayout>
-            <android.support.constraint.ConstraintLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/bodyPanel_3"
-                app:layout_constraintEnd_toEndOf="parent"
-                android:layout_marginTop="30dp"
-                android:layout_marginHorizontal="40dp"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/bodyPanel_2"
-                >
 
-                <TextView
-                    android:layout_width="match_parent"
-                    android:id="@+id/me_not_login_text_register"
-                    android:layout_height="wrap_content"
-                    android:gravity="center_horizontal"
-                    android:text="Create an account by e-mail"
-                    android:textColor="@color/link"
-                    />
-            </android.support.constraint.ConstraintLayout>
+            <Button
+                android:id="@+id/me_not_login_btn_register"
+                style="@style/Widget.MaterialComponents.Button.TextButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="16dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="24dp"
+                android:text="@string/page_me_guest_create_account"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/bodyPanel_2" />
         </android.support.constraint.ConstraintLayout>
     </ScrollView>
 </android.support.constraint.ConstraintLayout>

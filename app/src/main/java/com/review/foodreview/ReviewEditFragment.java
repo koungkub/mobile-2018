@@ -1,6 +1,5 @@
 package com.review.foodreview;
 
-import android.content.ClipData;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
@@ -12,26 +11,16 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.*;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.ImageView;
-import android.widget.RatingBar;
-import android.widget.Toast;
-import android.widget.Toolbar;
+import android.widget.*;
 
-import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
-import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
-import com.review.foodreview.dto.Restaurant;
 
 import java.io.ByteArrayOutputStream;
 import java.util.*;
@@ -48,6 +37,7 @@ public class ReviewEditFragment extends Fragment {
     private RatingBar _ratingBarFood, _ratingBarService, _ratingBarAtmosphere;
     private Button _btnUploadPhoto;
     private ImageView _imageFood;
+    private ProgressBar _loading;
 
     private Map<String, Object> data, rating;
 
@@ -90,6 +80,7 @@ public class ReviewEditFragment extends Fragment {
         _ratingBarFood = getView().findViewById(R.id.review_edit_star_food);
         _ratingBarService = getView().findViewById(R.id.review_edit_star_service);
         _ratingBarAtmosphere = getView().findViewById(R.id.review_edit_star_atmosphere);
+        _loading = getView().findViewById(R.id.review_edit_loading);
 
         // FirebaseAuth uid
         String uid = firebaseAuth.getUid();
@@ -104,9 +95,9 @@ public class ReviewEditFragment extends Fragment {
         Bundle bundle = getArguments();
 
         if (validateForm(uid, bundle)) {
-            Log.d(TAG, "Some field was empty");
+            Log.d(TAG, "Some fields were empty");
             Toast
-                    .makeText(getActivity(), "Some field was empty", Toast.LENGTH_SHORT)
+                    .makeText(getActivity(), "Some fields were empty", Toast.LENGTH_SHORT)
                     .show();
         } else {
             final String restaurantId = bundle.getString("restaurantId");
@@ -146,7 +137,7 @@ public class ReviewEditFragment extends Fragment {
                             Log.d(TAG, "firebase storage success");
 
                             Toast
-                                    .makeText(getActivity(), "Add review successful", Toast.LENGTH_SHORT)
+                                    .makeText(getActivity(), "Review added!", Toast.LENGTH_SHORT)
                                     .show();
                             getActivity()
                                     .getSupportFragmentManager()
@@ -160,7 +151,7 @@ public class ReviewEditFragment extends Fragment {
                         public void onFailure(@NonNull Exception e) {
                             Log.d(TAG, "firebase storage failure");
                             Toast
-                                    .makeText(getActivity(), "Can't add review. Something wrong!", Toast.LENGTH_SHORT)
+                                    .makeText(getActivity(), "Can't add review. Something went wrong.", Toast.LENGTH_SHORT)
                                     .show();
                         }
                     });
@@ -170,7 +161,7 @@ public class ReviewEditFragment extends Fragment {
                 public void onFailure(@NonNull Exception e) {
                     Log.d(TAG, "Add data to firestore failure");
                     Toast
-                            .makeText(getActivity(), "Can't add review. Something wrong!", Toast.LENGTH_SHORT)
+                            .makeText(getActivity(), "Can't add review. Something went wrong.", Toast.LENGTH_SHORT)
                             .show();
                 }
             });

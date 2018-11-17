@@ -9,7 +9,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.TextView;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -60,8 +59,8 @@ public class MeNotLoginFragment extends Fragment{
 
     private void registerBtn(){
         Log.d(TAG, "press create account");
-        TextView register = getActivity()
-                .findViewById(R.id.me_not_login_text_register);
+        Button register = getActivity()
+                .findViewById(R.id.me_not_login_btn_register);
         register.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

@@ -25,4 +25,8 @@
 
     <string name="page_restaurant_no_delivery">Delivery not available</string>
     <string name="page_restaurant_from_d_reviews">Has %d reviews</string>
+
+    <string name="page_me_guest_title">Discover new tastes</string>
+    <string name="page_me_guest_subtitle">Log in to save bookmarks \nand write reviews!</string>
+    <string name="page_me_guest_create_account">Create an account by e-mail</string>
 </resources>
