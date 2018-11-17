@@ -66,7 +66,7 @@ public class SearchResultsFragment extends Fragment {
                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
                         if (task.isSuccessful()) {
                             Log.d(TAG, "successfully retrieved search results");
-                            if (task.getResult().size() < 1) {
+                            if (task.getResult().size() < 1 || task.getResult() == null) {
                                 displayDialog("No result", "There is no restaurant in this category.");
                             } else {
                                 populateListView(task.getResult(), restaurantList, _resultsListView);
