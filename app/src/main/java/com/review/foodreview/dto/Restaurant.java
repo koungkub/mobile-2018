@@ -104,6 +104,7 @@ public class Restaurant {
     }
 
     public long getReviewCount() {
+        if (reviewCount == null) return 0;
         return reviewCount;
     }
 
