@@ -40,7 +40,6 @@ public class RestaurantListItem {
         final TextView _priceRange = restaurantListItem.findViewById(R.id.restaurant_list_item_text_price);
         // final TextView _rating = restaurantListItem.findViewById(R.id.restaurant_list_item_text_score);
         final ImageView _thumbnail = restaurantListItem.findViewById(R.id.restaurant_list_item_image);
-
         Picasso.get()
                 .load(restaurant.getImageUri().get(0))
                 .into(_thumbnail);

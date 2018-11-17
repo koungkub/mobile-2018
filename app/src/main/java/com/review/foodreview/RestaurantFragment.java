@@ -22,8 +22,10 @@ import com.google.firebase.firestore.*;
 import com.google.firebase.firestore.EventListener;
 import com.review.foodreview.component.ReviewListItem;
 import com.review.foodreview.dto.Bookmark;
+import com.review.foodreview.dto.LogDTO;
 import com.review.foodreview.dto.Restaurant;
 import com.review.foodreview.dto.Review;
+import com.review.foodreview.sqlite.DBHelper;
 import com.squareup.picasso.Picasso;
 
 import java.util.*;
@@ -50,6 +52,8 @@ public class RestaurantFragment extends Fragment implements OnMapReadyCallback {
     private ImageView _headerImage;
     private Menu menu;
 
+    private DBHelper dbHelper;
+
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -62,6 +66,7 @@ public class RestaurantFragment extends Fragment implements OnMapReadyCallback {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         Log.d(TAG, "onCreateView");
         MainActivity.onFragmentChanged(TAG);
+        dbHelper = new DBHelper(getContext());
         return inflater.inflate(R.layout.restaurant, container, false);
     }
 
@@ -73,8 +78,10 @@ public class RestaurantFragment extends Fragment implements OnMapReadyCallback {
         // get bundle
         Bundle bundle = getArguments();
 
-        if (bundle.getString("restaurantId") == null)
+        if (bundle.getString("restaurantId") == null) {
             Log.d(TAG, "onActivityCreated: restaurantId not found in the bundle");
+            dbHelper.createLog(new LogDTO(TAG, "onActivityCreated: restaurantId not found in the bundle"));
+        }
         restaurantId = bundle.getString("restaurantId");
         restaurantName = bundle.getString("restaurantName");
         restaurantRef = firestore.collection("restaurant").document(restaurantId);
@@ -86,12 +93,14 @@ public class RestaurantFragment extends Fragment implements OnMapReadyCallback {
         createMenu();
 
         Log.d(TAG, "fetching restaurant");
+        dbHelper.createLog(new LogDTO(TAG, "fetching restaurant " + restaurantId));
         restaurantRef.addSnapshotListener(new EventListener<DocumentSnapshot>() {
                     @Override
                     public void onEvent(@javax.annotation.Nullable DocumentSnapshot documentSnapshot,
                                         @javax.annotation.Nullable FirebaseFirestoreException e) {
                         if (documentSnapshot.exists()) {
                             Log.d(TAG, documentSnapshot.get("name").toString());
+                            dbHelper.createLog(new LogDTO(TAG, "restaurant: " + documentSnapshot.get("name").toString()));
                             restaurant = new Restaurant(
                                     documentSnapshot.getId(),
                                     documentSnapshot.getString("name"),
@@ -109,6 +118,7 @@ public class RestaurantFragment extends Fragment implements OnMapReadyCallback {
                             );
                         } else {
                             Log.d(TAG, "Restaurant doesn't exist");
+                            dbHelper.createLog(new LogDTO(TAG, "Restaurant doesn't exist"));
                             restaurant = new Restaurant(
                                     "no id",
                                     "no name",
@@ -136,6 +146,7 @@ public class RestaurantFragment extends Fragment implements OnMapReadyCallback {
                 });
 
         Log.d(TAG, "fetching reviews");
+        dbHelper.createLog(new LogDTO(TAG, "fetching reviews"));
         firestore.collection("review")
                 .whereEqualTo("restaurant", restaurantRef)
                 .limit(5)
@@ -145,6 +156,7 @@ public class RestaurantFragment extends Fragment implements OnMapReadyCallback {
                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
                         if (task.isSuccessful()) {
                             Log.d(TAG, "Successfully retrieved reviews");
+                            dbHelper.createLog(new LogDTO(TAG, "successfully retrieved reviews"));
                             for (QueryDocumentSnapshot reviewSnapshot : task.getResult()) {
                                 Review review = new Review(
                                         reviewSnapshot.getId(),
@@ -163,6 +175,7 @@ public class RestaurantFragment extends Fragment implements OnMapReadyCallback {
                                 }
                             }
                         } else {
+                            dbHelper.createLog(new LogDTO(TAG, task.getException().getLocalizedMessage()));
                             displayDialog("Error", task.getException().getLocalizedMessage());
                         }
                         // hide progress bar and make content visible
@@ -173,6 +186,7 @@ public class RestaurantFragment extends Fragment implements OnMapReadyCallback {
 
         if (isLoggedIn) {
             Log.d(TAG, "fetching bookmark status");
+            dbHelper.createLog(new LogDTO(TAG, "fetching bookmark status"));
             firestore.collection("bookmark")
                     .whereEqualTo("owner", userRef)
                     .whereEqualTo("restaurant", restaurantRef)
@@ -193,6 +207,7 @@ public class RestaurantFragment extends Fragment implements OnMapReadyCallback {
                                     }
                                 }
                             } else {
+                                dbHelper.createLog(new LogDTO(TAG, task.getException().getLocalizedMessage()));
                                 displayDialog("Error", task.getException().getLocalizedMessage());
                             }
                         }
