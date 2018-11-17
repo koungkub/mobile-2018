@@ -149,7 +149,7 @@ public class RestaurantFragment extends Fragment implements OnMapReadyCallback {
         dbHelper.createLog(new LogDTO(TAG, "fetching reviews"));
         firestore.collection("review")
                 .whereEqualTo("restaurant", restaurantRef)
-                .limit(5)
+                .limit(2)
                 .get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                     @Override
