@@ -107,7 +107,9 @@ public class DiscoverFragment extends Fragment{
     }
     private void getdiscoverList(){
         // do with firestore
-        mdb.collection("restaurant").addSnapshotListener(new EventListener<QuerySnapshot>() {
+        mdb.collection("restaurant")
+                .limit(8)
+                .addSnapshotListener(new EventListener<QuerySnapshot>() {
             @Override
             public void onEvent(@javax.annotation.Nullable QuerySnapshot queryDocumentSnapshots, @javax.annotation.Nullable FirebaseFirestoreException e) {
                 restaurants.clear();
