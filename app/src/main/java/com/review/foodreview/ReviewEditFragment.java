@@ -100,6 +100,7 @@ public class ReviewEditFragment extends Fragment {
                     .makeText(getActivity(), "Some fields were empty", Toast.LENGTH_SHORT)
                     .show();
         } else {
+            _loading.setVisibility(View.VISIBLE);
             final String restaurantId = bundle.getString("restaurantId");
             final String imageName = UUID.randomUUID().toString();
 
@@ -135,7 +136,7 @@ public class ReviewEditFragment extends Fragment {
                         @Override
                         public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
                             Log.d(TAG, "firebase storage success");
-
+                            _loading.setVisibility(View.INVISIBLE);
                             Toast
                                     .makeText(getActivity(), "Review added!", Toast.LENGTH_SHORT)
                                     .show();
@@ -149,6 +150,7 @@ public class ReviewEditFragment extends Fragment {
                     }).addOnFailureListener(new OnFailureListener() {
                         @Override
                         public void onFailure(@NonNull Exception e) {
+                            _loading.setVisibility(View.INVISIBLE);
                             Log.d(TAG, "firebase storage failure");
                             Toast
                                     .makeText(getActivity(), "Can't add review. Something went wrong.", Toast.LENGTH_SHORT)
@@ -159,6 +161,7 @@ public class ReviewEditFragment extends Fragment {
             }).addOnFailureListener(new OnFailureListener() {
                 @Override
                 public void onFailure(@NonNull Exception e) {
+                    _loading.setVisibility(View.INVISIBLE);
                     Log.d(TAG, "Add data to firestore failure");
                     Toast
                             .makeText(getActivity(), "Can't add review. Something went wrong.", Toast.LENGTH_SHORT)
