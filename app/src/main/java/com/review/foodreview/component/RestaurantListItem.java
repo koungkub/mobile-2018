@@ -38,12 +38,12 @@ public class RestaurantListItem {
         final TextView _restaurantName = restaurantListItem.findViewById(R.id.restaurant_list_item_text_name);
         final TextView _restaurantType = restaurantListItem.findViewById(R.id.restaurant_list_item_text_type);
         final TextView _priceRange = restaurantListItem.findViewById(R.id.restaurant_list_item_text_price);
-        final TextView _rating = restaurantListItem.findViewById(R.id.restaurant_list_item_text_score);
-        final ImageView _imageUri = restaurantListItem.findViewById(R.id.restaurant_list_item_image);
+        // final TextView _rating = restaurantListItem.findViewById(R.id.restaurant_list_item_text_score);
+        final ImageView _thumbnail = restaurantListItem.findViewById(R.id.restaurant_list_item_image);
 
         Picasso.get()
                 .load(restaurant.getImageUri().get(0))
-                .into(_imageUri);
+                .into(_thumbnail);
         _restaurantName.setText(restaurant.getName());
         _restaurantType.setText(restaurant.getCategoryName());
         _priceRange.setText(restaurant.getPriceRange());
