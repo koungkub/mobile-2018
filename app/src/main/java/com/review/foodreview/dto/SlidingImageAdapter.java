@@ -15,11 +15,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.google.firebase.firestore.EventListener;
-import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.FirebaseFirestoreException;
-import com.google.firebase.firestore.QueryDocumentSnapshot;
-import com.google.firebase.firestore.QuerySnapshot;
+import com.google.firebase.firestore.*;
 import com.review.foodreview.R;
 import com.review.foodreview.RestaurantFragment;
 import com.squareup.picasso.Picasso;
@@ -62,6 +58,7 @@ public class SlidingImageAdapter extends PagerAdapter {
         Log.d("ADAPTER", String.valueOf(position));
         assert imageLayout != null;
         mdb.collection("restaurant")
+                .orderBy("reviewCount", Query.Direction.DESCENDING)
                 .limit(3)
                 .addSnapshotListener(new EventListener<QuerySnapshot>() {
                     @Override
